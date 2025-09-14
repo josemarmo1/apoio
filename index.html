@@ -22,8 +22,9 @@
       --violet-100: #ede7f6;
       --violet-300: #c5b4ff;
       --mint-100: #def7f1;
-      --slate-800: #1f2430;
+      --slate-900: #171a21;
       --slate-700: #2b2f36;
+      --slate-600: #3a3f47;
       --slate-500: #475062;
       --slate-400: #6b7280;
       --white: #ffffff;
@@ -48,7 +49,7 @@
       * { animation: none !important; transition: none !important; }
     }
 
-    /* ============== HEADER ============== */
+    /* ============== HEADER (centralizado, sem botões) ============== */
     .site-header {
       position: sticky; top: 0; z-index: 50;
       backdrop-filter: saturate(140%) blur(8px);
@@ -57,51 +58,57 @@
       padding-top: calc(var(--safe-top) / 2);
     }
     .header-wrap {
-      max-width: 1100px; margin: 0 auto; padding: 10px var(--space);
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      max-width: 1100px; margin: 0 auto; padding: 12px var(--space);
+      display: grid; place-items: center;
+      text-align: center;
     }
-    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand { display: grid; grid-auto-flow: column; align-items: center; gap: 12px; }
     .logo {
-      width: 40px; height: 40px; border-radius: 12px;
+      width: 46px; height: 46px; border-radius: 12px;
       background: conic-gradient(from 180deg at 50% 50%, var(--pink-400), var(--violet-300), var(--pink-300));
       box-shadow: var(--shadow); display: grid; place-items: center; color: var(--white);
-      font-weight: 700; letter-spacing: .4px; flex: 0 0 40px;
+      font-weight: 800; letter-spacing: .4px;
     }
-    .brand-title { margin: 0; font-size: clamp(1rem, 4vw, 1.15rem); line-height: 1.1; }
-    .brand-sub { display:block; font-size: .72rem; color: var(--slate-400); font-weight: 600; }
+    .brand-title { margin: 0; font-size: clamp(1.1rem, 4.8vw, 1.6rem); line-height: 1.1; color: var(--slate-900); }
+    .brand-sub { display:block; font-size: clamp(.72rem, 3.2vw, .9rem); color: var(--slate-400); font-weight: 600; }
 
-    .nav-actions { display:flex; gap: 8px; }
-    .btn { border: none; padding: 10px 14px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: .95rem; min-height: 44px; }
-    .btn-primary { background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: var(--white); box-shadow: 0 4px 10px rgba(255,92,150,.22); }
-    .btn-ghost { background: var(--white); color: var(--slate-700); border: 1px solid #f6d3e2; }
-
-    /* Botão flutuante para mobile (acesso rápido ao jogo) */
-    .fab {
-      position: fixed; right: 16px; bottom: calc(16px + var(--safe-bottom)); z-index: 60;
-      border-radius: 999px; padding: 12px 16px; font-weight: 800; font-size: .95rem;
-      background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: #fff; border: none;
-      box-shadow: 0 10px 24px rgba(255,92,150,.35);
-    }
+    /* Separador sutil */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, #ffd0e1, transparent); margin: 0 auto; width: min(1100px, 94%); }
 
     /* ============== HERO ============== */
     .hero { max-width: 1100px; margin: 0 auto; padding: var(--space); display: grid; gap: var(--space); }
     .hero-card { background: var(--white); border-radius: var(--radius); padding: var(--space); box-shadow: var(--shadow); border: 1px solid #ffe2ef; }
     .pill { display:inline-block; padding: 6px 12px; border-radius: 999px; background: var(--pink-100); color: #7a3e53; font-weight: 700; font-size: .85rem; border: 1px solid #ffd0e1; }
-    .hero h2 { margin: 10px 0; font-size: clamp(1.25rem, 5.5vw, 1.8rem); }
-    .hero p { margin: 0 0 10px; color: var(--slate-500); font-size: clamp(.95rem, 3.8vw, 1.05rem); }
+    .hero h2 { margin: 10px 0; font-size: clamp(1.25rem, 5.5vw, 1.9rem); text-wrap: balance; }
+    .hero p { margin: 0; color: var(--slate-500); font-size: clamp(.95rem, 3.8vw, 1.05rem); }
 
     .hero-illustration { aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; position: relative; background: radial-gradient(120% 80% at 20% 0%, var(--pink-100), transparent 45%), radial-gradient(120% 80% at 100% 100%, var(--violet-100), transparent 40%), linear-gradient(180deg, var(--white), var(--pink-50)); border: 1px solid #ffe2ef; box-shadow: var(--shadow); }
     .floating { position: absolute; inset: 0; display:grid; place-items: center; font-weight:800; font-size: clamp(.95rem, 4vw, 1.2rem); color: #a04b6d; text-align:center; padding: 10px; }
 
+    /* ============== FILTRO ============== */
+    .filters { max-width: 1100px; margin: 0 auto; padding: 0 var(--space) var(--space); }
+    .filter-bar { background: var(--white); border: 1px solid #ffe2ef; border-radius: 14px; box-shadow: var(--shadow); padding: 12px; display: grid; gap: 10px; }
+    .filter-row { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .search { display:flex; gap: 8px; align-items: center; }
+    .search input { flex: 1; padding: 12px 14px; border-radius: 12px; border: 1px solid #e6e6e6; font-size: 1rem; }
+    .chips { display:flex; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; font-weight: 700; color: #7a3e53; cursor: pointer; user-select: none; }
+    .chip[aria-pressed="true"] { background: var(--pink-400); color: white; border-color: var(--pink-500); box-shadow: 0 6px 14px rgba(255,92,150,.25); }
+
     /* ============== REPOSITÓRIO ============== */
-    .section { max-width: 1100px; margin: 0 auto; padding: 0 var(--space) var(--space); }
+    .section { max-width: 1100px; margin: 0 auto; padding: var(--space); padding-top: 12px; }
     .section h3 { margin: 0 0 10px; font-size: clamp(1rem, 4.5vw, 1.2rem); color: #7a3e53; }
-    .games-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .card { background: var(--white); border-radius: 14px; border: 1px solid #ffe2ef; box-shadow: var(--shadow); padding: 16px; display:flex; flex-direction: column; gap: 10px; }
-    .card h4 { margin: 0; font-size: clamp(1rem, 4.5vw, 1.1rem); }
+
+    .games-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .card { background: var(--white); border-radius: 16px; border: 1px solid #ffe2ef; box-shadow: var(--shadow); padding: 16px; display:grid; grid-template-rows: auto 1fr auto; gap: 10px; min-height: 170px; }
+    .card h4 { margin: 0; font-size: clamp(1rem, 4.5vw, 1.15rem); color: var(--slate-900); }
     .card p { margin: 0; color: var(--slate-500); font-size: clamp(.95rem, 4vw, 1rem); }
     .tags { display:flex; gap: 8px; flex-wrap: wrap; }
     .tag { font-size: .75rem; padding: 4px 10px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; color: #7a3e53; font-weight: 700; }
+    .card-actions { display:flex; gap: 8px; }
+    .btn { border: none; padding: 10px 14px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: .95rem; min-height: 44px; }
+    .btn-primary { background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: var(--white); box-shadow: 0 4px 10px rgba(255,92,150,.22); }
+    .btn-ghost { background: var(--white); color: var(--slate-700); border: 1px solid #f6d3e2; }
 
     /* ============== MODAL DO JOGO ============== */
     dialog::backdrop { background: rgba(0,0,0,.35); }
@@ -137,7 +144,7 @@
 
     #player-input { width: 100%; max-width: 360px; padding: 12px 14px; border-radius: 12px; border: 1px solid #e6e6e6; font-size: 1rem; text-align: center; }
     #feedback { margin-top: 4px; font-size: clamp(1rem, 4.5vw, 1.05rem); font-weight: 800; }
-    #score-display-game { font-size: clamp(1.05rem, 5vw, 1.2rem); color: var(--slate-800); margin-top: 4px; font-weight: 800; }
+    #score-display-game { font-size: clamp(1.05rem, 5vw, 1.2rem); color: var(--slate-900); margin-top: 4px; font-weight: 800; }
 
     #ranking-list { margin-top: 8px; width: 100%; text-align: left; }
     #ranking-list h2 { font-size: clamp(1rem, 4.5vw, 1.1rem); color: var(--slate-700); margin: 0 0 8px; text-align: center; }
@@ -148,81 +155,92 @@
 
     /* ============== FOOTER ============== */
     footer { margin-top: 8px; background: #fff; border-top: 1px solid #ffe2ef; }
-    .footer-wrap { max-width: 1100px; margin: 0 auto; padding: 12px var(--space); display: grid; grid-template-columns: 1fr; gap: 8px; align-items:center; }
-    .credits { color: var(--slate-500); font-size: .95rem; text-align: center; }
-    .chip { padding: 8px 12px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; font-weight: 700; color: #7a3e53; display: inline-block; margin: 0 auto; }
+    .footer-wrap { max-width: 1100px; margin: 0 auto; padding: 12px var(--space); display: grid; grid-template-columns: 1fr; gap: 8px; align-items:center; text-align:center; }
+    .credits { color: var(--slate-500); font-size: .95rem; }
 
     /* ====== LAYOUTS MAIORES (TABLET/DESKTOP) ====== */
     @media (min-width: 720px) {
-      .hero { grid-template-columns: 1.15fr 1fr; }
+      .hero { grid-template-columns: 1.1fr 1fr; }
+      .filter-row { grid-template-columns: 1fr auto; align-items: center; }
       .games-grid { grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); }
+      .card { grid-template-rows: auto 1fr auto; }
       .footer-wrap { grid-template-columns: 1fr auto; text-align: left; }
-      .credits { text-align: left; }
     }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
+  <!-- HEADER centralizado, sem botões -->
   <header class="site-header">
     <div class="header-wrap">
       <div class="brand" aria-label="Marca da professora Julia Maria">
         <div class="logo" aria-hidden="true">JM</div>
         <div>
-          <h1 class="brand-title">Profª Julia Maria <span class="brand-sub">Jogos & Recursos Pedagógicos</span></h1>
+          <h1 class="brand-title">Profª Julia Maria</h1>
+          <span class="brand-sub">Jogos & Recursos Pedagógicos</span>
         </div>
       </div>
-      <nav class="nav-actions" aria-label="Ações do site">
-        <button class="btn btn-ghost" onclick="scrollToSection('jogos')" aria-label="Ir para jogos">Jogos</button>
-        <button class="btn btn-ghost" onclick="scrollToSection('sobre')" aria-label="Ir para sobre">Sobre</button>
-        <button class="btn btn-primary" onclick="openGame()" aria-label="Abrir jogo de Unidades">Abrir Jogo</button>
-      </nav>
     </div>
   </header>
+  <div class="divider"></div>
 
   <!-- HERO -->
   <section class="hero" id="inicio">
     <div class="hero-card">
       <span class="pill">Repositório pedagógico</span>
       <h2>Jogos prontos para usar em sala de aula</h2>
-      <p>Atividades interativas com foco em <b>unidades de medida</b>, alinhadas à BNCC e pensadas com carinho para turmas do fundamental. Toque em <b>Abrir Jogo</b> para iniciar agora ou explore o repositório abaixo.</p>
-      <div class="nav-actions" style="margin-top:8px">
-        <button class="btn btn-primary" onclick="openGame()">Abrir Jogo de Unidades</button>
-        <button class="btn btn-ghost" onclick="scrollToSection('jogos')">Ver repositório</button>
-      </div>
+      <p>Atividades interativas com foco em <b>unidades de medida</b>, alinhadas à BNCC e pensadas para o fundamental. Abra o jogo no card abaixo ou filtre para encontrar atividades.</p>
     </div>
     <div class="hero-illustration" aria-hidden="true">
       <div class="floating">♥ Aprender pode ser leve, lúdico e rosa pastel :)</div>
     </div>
   </section>
 
+  <!-- FILTROS -->
+  <section class="filters" aria-label="Filtros do repositório">
+    <div class="filter-bar">
+      <div class="filter-row">
+        <div class="search" role="search">
+          <input id="search-input" type="search" placeholder="Pesquisar por nome, descrição ou tag (ex.: Matemática, BNCC)" aria-label="Pesquisar jogos" />
+        </div>
+        <div class="chips" aria-label="Categorias" role="group">
+          <button class="chip" data-chip="todas" aria-pressed="true">Todas</button>
+          <button class="chip" data-chip="Matemática">Matemática</button>
+          <button class="chip" data-chip="Fundamental">Fundamental</button>
+          <button class="chip" data-chip="BNCC">BNCC</button>
+          <button class="chip" data-chip="Planejado">Planejado</button>
+          <button class="chip" data-chip="Lúdico">Lúdico</button>
+          <button class="chip" data-chip="Cooperativo">Cooperativo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- REPOSITÓRIO DE JOGOS -->
   <section class="section" id="jogos">
     <h3>Repositório de Jogos</h3>
-    <div class="games-grid">
-      <article class="card">
+    <div id="games-grid" class="games-grid">
+      <article class="card" data-title="Jogo das Unidades de Medida" data-tags="Matemática,Fundamental,BNCC" data-desc="Quiz interativo com três níveis para grandezas e medidas.">
         <h4>Jogo das Unidades de Medida</h4>
         <p>Quiz interativo com três níveis (fácil, médio e difícil) para consolidar conteúdos de grandezas e medidas.</p>
-        <div class="tags">
-          <span class="tag">Matemática</span>
-          <span class="tag">Fundamental</span>
-          <span class="tag">BNCC</span>
-        </div>
-        <div class="nav-actions">
+        <div class="tags"><span class="tag">Matemática</span><span class="tag">Fundamental</span><span class="tag">BNCC</span></div>
+        <div class="card-actions">
           <button class="btn btn-primary" onclick="openGame()">Abrir agora</button>
           <button class="btn btn-ghost" onclick="openGame(true)">Tela cheia</button>
         </div>
       </article>
-      <article class="card">
+
+      <article class="card" data-title="Memória das Medidas" data-tags="Planejado,Lúdico,Fundamental" data-desc="Relacione unidades e instrumentos de medida.">
         <h4>Memória das Medidas <span style="opacity:.6">(em breve)</span></h4>
         <p>Jogo da memória relacionando unidades e instrumentos de medida.</p>
-        <div class="tags"><span class="tag">Planejado</span><span class="tag">Lúdico</span></div>
-        <div class="nav-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
+        <div class="tags"><span class="tag">Planejado</span><span class="tag">Lúdico</span><span class="tag">Fundamental</span></div>
+        <div class="card-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
       </article>
-      <article class="card">
+
+      <article class="card" data-title="Estafeta das Grandezas" data-tags="Planejado,Cooperativo,Fundamental" data-desc="Desafios rápidos com feedback imediato.">
         <h4>Estafeta das Grandezas <span style="opacity:.6">(em breve)</span></h4>
         <p>Atividade gamificada com desafios rápidos e feedback imediato.</p>
-        <div class="tags"><span class="tag">Planejado</span><span class="tag">Cooperativo</span></div>
-        <div class="nav-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
+        <div class="tags"><span class="tag">Planejado</span><span class="tag">Cooperativo</span><span class="tag">Fundamental</span></div>
+        <div class="card-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
       </article>
     </div>
   </section>
@@ -233,7 +251,7 @@
     <div class="card">
       <p>Produzido por <b>Profª Julia Maria</b>. Interface e otimizações de acessibilidade/UX pensadas para uso em sala de aula, celular e projeção. Sinta-se à vontade para compartilhar com a sua turma.</p>
       <p class="credits">Créditos: Design e implementação — Profª Julia Maria (conteúdo pedagógico) e colaboração técnica para a interface. Licença: uso educacional.</p>
-      <div class="tags"><span class="tag">Versão 1.1</span><span class="tag">Atualizado 2025</span></div>
+      <div class="tags"><span class="tag">Versão 1.2</span><span class="tag">Atualizado 2025</span></div>
     </div>
   </section>
 
@@ -281,37 +299,50 @@
     </div>
   </dialog>
 
-  <!-- FAB (atalho mobile) -->
-  <button class="fab" onclick="openGame()" aria-label="Abrir rapidamente o jogo">Abrir Jogo</button>
-
   <!-- FOOTER -->
   <footer>
     <div class="footer-wrap">
       <div class="credits">© <span id="year"></span> Profª Julia Maria — Repositório de Jogos Pedagógicos. Todos os direitos reservados.</div>
-      <span class="chip">Didática ♥ Tecnologia</span>
     </div>
   </footer>
 
   <script>
     // ======== util navegação ========
-    function scrollToSection(id){
-      document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
-    }
+    function scrollToSection(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'}); }
 
     // ======== modal ========
     const modal = document.getElementById('game-modal');
-    function openGame(fullscreen){
-      if(!modal.open) modal.showModal();
-      if(fullscreen) toggleFullscreen();
-    }
+    function openGame(fullscreen){ if(!modal.open) modal.showModal(); if(fullscreen) toggleFullscreen(); }
     function closeGame(){ if(modal.open) modal.close(); }
-    function toggleFullscreen(){
-      const el = modal;
-      if (!document.fullscreenElement) {
-        el.requestFullscreen?.();
-      } else {
-        document.exitFullscreen?.();
-      }
+    function toggleFullscreen(){ const el = modal; if (!document.fullscreenElement) { el.requestFullscreen?.(); } else { document.exitFullscreen?.(); } }
+
+    // ======== FILTRO ========
+    const chips = Array.from(document.querySelectorAll('.chip'));
+    const searchInput = document.getElementById('search-input');
+    const grid = document.getElementById('games-grid');
+
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      const isAll = chip.dataset.chip === 'todas';
+      chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+      chip.setAttribute('aria-pressed', 'true');
+      filterCards();
+    }));
+    searchInput.addEventListener('input', filterCards);
+
+    function filterCards(){
+      const activeChip = chips.find(c => c.getAttribute('aria-pressed') === 'true');
+      const chipValue = activeChip ? activeChip.dataset.chip : 'todas';
+      const term = searchInput.value.trim().toLowerCase();
+      const cards = Array.from(grid.querySelectorAll('.card'));
+
+      cards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const desc = card.dataset.desc.toLowerCase();
+        const tags = card.dataset.tags.toLowerCase();
+        const matchesText = !term || title.includes(term) || desc.includes(term) || tags.includes(term);
+        const matchesChip = chipValue === 'todas' || tags.includes(chipValue.toLowerCase());
+        card.style.display = (matchesText && matchesChip) ? 'grid' : 'none';
+      });
     }
 
     // ======== jogo (conteúdo original + ajustes) ========
@@ -360,96 +391,55 @@
     const nextBtn = document.getElementById('next-btn');
     const rankingListOl = document.getElementById('ranking-ol');
 
-    function loadRanking() {
-      try { return (JSON.parse(localStorage.getItem('ranking')) || []).sort((a,b)=>b.score-a.score); } catch { return []; }
-    }
+    function loadRanking() { try { return (JSON.parse(localStorage.getItem('ranking')) || []).sort((a,b)=>b.score-a.score); } catch { return []; } }
     function saveRanking(r) { try { localStorage.setItem('ranking', JSON.stringify(r)); } catch { /* storage full/blocked */ } }
     function displayRanking() {
       const ranking = loadRanking();
       rankingListOl.innerHTML = '';
-      if (ranking.length === 0) {
-        rankingListOl.innerHTML = '<li>Nenhum recorde ainda! Seja o primeiro.</li>';
-      } else {
-        ranking.forEach((entry, index) => {
-          const li = document.createElement('li');
-          li.innerHTML = `<span>${index + 1}. ${entry.name}</span><span>${entry.score} pontos</span>`;
-          rankingListOl.appendChild(li);
-        });
-      }
+      if (ranking.length === 0) { rankingListOl.innerHTML = '<li>Nenhum recorde ainda! Seja o primeiro.</li>'; }
+      else { ranking.forEach((entry, index) => { const li = document.createElement('li'); li.innerHTML = `<span>${index + 1}. ${entry.name}</span><span>${entry.score} pontos</span>`; rankingListOl.appendChild(li); }); }
     }
-    function addScoreToRanking(name, finalScore) {
-      let ranking = loadRanking();
-      ranking.push({ name, score: finalScore });
-      ranking.sort((a,b)=>b.score-a.score); ranking = ranking.slice(0, 10);
-      saveRanking(ranking); displayRanking();
-    }
+    function addScoreToRanking(name, finalScore) { let ranking = loadRanking(); ranking.push({ name, score: finalScore }); ranking.sort((a,b)=>b.score-a.score); ranking = ranking.slice(0, 10); saveRanking(ranking); displayRanking(); }
 
-    // Habilita/Desabilita botões por nome
     document.addEventListener('input', (e) => {
-      if(e.target === playerInput){
-        const hasName = playerInput.value.trim().length > 0;
-        document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = !hasName);
-      }
+      if(e.target === playerInput){ const hasName = playerInput.value.trim().length > 0; document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = !hasName); }
     });
 
     function startGame(level) {
-      playerName = playerInput.value.trim();
-      if (!playerName) { alert('Por favor, digite seu nome para começar!'); return; }
-      currentLevel = level; questionIndex = 0; score = 0; answered = false;
-      startScreen.classList.add('hidden'); gameScreen.classList.remove('hidden');
-      levelDisplay.textContent = `Nível: ${level.charAt(0).toUpperCase() + level.slice(1)}`;
-      levelDisplay.style.color = levelPoints[level].color;
-      scoreDisplayGame.textContent = 'Pontuação: 0';
-      showQuestion();
+      playerName = playerInput.value.trim(); if (!playerName) { alert('Por favor, digite seu nome para começar!'); return; }
+      currentLevel = level; questionIndex = 0; score = 0; answered = false; startScreen.classList.add('hidden'); gameScreen.classList.remove('hidden');
+      levelDisplay.textContent = `Nível: ${level.charAt(0).toUpperCase() + level.slice(1)}`; levelDisplay.style.color = levelPoints[level].color; scoreDisplayGame.textContent = 'Pontuação: 0'; showQuestion();
     }
 
     function showQuestion() {
       answered = false; feedbackEl.classList.add('hidden'); nextBtn.classList.add('hidden');
-      const currentQuestion = questions[currentLevel][questionIndex];
-      questionText.textContent = currentQuestion.q;
-      optionA.textContent = `a) ${currentQuestion.a}`;
-      optionB.textContent = `b) ${currentQuestion.b}`;
-      optionC.textContent = `c) ${currentQuestion.c}`;
+      const currentQuestion = questions[currentLevel][questionIndex]; questionText.textContent = currentQuestion.q;
+      optionA.textContent = `a) ${currentQuestion.a}`; optionB.textContent = `b) ${currentQuestion.b}`; optionC.textContent = `c) ${currentQuestion.c}`;
       [optionA, optionB, optionC].forEach(btn => { btn.classList.remove('btn-green','btn-yellow','btn-red'); btn.classList.add('btn-blue'); });
     }
 
     function checkAnswer(answer) {
-      if (answered) return; answered = true;
-      const currentQuestion = questions[currentLevel][questionIndex];
-      let pointChange = 0;
+      if (answered) return; answered = true; const currentQuestion = questions[currentLevel][questionIndex]; let pointChange = 0;
       if (answer === currentQuestion.correct) {
-        pointChange = levelPoints[currentLevel].correct; score += pointChange;
-        feedbackEl.textContent = `Correto! (+${pointChange} pontos)`; feedbackEl.style.color = 'green';
-        document.getElementById(`option-${answer}`).classList.remove('btn-blue');
-        document.getElementById(`option-${answer}`).classList.add('btn-green');
+        pointChange = levelPoints[currentLevel].correct; score += pointChange; feedbackEl.textContent = `Correto! (+${pointChange} pontos)`; feedbackEl.style.color = 'green';
+        document.getElementById(`option-${answer}`).classList.remove('btn-blue'); document.getElementById(`option-${answer}`).classList.add('btn-green');
       } else {
-        pointChange = levelPoints[currentLevel].wrong; score -= pointChange;
-        feedbackEl.textContent = `Errado! (-${pointChange} pontos). A resposta correta era: ${currentQuestion.correct.toUpperCase()}`; feedbackEl.style.color = 'red';
-        document.getElementById(`option-${answer}`).classList.remove('btn-blue');
-        document.getElementById(`option-${answer}`).classList.add('btn-red');
-        document.getElementById(`option-${currentQuestion.correct}`).classList.remove('btn-blue');
-        document.getElementById(`option-${currentQuestion.correct}`).classList.add('btn-green');
+        pointChange = levelPoints[currentLevel].wrong; score -= pointChange; feedbackEl.textContent = `Errado! (-${pointChange} pontos). A resposta correta era: ${currentQuestion.correct.toUpperCase()}`; feedbackEl.style.color = 'red';
+        document.getElementById(`option-${answer}`).classList.remove('btn-blue'); document.getElementById(`option-${answer}`).classList.add('btn-red');
+        document.getElementById(`option-${currentQuestion.correct}`).classList.remove('btn-blue'); document.getElementById(`option-${currentQuestion.correct}`).classList.add('btn-green');
       }
-      scoreDisplayGame.textContent = `Pontuação: ${score}`;
-      feedbackEl.classList.remove('hidden'); nextBtn.classList.remove('hidden');
+      scoreDisplayGame.textContent = `Pontuação: ${score}`; feedbackEl.classList.remove('hidden'); nextBtn.classList.remove('hidden');
     }
 
     function nextQuestion() {
-      questionIndex++;
-      if (questionIndex < questions[currentLevel].length) {
-        showQuestion();
-      } else {
-        gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden');
-        addScoreToRanking(playerName, score);
-        alert(`Fim do Nível ${currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}! Sua pontuação final é: ${score}.`);
-        score = 0; playerInput.value = ''; document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = true);
-      }
+      questionIndex++; if (questionIndex < questions[currentLevel].length) { showQuestion(); }
+      else { gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden'); addScoreToRanking(playerName, score); alert(`Fim do Nível ${currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}! Sua pontuação final é: ${score}.`); score = 0; playerInput.value = ''; document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = true); }
     }
 
-    // Mobile UX ajustes: fechar teclado ao abrir modal fullscreen
+    // Mobile UX ajustes: fechar teclado ao fechar modal
     modal.addEventListener('close', () => { document.activeElement?.blur?.(); });
 
-    function init(){ document.getElementById('year').textContent = new Date().getFullYear(); displayRanking(); }
+    function init(){ document.getElementById('year').textContent = new Date().getFullYear(); filterCards(); displayRanking(); }
     init();
   </script>
 </body>
