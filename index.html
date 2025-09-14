@@ -2,13 +2,16 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Profª Julia Maria — Repositório de Jogos</title>
   <meta name="description" content="Repositório profissional de jogos pedagógicos da Profª Julia Maria." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ===================== */
+    /*  DESIGN MOBILE-FIRST  */
+    /* ===================== */
     :root {
       --pink-50: #ffeef5;
       --pink-100: #ffd9e8;
@@ -19,122 +22,110 @@
       --violet-100: #ede7f6;
       --violet-300: #c5b4ff;
       --mint-100: #def7f1;
+      --slate-800: #1f2430;
       --slate-700: #2b2f36;
-      --slate-600: #3a3f47;
+      --slate-500: #475062;
       --slate-400: #6b7280;
       --white: #ffffff;
       --shadow: 0 10px 25px rgba(0,0,0,.08);
       --radius: 16px;
+      --space: clamp(12px, 3vw, 20px);
+      --safe-top: env(safe-area-inset-top);
+      --safe-bottom: env(safe-area-inset-bottom);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
-      margin: 0;
+      margin: 0; padding: 0;
       font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       background: linear-gradient(180deg, var(--pink-50), var(--mint-100));
       color: var(--slate-700);
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* Header */
+    /* Acessibilidade e redução de movimento */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* ============== HEADER ============== */
     .site-header {
       position: sticky; top: 0; z-index: 50;
       backdrop-filter: saturate(140%) blur(8px);
-      background: rgba(255, 238, 245, .85);
+      background: rgba(255, 238, 245, .9);
       border-bottom: 1px solid #f7cfe0;
+      padding-top: calc(var(--safe-top) / 2);
     }
     .header-wrap {
-      max-width: 1100px; margin: 0 auto; padding: 14px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px;
+      max-width: 1100px; margin: 0 auto; padding: 10px var(--space);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
     }
-    .brand {
-      display: flex; align-items: center; gap: 12px;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
     .logo {
-      width: 44px; height: 44px; border-radius: 12px;
+      width: 40px; height: 40px; border-radius: 12px;
       background: conic-gradient(from 180deg at 50% 50%, var(--pink-400), var(--violet-300), var(--pink-300));
-      box-shadow: var(--shadow);
-      display: grid; place-items: center; color: var(--white);
-      font-weight: 700; letter-spacing: .5px;
+      box-shadow: var(--shadow); display: grid; place-items: center; color: var(--white);
+      font-weight: 700; letter-spacing: .4px; flex: 0 0 40px;
     }
-    .brand h1 { font-size: 1.1rem; margin: 0; line-height: 1.2; }
-    .brand small { display:block; font-size: .72rem; color: var(--slate-400); }
+    .brand-title { margin: 0; font-size: clamp(1rem, 4vw, 1.15rem); line-height: 1.1; }
+    .brand-sub { display:block; font-size: .72rem; color: var(--slate-400); font-weight: 600; }
 
-    .nav-actions { display:flex; gap: 10px; flex-wrap: wrap; }
-    .btn {
-      border: none; padding: 10px 14px; border-radius: 999px; cursor: pointer; font-weight: 600;
-      transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
-      box-shadow: 0 4px 10px rgba(255,92,150,.2);
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary {
-      background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: var(--white);
-    }
-    .btn-ghost {
-      background: var(--white); color: var(--slate-700); border: 1px solid #f6d3e2;
+    .nav-actions { display:flex; gap: 8px; }
+    .btn { border: none; padding: 10px 14px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: .95rem; min-height: 44px; }
+    .btn-primary { background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: var(--white); box-shadow: 0 4px 10px rgba(255,92,150,.22); }
+    .btn-ghost { background: var(--white); color: var(--slate-700); border: 1px solid #f6d3e2; }
+
+    /* Botão flutuante para mobile (acesso rápido ao jogo) */
+    .fab {
+      position: fixed; right: 16px; bottom: calc(16px + var(--safe-bottom)); z-index: 60;
+      border-radius: 999px; padding: 12px 16px; font-weight: 800; font-size: .95rem;
+      background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: #fff; border: none;
+      box-shadow: 0 10px 24px rgba(255,92,150,.35);
     }
 
-    /* Hero */
-    .hero {
-      max-width: 1100px; margin: 24px auto 0; padding: 24px 20px 8px;
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center;
-    }
-    .hero-card {
-      background: var(--white); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow);
-      border: 1px solid #ffe2ef;
-    }
-    .hero h2 { margin: 0 0 10px; font-size: clamp(1.4rem, 3.2vw, 2rem); }
-    .hero p { margin: 0 0 16px; color: var(--slate-400); }
-    .pill {
-      display:inline-block; padding: 6px 12px; border-radius: 999px; background: var(--pink-100); color: #7a3e53; font-weight: 600; font-size: .85rem;
-      border: 1px solid #ffd0e1;
-    }
-    .hero-illustration {
-      aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; position: relative;
-      background: radial-gradient(120% 80% at 20% 0%, var(--pink-100), transparent 45%),
-                  radial-gradient(120% 80% at 100% 100%, var(--violet-100), transparent 40%),
-                  linear-gradient(180deg, var(--white), var(--pink-50));
-      border: 1px solid #ffe2ef; box-shadow: var(--shadow);
-    }
-    .floating {
-      position: absolute; inset: 0; display:grid; place-items: center; font-weight:700; font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: #a04b6d;
-    }
+    /* ============== HERO ============== */
+    .hero { max-width: 1100px; margin: 0 auto; padding: var(--space); display: grid; gap: var(--space); }
+    .hero-card { background: var(--white); border-radius: var(--radius); padding: var(--space); box-shadow: var(--shadow); border: 1px solid #ffe2ef; }
+    .pill { display:inline-block; padding: 6px 12px; border-radius: 999px; background: var(--pink-100); color: #7a3e53; font-weight: 700; font-size: .85rem; border: 1px solid #ffd0e1; }
+    .hero h2 { margin: 10px 0; font-size: clamp(1.25rem, 5.5vw, 1.8rem); }
+    .hero p { margin: 0 0 10px; color: var(--slate-500); font-size: clamp(.95rem, 3.8vw, 1.05rem); }
 
-    /* Grid de jogos */
-    .section { max-width: 1100px; margin: 24px auto; padding: 0 20px; }
-    .section h3 { margin: 0 0 14px; font-size: 1.2rem; color: #7a3e53; }
-    .games-grid {
-      display: grid; grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); gap: 16px;
-    }
-    .card {
-      background: var(--white); border-radius: 14px; border: 1px solid #ffe2ef; box-shadow: var(--shadow); padding: 18px; display:flex; flex-direction: column; gap: 12px;
-    }
-    .card h4 { margin: 0; font-size: 1rem; }
-    .card p { margin: 0; color: var(--slate-400); font-size: .95rem; }
-    .card .tags { display:flex; gap: 8px; flex-wrap: wrap; }
-    .tag { font-size: .75rem; padding: 4px 10px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; color: #7a3e53; font-weight: 600; }
+    .hero-illustration { aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; position: relative; background: radial-gradient(120% 80% at 20% 0%, var(--pink-100), transparent 45%), radial-gradient(120% 80% at 100% 100%, var(--violet-100), transparent 40%), linear-gradient(180deg, var(--white), var(--pink-50)); border: 1px solid #ffe2ef; box-shadow: var(--shadow); }
+    .floating { position: absolute; inset: 0; display:grid; place-items: center; font-weight:800; font-size: clamp(.95rem, 4vw, 1.2rem); color: #a04b6d; text-align:center; padding: 10px; }
 
-    /* Modal do jogo */
+    /* ============== REPOSITÓRIO ============== */
+    .section { max-width: 1100px; margin: 0 auto; padding: 0 var(--space) var(--space); }
+    .section h3 { margin: 0 0 10px; font-size: clamp(1rem, 4.5vw, 1.2rem); color: #7a3e53; }
+    .games-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .card { background: var(--white); border-radius: 14px; border: 1px solid #ffe2ef; box-shadow: var(--shadow); padding: 16px; display:flex; flex-direction: column; gap: 10px; }
+    .card h4 { margin: 0; font-size: clamp(1rem, 4.5vw, 1.1rem); }
+    .card p { margin: 0; color: var(--slate-500); font-size: clamp(.95rem, 4vw, 1rem); }
+    .tags { display:flex; gap: 8px; flex-wrap: wrap; }
+    .tag { font-size: .75rem; padding: 4px 10px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; color: #7a3e53; font-weight: 700; }
+
+    /* ============== MODAL DO JOGO ============== */
     dialog::backdrop { background: rgba(0,0,0,.35); }
-    dialog {
-      width: min(900px, 96vw); border: none; border-radius: 18px; padding: 0; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,.25);
-    }
-    .modal-header { display:flex; align-items:center; justify-content: space-between; padding: 14px 16px; background: var(--pink-100); border-bottom: 1px solid #ffd0e1; }
-    .modal-title { font-weight:700; }
-    .modal-body { padding: 0; background: #f7fbfd; }
-    .icon-btn { background: transparent; border: none; cursor: pointer; font-size: 1.2rem; padding: 8px; }
+    dialog { width: min(900px, 96vw); border: none; border-radius: 18px; padding: 0; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,.25); }
 
-    /* Conteúdo do jogo existente (ajustado) */
-    .container {
-      background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-      text-align: center; max-width: 760px; width: 100%; min-height: 440px; display: flex; flex-direction: column; justify-content: space-between;
-      margin: 18px auto; border: 1px solid #eef2f5;
+    /* Fullscreen / Mobile-like fullscreen */
+    @media (max-width: 600px) {
+      dialog { width: 100vw; height: 100dvh; max-width: none; max-height: none; border-radius: 0; }
+      .modal-body { height: calc(100dvh - 56px); overflow:auto; -webkit-overflow-scrolling: touch; }
     }
-    .options { display:flex; flex-direction: column; gap: 12px; width: 100%; }
-    .option-btn { color: white; padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: 700; transition: transform .15s, box-shadow .2s; }
-    .option-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.12); }
-    .level-btn { font-size: 1.05rem; }
+
+    .modal-header { display:flex; align-items:center; justify-content: space-between; padding: 10px 12px; background: var(--pink-100); border-bottom: 1px solid #ffd0e1; }
+    .modal-title { font-weight:800; font-size: 1rem; }
+    .icon-btn { background: transparent; border: none; cursor: pointer; font-size: 1.2rem; padding: 8px; min-width: 44px; }
+
+    .modal-body { padding: 0; background: #f7fbfd; }
+
+    /* ============== JOGO (mobile-friendly) ============== */
+    .container { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.06); text-align: center; max-width: 760px; width: 100%; min-height: auto; display: flex; flex-direction: column; gap: 10px; margin: 0; border: 1px solid #eef2f5; }
+    .screen { display:flex; flex-direction: column; align-items:center; width:100%; gap: 10px; }
+    .options { display:flex; flex-direction: column; gap: 10px; width: 100%; }
+    .option-btn { color: white; padding: 14px; border: none; border-radius: 12px; cursor: pointer; font-size: clamp(1rem, 4.5vw, 1.05rem); font-weight: 800; transition: transform .15s, box-shadow .2s; min-height: 48px; }
+    .option-btn:active { transform: scale(.99); }
+    .level-btn { font-size: clamp(1rem, 4.5vw, 1.05rem); }
     .btn-green { background-color: #58c39b; }
     .btn-green:hover { background-color: #4db38e; }
     .btn-yellow { background-color: #f6c34f; }
@@ -144,24 +135,29 @@
     .btn-blue { background-color: #7b93ff; }
     .btn-blue:hover { background-color: #6c85f0; }
 
-    #feedback { margin-top: 12px; font-size: 1.05rem; font-weight: 700; }
-    #score-display-game { font-size: 1.25rem; color: #333; margin-top: 8px; }
+    #player-input { width: 100%; max-width: 360px; padding: 12px 14px; border-radius: 12px; border: 1px solid #e6e6e6; font-size: 1rem; text-align: center; }
+    #feedback { margin-top: 4px; font-size: clamp(1rem, 4.5vw, 1.05rem); font-weight: 800; }
+    #score-display-game { font-size: clamp(1.05rem, 5vw, 1.2rem); color: var(--slate-800); margin-top: 4px; font-weight: 800; }
+
+    #ranking-list { margin-top: 8px; width: 100%; text-align: left; }
+    #ranking-list h2 { font-size: clamp(1rem, 4.5vw, 1.1rem); color: var(--slate-700); margin: 0 0 8px; text-align: center; }
+    #ranking-list ol { padding-left: 20px; list-style-position: inside; margin: 0; }
+    #ranking-list li { padding: 8px 0; font-size: clamp(.95rem, 4.5vw, 1rem); border-bottom: 1px solid #eee; display: flex; justify-content: space-between; gap: 6px; }
+
     .hidden { display: none; }
-    #player-input { width: 80%; max-width: 320px; padding: 11px; border-radius: 10px; border: 1px solid #e6e6e6; font-size: 1rem; margin-bottom: 12px; text-align: center; }
-    #ranking-list { margin-top: 12px; width: 100%; text-align: left; }
-    #ranking-list h2 { font-size: 1.1rem; color: #333; margin-bottom: 8px; text-align: center; }
-    #ranking-list ol { padding-left: 20px; list-style-position: inside; }
-    #ranking-list li { padding: 8px; font-size: .98rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
 
-    /* Rodapé */
-    footer { margin-top: 40px; background: #fff; border-top: 1px solid #ffe2ef; }
-    .footer-wrap { max-width: 1100px; margin: 0 auto; padding: 18px 20px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items:center; }
-    .credits { color: var(--slate-400); font-size: .95rem; }
-    .social { display:flex; gap: 10px; }
-    .chip { padding: 8px 12px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; font-weight: 600; color: #7a3e53; }
+    /* ============== FOOTER ============== */
+    footer { margin-top: 8px; background: #fff; border-top: 1px solid #ffe2ef; }
+    .footer-wrap { max-width: 1100px; margin: 0 auto; padding: 12px var(--space); display: grid; grid-template-columns: 1fr; gap: 8px; align-items:center; }
+    .credits { color: var(--slate-500); font-size: .95rem; text-align: center; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; font-weight: 700; color: #7a3e53; display: inline-block; margin: 0 auto; }
 
-    @media (max-width: 880px) {
-      .hero { grid-template-columns: 1fr; }
+    /* ====== LAYOUTS MAIORES (TABLET/DESKTOP) ====== */
+    @media (min-width: 720px) {
+      .hero { grid-template-columns: 1.15fr 1fr; }
+      .games-grid { grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); }
+      .footer-wrap { grid-template-columns: 1fr auto; text-align: left; }
+      .credits { text-align: left; }
     }
   </style>
 </head>
@@ -172,13 +168,13 @@
       <div class="brand" aria-label="Marca da professora Julia Maria">
         <div class="logo" aria-hidden="true">JM</div>
         <div>
-          <h1>Profª Julia Maria <small>Jogos & Recursos Pedagógicos</small></h1>
+          <h1 class="brand-title">Profª Julia Maria <span class="brand-sub">Jogos & Recursos Pedagógicos</span></h1>
         </div>
       </div>
       <nav class="nav-actions" aria-label="Ações do site">
-        <button class="btn btn-ghost" onclick="scrollToSection('jogos')">Jogos</button>
-        <button class="btn btn-ghost" onclick="scrollToSection('sobre')">Sobre</button>
-        <button class="btn btn-primary" onclick="openGame()">Abrir Jogo de Unidades</button>
+        <button class="btn btn-ghost" onclick="scrollToSection('jogos')" aria-label="Ir para jogos">Jogos</button>
+        <button class="btn btn-ghost" onclick="scrollToSection('sobre')" aria-label="Ir para sobre">Sobre</button>
+        <button class="btn btn-primary" onclick="openGame()" aria-label="Abrir jogo de Unidades">Abrir Jogo</button>
       </nav>
     </div>
   </header>
@@ -188,8 +184,8 @@
     <div class="hero-card">
       <span class="pill">Repositório pedagógico</span>
       <h2>Jogos prontos para usar em sala de aula</h2>
-      <p>Atividades interativas com foco em <b>unidades de medida</b>, alinhadas à BNCC e pensadas com carinho para turmas do fundamental. Clique em <b>Abrir Jogo</b> para iniciar imediatamente, ou explore o repositório abaixo.</p>
-      <div class="nav-actions" style="margin-top:10px">
+      <p>Atividades interativas com foco em <b>unidades de medida</b>, alinhadas à BNCC e pensadas com carinho para turmas do fundamental. Toque em <b>Abrir Jogo</b> para iniciar agora ou explore o repositório abaixo.</p>
+      <div class="nav-actions" style="margin-top:8px">
         <button class="btn btn-primary" onclick="openGame()">Abrir Jogo de Unidades</button>
         <button class="btn btn-ghost" onclick="scrollToSection('jogos')">Ver repositório</button>
       </div>
@@ -213,30 +209,20 @@
         </div>
         <div class="nav-actions">
           <button class="btn btn-primary" onclick="openGame()">Abrir agora</button>
-          <button class="btn btn-ghost" onclick="openGame(true)">Abrir em Tela Cheia</button>
+          <button class="btn btn-ghost" onclick="openGame(true)">Tela cheia</button>
         </div>
       </article>
       <article class="card">
         <h4>Memória das Medidas <span style="opacity:.6">(em breve)</span></h4>
         <p>Jogo da memória relacionando unidades e instrumentos de medida.</p>
-        <div class="tags">
-          <span class="tag">Planejado</span>
-          <span class="tag">Lúdico</span>
-        </div>
-        <div class="nav-actions">
-          <button class="btn btn-ghost" disabled>Indisponível</button>
-        </div>
+        <div class="tags"><span class="tag">Planejado</span><span class="tag">Lúdico</span></div>
+        <div class="nav-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
       </article>
       <article class="card">
         <h4>Estafeta das Grandezas <span style="opacity:.6">(em breve)</span></h4>
         <p>Atividade gamificada com desafios rápidos e feedback imediato.</p>
-        <div class="tags">
-          <span class="tag">Planejado</span>
-          <span class="tag">Cooperativo</span>
-        </div>
-        <div class="nav-actions">
-          <button class="btn btn-ghost" disabled>Indisponível</button>
-        </div>
+        <div class="tags"><span class="tag">Planejado</span><span class="tag">Cooperativo</span></div>
+        <div class="nav-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
       </article>
     </div>
   </section>
@@ -245,13 +231,13 @@
   <section class="section" id="sobre">
     <h3>Sobre este repositório</h3>
     <div class="card">
-      <p>Produzido por <b>Profª Julia Maria</b>. Interface e otimizações de acessibilidade/UX pensadas para uso em sala de aula e projeção. Sinta-se à vontade para compartilhar com a sua turma.</p>
+      <p>Produzido por <b>Profª Julia Maria</b>. Interface e otimizações de acessibilidade/UX pensadas para uso em sala de aula, celular e projeção. Sinta-se à vontade para compartilhar com a sua turma.</p>
       <p class="credits">Créditos: Design e implementação — Profª Julia Maria (conteúdo pedagógico) e colaboração técnica para a interface. Licença: uso educacional.</p>
-      <div class="tags"><span class="tag">Versão 1.0</span><span class="tag">Atualizado 2025</span></div>
+      <div class="tags"><span class="tag">Versão 1.1</span><span class="tag">Atualizado 2025</span></div>
     </div>
   </section>
 
-  <!-- MODAL DO JOGO (carrega o jogo existente) -->
+  <!-- MODAL DO JOGO -->
   <dialog id="game-modal" aria-label="Jogo das Unidades de Medida">
     <div class="modal-header">
       <div class="modal-title">Jogo das Unidades de Medida</div>
@@ -261,12 +247,11 @@
       </div>
     </div>
     <div class="modal-body">
-      <!-- O jogo original foi mantido e levemente ajustado para o novo layout -->
       <div class="container">
         <div id="start-screen" class="screen">
-          <h2 style="margin: 8px 0 4px; color:#7a3e53">Jogo das Unidades de Medida</h2>
-          <p>Para começar, digite seu nome e escolha um nível!</p>
-          <input type="text" id="player-input" placeholder="Seu nome" />
+          <h2 style="margin: 6px 0 2px; color:#7a3e53; font-size: clamp(1.1rem, 5vw, 1.4rem)">Jogo das Unidades de Medida</h2>
+          <p style="margin:0 0 6px">Para começar, digite seu nome e escolha um nível!</p>
+          <input type="text" id="player-input" placeholder="Seu nome" inputmode="text" autocomplete="name" />
           <div class="options">
             <button id="easy-btn" class="option-btn btn-green level-btn" onclick="startGame('facil')" disabled>Fácil</button>
             <button id="medium-btn" class="option-btn btn-yellow level-btn" onclick="startGame('medio')" disabled>Médio</button>
@@ -278,10 +263,10 @@
           </div>
         </div>
         <div id="game-screen" class="screen hidden">
-          <p id="level-display" style="font-weight: bold;"></p>
-          <hr style="width: 100%; border-color: #ddd;" />
-          <div id="question-box" style="margin-bottom: 12px;">
-            <p id="question-text" style="font-size: 1.2em;"></p>
+          <p id="level-display" style="font-weight: 800;"></p>
+          <hr style="width: 100%; border-color: #eee; margin: 0;" />
+          <div id="question-box">
+            <p id="question-text" style="font-size: clamp(1.05rem, 4.8vw, 1.2rem);"></p>
           </div>
           <div id="options-container" class="options">
             <button id="option-a" class="option-btn" onclick="checkAnswer('a')"></button>
@@ -289,30 +274,31 @@
             <button id="option-c" class="option-btn" onclick="checkAnswer('c')"></button>
           </div>
           <div id="feedback" class="hidden"></div>
-          <p id="score-display-game" style="font-weight: bold;">Pontuação: 0</p>
+          <p id="score-display-game">Pontuação: 0</p>
           <button id="next-btn" class="option-btn btn-blue hidden" onclick="nextQuestion()">Próxima Pergunta</button>
         </div>
       </div>
     </div>
   </dialog>
 
+  <!-- FAB (atalho mobile) -->
+  <button class="fab" onclick="openGame()" aria-label="Abrir rapidamente o jogo">Abrir Jogo</button>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-wrap">
       <div class="credits">© <span id="year"></span> Profª Julia Maria — Repositório de Jogos Pedagógicos. Todos os direitos reservados.</div>
-      <div class="social">
-        <span class="chip">Didática ♥ Tecnologia</span>
-      </div>
+      <span class="chip">Didática ♥ Tecnologia</span>
     </div>
   </footer>
 
   <script>
-    // ========= util navegação =========
+    // ======== util navegação ========
     function scrollToSection(id){
       document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
     }
 
-    // ========= modal =========
+    // ======== modal ========
     const modal = document.getElementById('game-modal');
     function openGame(fullscreen){
       if(!modal.open) modal.showModal();
@@ -328,7 +314,7 @@
       }
     }
 
-    // ========= jogo (conteúdo original + pequenos ajustes) =========
+    // ======== jogo (conteúdo original + ajustes) ========
     const questions = {
       facil: [
         { q: 'O que é mais adequado para medir a altura de uma pessoa?', a: 'Metros', b: 'Litros', c: 'Quilos', correct: 'a' },
@@ -364,7 +350,6 @@
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const playerInput = document.getElementById('player-input');
-    const levelButtons = () => document.querySelectorAll('.level-btn');
     const questionText = document.getElementById('question-text');
     const optionA = document.getElementById('option-a');
     const optionB = document.getElementById('option-b');
@@ -375,12 +360,10 @@
     const nextBtn = document.getElementById('next-btn');
     const rankingListOl = document.getElementById('ranking-ol');
 
-    // Ranking
     function loadRanking() {
-      const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
-      return ranking.sort((a, b) => b.score - a.score);
+      try { return (JSON.parse(localStorage.getItem('ranking')) || []).sort((a,b)=>b.score-a.score); } catch { return []; }
     }
-    function saveRanking(ranking) { localStorage.setItem('ranking', JSON.stringify(ranking)); }
+    function saveRanking(r) { try { localStorage.setItem('ranking', JSON.stringify(r)); } catch { /* storage full/blocked */ } }
     function displayRanking() {
       const ranking = loadRanking();
       rankingListOl.innerHTML = '';
@@ -396,18 +379,16 @@
     }
     function addScoreToRanking(name, finalScore) {
       let ranking = loadRanking();
-      ranking.push({ name: name, score: finalScore });
-      ranking.sort((a, b) => b.score - a.score);
-      ranking = ranking.slice(0, 10);
-      saveRanking(ranking);
-      displayRanking();
+      ranking.push({ name, score: finalScore });
+      ranking.sort((a,b)=>b.score-a.score); ranking = ranking.slice(0, 10);
+      saveRanking(ranking); displayRanking();
     }
 
-    // Lógica do jogo
+    // Habilita/Desabilita botões por nome
     document.addEventListener('input', (e) => {
       if(e.target === playerInput){
         const hasName = playerInput.value.trim().length > 0;
-        levelButtons().forEach(btn => btn.disabled = !hasName);
+        document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = !hasName);
       }
     });
 
@@ -415,8 +396,7 @@
       playerName = playerInput.value.trim();
       if (!playerName) { alert('Por favor, digite seu nome para começar!'); return; }
       currentLevel = level; questionIndex = 0; score = 0; answered = false;
-      startScreen.classList.add('hidden');
-      gameScreen.classList.remove('hidden');
+      startScreen.classList.add('hidden'); gameScreen.classList.remove('hidden');
       levelDisplay.textContent = `Nível: ${level.charAt(0).toUpperCase() + level.slice(1)}`;
       levelDisplay.style.color = levelPoints[level].color;
       scoreDisplayGame.textContent = 'Pontuação: 0';
@@ -462,11 +442,14 @@
         gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden');
         addScoreToRanking(playerName, score);
         alert(`Fim do Nível ${currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}! Sua pontuação final é: ${score}.`);
-        score = 0; playerInput.value = ''; levelButtons().forEach(btn => btn.disabled = true);
+        score = 0; playerInput.value = ''; document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = true);
       }
     }
 
-    function init(){ displayRanking(); document.getElementById('year').textContent = new Date().getFullYear(); }
+    // Mobile UX ajustes: fechar teclado ao abrir modal fullscreen
+    modal.addEventListener('close', () => { document.activeElement?.blur?.(); });
+
+    function init(){ document.getElementById('year').textContent = new Date().getFullYear(); displayRanking(); }
     init();
   </script>
 </body>
