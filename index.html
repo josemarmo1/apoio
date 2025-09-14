@@ -3,36 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Profª Julia Maria — Repositório de Jogos</title>
-  <meta name="description" content="Repositório profissional de jogos pedagógicos da Profª Julia Maria." />
+  <title>Profª Julia Maria — Jogos</title>
+  <meta name="description" content="Jogos pedagógicos da Profª Julia Maria." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     /* ===================== */
-    /*  DESIGN MOBILE-FIRST  */
+    /*       MOBILE FIRST    */
     /* ===================== */
     :root {
       --pink-50: #ffeef5;
       --pink-100: #ffd9e8;
-      --pink-200: #ffbfd7;
       --pink-300: #ff9fc2;
       --pink-400: #ff80ae;
       --pink-500: #ff5c96;
-      --violet-100: #ede7f6;
-      --violet-300: #c5b4ff;
+      --violet-200: #d9ccff;
       --mint-100: #def7f1;
-      --slate-900: #171a21;
+      --slate-900: #161a23;
       --slate-700: #2b2f36;
-      --slate-600: #3a3f47;
       --slate-500: #475062;
-      --slate-400: #6b7280;
-      --white: #ffffff;
+      --white: #fff;
       --shadow: 0 10px 25px rgba(0,0,0,.08);
-      --radius: 16px;
-      --space: clamp(12px, 3vw, 20px);
+      --radius: 18px;
+      --space: clamp(14px, 4vw, 22px);
       --safe-top: env(safe-area-inset-top);
-      --safe-bottom: env(safe-area-inset-bottom);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -43,215 +38,107 @@
       color: var(--slate-700);
       -webkit-tap-highlight-color: transparent;
     }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
-    /* Acessibilidade e redução de movimento */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
-    }
+    /* HEADER minimalista com logo profissional (SVG) */
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,238,245,.9); backdrop-filter: blur(8px); border-bottom: 1px solid #f7cfe0; padding-top: calc(var(--safe-top) / 2); }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 10px var(--space); display: grid; place-items: center; }
+    .brand { display: grid; place-items: center; gap: 8px; text-align: center; }
+    .brand svg { width: clamp(120px, 40vw, 180px); height: auto; filter: drop-shadow(0 6px 14px rgba(255,92,150,.25)); }
+    .brand-title { margin: 4px 0 0; font-size: clamp(1.1rem, 5vw, 1.5rem); color: var(--slate-900); font-weight: 800; letter-spacing: .2px; }
+    .brand-sub { margin: 0; font-size: clamp(.8rem, 3.6vw, .95rem); color: #7a3e53; opacity: .85; }
 
-    /* ============== HEADER (centralizado, sem botões) ============== */
-    .site-header {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: saturate(140%) blur(8px);
-      background: rgba(255, 238, 245, .9);
-      border-bottom: 1px solid #f7cfe0;
-      padding-top: calc(var(--safe-top) / 2);
-    }
-    .header-wrap {
-      max-width: 1100px; margin: 0 auto; padding: 12px var(--space);
-      display: grid; place-items: center;
-      text-align: center;
-    }
-    .brand { display: grid; grid-auto-flow: column; align-items: center; gap: 12px; }
-    .logo {
-      width: 46px; height: 46px; border-radius: 12px;
-      background: conic-gradient(from 180deg at 50% 50%, var(--pink-400), var(--violet-300), var(--pink-300));
-      box-shadow: var(--shadow); display: grid; place-items: center; color: var(--white);
-      font-weight: 800; letter-spacing: .4px;
-    }
-    .brand-title { margin: 0; font-size: clamp(1.1rem, 4.8vw, 1.6rem); line-height: 1.1; color: var(--slate-900); }
-    .brand-sub { display:block; font-size: clamp(.72rem, 3.2vw, .9rem); color: var(--slate-400); font-weight: 600; }
+    /* HERO extremamente simples */
+    .hero { max-width: 960px; margin: 0 auto; padding: var(--space); display: grid; gap: var(--space); }
+    .panel { background: var(--white); border: 1px solid #ffe2ef; border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(14px, 4vw, 22px); text-align: center; }
+    .cta { display: inline-flex; align-items: center; gap: 10px; border: none; padding: 14px 18px; border-radius: 999px; cursor: pointer; font-weight: 800; font-size: 1rem; background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: #fff; box-shadow: 0 8px 20px rgba(255,92,150,.25); min-height: 48px; }
+    .cta:active { transform: translateY(1px); }
 
-    /* Separador sutil */
-    .divider { height: 1px; background: linear-gradient(90deg, transparent, #ffd0e1, transparent); margin: 0 auto; width: min(1100px, 94%); }
+    /* CARD ÚNICO do jogo (limpo) */
+    .grid { display: grid; gap: 12px; }
+    .card { background: var(--white); border-radius: 16px; border: 1px solid #ffe2ef; box-shadow: var(--shadow); padding: 16px; display: grid; gap: 10px; }
+    .card h3 { margin: 0; font-size: clamp(1rem, 4.4vw, 1.15rem); color: var(--slate-900); }
+    .card p { margin: 0; font-size: clamp(.95rem, 3.8vw, 1rem); color: var(--slate-500); }
 
-    /* ============== HERO ============== */
-    .hero { max-width: 1100px; margin: 0 auto; padding: var(--space); display: grid; gap: var(--space); }
-    .hero-card { background: var(--white); border-radius: var(--radius); padding: var(--space); box-shadow: var(--shadow); border: 1px solid #ffe2ef; }
-    .pill { display:inline-block; padding: 6px 12px; border-radius: 999px; background: var(--pink-100); color: #7a3e53; font-weight: 700; font-size: .85rem; border: 1px solid #ffd0e1; }
-    .hero h2 { margin: 10px 0; font-size: clamp(1.25rem, 5.5vw, 1.9rem); text-wrap: balance; }
-    .hero p { margin: 0; color: var(--slate-500); font-size: clamp(.95rem, 3.8vw, 1.05rem); }
-
-    .hero-illustration { aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; position: relative; background: radial-gradient(120% 80% at 20% 0%, var(--pink-100), transparent 45%), radial-gradient(120% 80% at 100% 100%, var(--violet-100), transparent 40%), linear-gradient(180deg, var(--white), var(--pink-50)); border: 1px solid #ffe2ef; box-shadow: var(--shadow); }
-    .floating { position: absolute; inset: 0; display:grid; place-items: center; font-weight:800; font-size: clamp(.95rem, 4vw, 1.2rem); color: #a04b6d; text-align:center; padding: 10px; }
-
-    /* ============== FILTRO ============== */
-    .filters { max-width: 1100px; margin: 0 auto; padding: 0 var(--space) var(--space); }
-    .filter-bar { background: var(--white); border: 1px solid #ffe2ef; border-radius: 14px; box-shadow: var(--shadow); padding: 12px; display: grid; gap: 10px; }
-    .filter-row { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .search { display:flex; gap: 8px; align-items: center; }
-    .search input { flex: 1; padding: 12px 14px; border-radius: 12px; border: 1px solid #e6e6e6; font-size: 1rem; }
-    .chips { display:flex; flex-wrap: wrap; gap: 8px; }
-    .chip { padding: 8px 12px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; font-weight: 700; color: #7a3e53; cursor: pointer; user-select: none; }
-    .chip[aria-pressed="true"] { background: var(--pink-400); color: white; border-color: var(--pink-500); box-shadow: 0 6px 14px rgba(255,92,150,.25); }
-
-    /* ============== REPOSITÓRIO ============== */
-    .section { max-width: 1100px; margin: 0 auto; padding: var(--space); padding-top: 12px; }
-    .section h3 { margin: 0 0 10px; font-size: clamp(1rem, 4.5vw, 1.2rem); color: #7a3e53; }
-
-    .games-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    .card { background: var(--white); border-radius: 16px; border: 1px solid #ffe2ef; box-shadow: var(--shadow); padding: 16px; display:grid; grid-template-rows: auto 1fr auto; gap: 10px; min-height: 170px; }
-    .card h4 { margin: 0; font-size: clamp(1rem, 4.5vw, 1.15rem); color: var(--slate-900); }
-    .card p { margin: 0; color: var(--slate-500); font-size: clamp(.95rem, 4vw, 1rem); }
-    .tags { display:flex; gap: 8px; flex-wrap: wrap; }
-    .tag { font-size: .75rem; padding: 4px 10px; border-radius: 999px; background: var(--pink-100); border: 1px solid #ffd0e1; color: #7a3e53; font-weight: 700; }
-    .card-actions { display:flex; gap: 8px; }
-    .btn { border: none; padding: 10px 14px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: .95rem; min-height: 44px; }
-    .btn-primary { background: linear-gradient(90deg, var(--pink-400), var(--pink-500)); color: var(--white); box-shadow: 0 4px 10px rgba(255,92,150,.22); }
-    .btn-ghost { background: var(--white); color: var(--slate-700); border: 1px solid #f6d3e2; }
-
-    /* ============== MODAL DO JOGO ============== */
+    /* MODAL do jogo */
     dialog::backdrop { background: rgba(0,0,0,.35); }
     dialog { width: min(900px, 96vw); border: none; border-radius: 18px; padding: 0; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,.25); }
-
-    /* Fullscreen / Mobile-like fullscreen */
-    @media (max-width: 600px) {
-      dialog { width: 100vw; height: 100dvh; max-width: none; max-height: none; border-radius: 0; }
-      .modal-body { height: calc(100dvh - 56px); overflow:auto; -webkit-overflow-scrolling: touch; }
-    }
-
+    @media (max-width: 600px) { dialog { width: 100vw; height: 100dvh; border-radius: 0; } .modal-body{ height: calc(100dvh - 56px); overflow:auto; -webkit-overflow-scrolling: touch; } }
     .modal-header { display:flex; align-items:center; justify-content: space-between; padding: 10px 12px; background: var(--pink-100); border-bottom: 1px solid #ffd0e1; }
     .modal-title { font-weight:800; font-size: 1rem; }
     .icon-btn { background: transparent; border: none; cursor: pointer; font-size: 1.2rem; padding: 8px; min-width: 44px; }
-
     .modal-body { padding: 0; background: #f7fbfd; }
 
-    /* ============== JOGO (mobile-friendly) ============== */
-    .container { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.06); text-align: center; max-width: 760px; width: 100%; min-height: auto; display: flex; flex-direction: column; gap: 10px; margin: 0; border: 1px solid #eef2f5; }
+    /* JOGO (ajustes touch) */
+    .container { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.06); text-align: center; max-width: 760px; width: 100%; display: flex; flex-direction: column; gap: 10px; margin: 0; border: 1px solid #eef2f5; }
     .screen { display:flex; flex-direction: column; align-items:center; width:100%; gap: 10px; }
     .options { display:flex; flex-direction: column; gap: 10px; width: 100%; }
     .option-btn { color: white; padding: 14px; border: none; border-radius: 12px; cursor: pointer; font-size: clamp(1rem, 4.5vw, 1.05rem); font-weight: 800; transition: transform .15s, box-shadow .2s; min-height: 48px; }
     .option-btn:active { transform: scale(.99); }
     .level-btn { font-size: clamp(1rem, 4.5vw, 1.05rem); }
-    .btn-green { background-color: #58c39b; }
-    .btn-green:hover { background-color: #4db38e; }
-    .btn-yellow { background-color: #f6c34f; }
-    .btn-yellow:hover { background-color: #e7b741; }
-    .btn-red { background-color: #f05f5f; }
-    .btn-red:hover { background-color: #dd5454; }
-    .btn-blue { background-color: #7b93ff; }
-    .btn-blue:hover { background-color: #6c85f0; }
-
+    .btn-green { background-color: #58c39b; } .btn-green:hover { background-color: #4db38e; }
+    .btn-yellow { background-color: #f6c34f; } .btn-yellow:hover { background-color: #e7b741; }
+    .btn-red { background-color: #f05f5f; } .btn-red:hover { background-color: #dd5454; }
+    .btn-blue { background-color: #7b93ff; } .btn-blue:hover { background-color: #6c85f0; }
     #player-input { width: 100%; max-width: 360px; padding: 12px 14px; border-radius: 12px; border: 1px solid #e6e6e6; font-size: 1rem; text-align: center; }
     #feedback { margin-top: 4px; font-size: clamp(1rem, 4.5vw, 1.05rem); font-weight: 800; }
     #score-display-game { font-size: clamp(1.05rem, 5vw, 1.2rem); color: var(--slate-900); margin-top: 4px; font-weight: 800; }
-
     #ranking-list { margin-top: 8px; width: 100%; text-align: left; }
     #ranking-list h2 { font-size: clamp(1rem, 4.5vw, 1.1rem); color: var(--slate-700); margin: 0 0 8px; text-align: center; }
     #ranking-list ol { padding-left: 20px; list-style-position: inside; margin: 0; }
     #ranking-list li { padding: 8px 0; font-size: clamp(.95rem, 4.5vw, 1rem); border-bottom: 1px solid #eee; display: flex; justify-content: space-between; gap: 6px; }
-
     .hidden { display: none; }
 
-    /* ============== FOOTER ============== */
-    footer { margin-top: 8px; background: #fff; border-top: 1px solid #ffe2ef; }
-    .footer-wrap { max-width: 1100px; margin: 0 auto; padding: 12px var(--space); display: grid; grid-template-columns: 1fr; gap: 8px; align-items:center; text-align:center; }
-    .credits { color: var(--slate-500); font-size: .95rem; }
-
-    /* ====== LAYOUTS MAIORES (TABLET/DESKTOP) ====== */
-    @media (min-width: 720px) {
-      .hero { grid-template-columns: 1.1fr 1fr; }
-      .filter-row { grid-template-columns: 1fr auto; align-items: center; }
-      .games-grid { grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); }
-      .card { grid-template-rows: auto 1fr auto; }
-      .footer-wrap { grid-template-columns: 1fr auto; text-align: left; }
-    }
+    /* FOOTER enxuto */
+    footer { margin-top: 8px; }
+    .foot { max-width: 960px; margin: 0 auto; padding: 12px var(--space); text-align: center; color: var(--slate-500); font-size: .95rem; }
   </style>
 </head>
 <body>
-  <!-- HEADER centralizado, sem botões -->
-  <header class="site-header">
-    <div class="header-wrap">
-      <div class="brand" aria-label="Marca da professora Julia Maria">
-        <div class="logo" aria-hidden="true">JM</div>
-        <div>
-          <h1 class="brand-title">Profª Julia Maria</h1>
-          <span class="brand-sub">Jogos & Recursos Pedagógicos</span>
-        </div>
+  <!-- HEADER com logo profissional (SVG) -->
+  <header>
+    <div class="wrap">
+      <div class="brand" aria-label="Professora Julia Maria">
+        <!-- LOGO SVG: coração + escudo com JM -->
+        <svg viewBox="0 0 320 120" role="img" aria-label="Logo Profª Julia Maria">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ff80ae"/>
+              <stop offset="100%" stop-color="#ff5c96"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#d9ccff"/>
+              <stop offset="100%" stop-color="#ffbfd7"/>
+            </linearGradient>
+          </defs>
+          <!-- coração estilizado -->
+          <path d="M60 20c18-18 48-8 48 16 0 28-36 46-48 58C48 82 12 64 12 36 12 11 42 2 60 20z" fill="url(#g2)"/>
+          <!-- escudo -->
+          <path d="M170 20h80a6 6 0 0 1 6 6v44c0 28-24 40-46 48-22-8-46-20-46-48V26a6 6 0 0 1 6-6z" fill="url(#g1)"/>
+          <!-- letras JM -->
+          <text x="210" y="70" text-anchor="middle" font-size="40" font-family="Poppins, sans-serif" font-weight="800" fill="#fff">JM</text>
+        </svg>
+        <h1 class="brand-title">Profª Julia Maria</h1>
+        <p class="brand-sub">Jogos para aprender brincando</p>
       </div>
     </div>
   </header>
-  <div class="divider"></div>
 
-  <!-- HERO -->
-  <section class="hero" id="inicio">
-    <div class="hero-card">
-      <span class="pill">Repositório pedagógico</span>
-      <h2>Jogos prontos para usar em sala de aula</h2>
-      <p>Atividades interativas com foco em <b>unidades de medida</b>, alinhadas à BNCC e pensadas para o fundamental. Abra o jogo no card abaixo ou filtre para encontrar atividades.</p>
-    </div>
-    <div class="hero-illustration" aria-hidden="true">
-      <div class="floating">♥ Aprender pode ser leve, lúdico e rosa pastel :)</div>
+  <!-- HERO minimalista: 1 botão grande -->
+  <section class="hero">
+    <div class="panel">
+      <button class="cta" onclick="openGame()" aria-label="Abrir jogo de Unidades">▶ Abrir Jogo</button>
     </div>
   </section>
 
-  <!-- FILTROS -->
-  <section class="filters" aria-label="Filtros do repositório">
-    <div class="filter-bar">
-      <div class="filter-row">
-        <div class="search" role="search">
-          <input id="search-input" type="search" placeholder="Pesquisar por nome, descrição ou tag (ex.: Matemática, BNCC)" aria-label="Pesquisar jogos" />
-        </div>
-        <div class="chips" aria-label="Categorias" role="group">
-          <button class="chip" data-chip="todas" aria-pressed="true">Todas</button>
-          <button class="chip" data-chip="Matemática">Matemática</button>
-          <button class="chip" data-chip="Fundamental">Fundamental</button>
-          <button class="chip" data-chip="BNCC">BNCC</button>
-          <button class="chip" data-chip="Planejado">Planejado</button>
-          <button class="chip" data-chip="Lúdico">Lúdico</button>
-          <button class="chip" data-chip="Cooperativo">Cooperativo</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- REPOSITÓRIO DE JOGOS -->
-  <section class="section" id="jogos">
-    <h3>Repositório de Jogos</h3>
-    <div id="games-grid" class="games-grid">
-      <article class="card" data-title="Jogo das Unidades de Medida" data-tags="Matemática,Fundamental,BNCC" data-desc="Quiz interativo com três níveis para grandezas e medidas.">
-        <h4>Jogo das Unidades de Medida</h4>
-        <p>Quiz interativo com três níveis (fácil, médio e difícil) para consolidar conteúdos de grandezas e medidas.</p>
-        <div class="tags"><span class="tag">Matemática</span><span class="tag">Fundamental</span><span class="tag">BNCC</span></div>
-        <div class="card-actions">
-          <button class="btn btn-primary" onclick="openGame()">Abrir agora</button>
-          <button class="btn btn-ghost" onclick="openGame(true)">Tela cheia</button>
-        </div>
+  <!-- CARD ÚNICO do jogo (opcional, para contexto) -->
+  <section class="hero" id="jogos">
+    <div class="grid">
+      <article class="card">
+        <h3>Jogo das Unidades de Medida</h3>
+        <p>Responda e avance de fase. É rápido e divertido!</p>
+        <button class="cta" onclick="openGame()">Jogar agora</button>
       </article>
-
-      <article class="card" data-title="Memória das Medidas" data-tags="Planejado,Lúdico,Fundamental" data-desc="Relacione unidades e instrumentos de medida.">
-        <h4>Memória das Medidas <span style="opacity:.6">(em breve)</span></h4>
-        <p>Jogo da memória relacionando unidades e instrumentos de medida.</p>
-        <div class="tags"><span class="tag">Planejado</span><span class="tag">Lúdico</span><span class="tag">Fundamental</span></div>
-        <div class="card-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
-      </article>
-
-      <article class="card" data-title="Estafeta das Grandezas" data-tags="Planejado,Cooperativo,Fundamental" data-desc="Desafios rápidos com feedback imediato.">
-        <h4>Estafeta das Grandezas <span style="opacity:.6">(em breve)</span></h4>
-        <p>Atividade gamificada com desafios rápidos e feedback imediato.</p>
-        <div class="tags"><span class="tag">Planejado</span><span class="tag">Cooperativo</span><span class="tag">Fundamental</span></div>
-        <div class="card-actions"><button class="btn btn-ghost" disabled>Indisponível</button></div>
-      </article>
-    </div>
-  </section>
-
-  <!-- SOBRE / CRÉDITOS -->
-  <section class="section" id="sobre">
-    <h3>Sobre este repositório</h3>
-    <div class="card">
-      <p>Produzido por <b>Profª Julia Maria</b>. Interface e otimizações de acessibilidade/UX pensadas para uso em sala de aula, celular e projeção. Sinta-se à vontade para compartilhar com a sua turma.</p>
-      <p class="credits">Créditos: Design e implementação — Profª Julia Maria (conteúdo pedagógico) e colaboração técnica para a interface. Licença: uso educacional.</p>
-      <div class="tags"><span class="tag">Versão 1.2</span><span class="tag">Atualizado 2025</span></div>
     </div>
   </section>
 
@@ -267,8 +154,8 @@
     <div class="modal-body">
       <div class="container">
         <div id="start-screen" class="screen">
-          <h2 style="margin: 6px 0 2px; color:#7a3e53; font-size: clamp(1.1rem, 5vw, 1.4rem)">Jogo das Unidades de Medida</h2>
-          <p style="margin:0 0 6px">Para começar, digite seu nome e escolha um nível!</p>
+          <h2 style="margin: 2px 0 2px; color:#7a3e53; font-size: clamp(1.1rem, 5vw, 1.4rem)">Jogo das Unidades de Medida</h2>
+          <p style="margin:0 0 6px">Digite seu nome e escolha um nível</p>
           <input type="text" id="player-input" placeholder="Seu nome" inputmode="text" autocomplete="name" />
           <div class="options">
             <button id="easy-btn" class="option-btn btn-green level-btn" onclick="startGame('facil')" disabled>Fácil</button>
@@ -283,9 +170,7 @@
         <div id="game-screen" class="screen hidden">
           <p id="level-display" style="font-weight: 800;"></p>
           <hr style="width: 100%; border-color: #eee; margin: 0;" />
-          <div id="question-box">
-            <p id="question-text" style="font-size: clamp(1.05rem, 4.8vw, 1.2rem);"></p>
-          </div>
+          <div id="question-box"><p id="question-text" style="font-size: clamp(1.05rem, 4.8vw, 1.2rem);"></p></div>
           <div id="options-container" class="options">
             <button id="option-a" class="option-btn" onclick="checkAnswer('a')"></button>
             <button id="option-b" class="option-btn" onclick="checkAnswer('b')"></button>
@@ -299,53 +184,18 @@
     </div>
   </dialog>
 
-  <!-- FOOTER -->
   <footer>
-    <div class="footer-wrap">
-      <div class="credits">© <span id="year"></span> Profª Julia Maria — Repositório de Jogos Pedagógicos. Todos os direitos reservados.</div>
-    </div>
+    <div class="foot">© <span id="year"></span> Profª Julia Maria • uso educacional</div>
   </footer>
 
   <script>
-    // ======== util navegação ========
-    function scrollToSection(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'}); }
-
     // ======== modal ========
     const modal = document.getElementById('game-modal');
     function openGame(fullscreen){ if(!modal.open) modal.showModal(); if(fullscreen) toggleFullscreen(); }
     function closeGame(){ if(modal.open) modal.close(); }
     function toggleFullscreen(){ const el = modal; if (!document.fullscreenElement) { el.requestFullscreen?.(); } else { document.exitFullscreen?.(); } }
 
-    // ======== FILTRO ========
-    const chips = Array.from(document.querySelectorAll('.chip'));
-    const searchInput = document.getElementById('search-input');
-    const grid = document.getElementById('games-grid');
-
-    chips.forEach(chip => chip.addEventListener('click', () => {
-      const isAll = chip.dataset.chip === 'todas';
-      chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
-      chip.setAttribute('aria-pressed', 'true');
-      filterCards();
-    }));
-    searchInput.addEventListener('input', filterCards);
-
-    function filterCards(){
-      const activeChip = chips.find(c => c.getAttribute('aria-pressed') === 'true');
-      const chipValue = activeChip ? activeChip.dataset.chip : 'todas';
-      const term = searchInput.value.trim().toLowerCase();
-      const cards = Array.from(grid.querySelectorAll('.card'));
-
-      cards.forEach(card => {
-        const title = card.dataset.title.toLowerCase();
-        const desc = card.dataset.desc.toLowerCase();
-        const tags = card.dataset.tags.toLowerCase();
-        const matchesText = !term || title.includes(term) || desc.includes(term) || tags.includes(term);
-        const matchesChip = chipValue === 'todas' || tags.includes(chipValue.toLowerCase());
-        card.style.display = (matchesText && matchesChip) ? 'grid' : 'none';
-      });
-    }
-
-    // ======== jogo (conteúdo original + ajustes) ========
+    // ======== JOGO (conteúdo original) ========
     const questions = {
       facil: [
         { q: 'O que é mais adequado para medir a altura de uma pessoa?', a: 'Metros', b: 'Litros', c: 'Quilos', correct: 'a' },
@@ -392,7 +242,7 @@
     const rankingListOl = document.getElementById('ranking-ol');
 
     function loadRanking() { try { return (JSON.parse(localStorage.getItem('ranking')) || []).sort((a,b)=>b.score-a.score); } catch { return []; } }
-    function saveRanking(r) { try { localStorage.setItem('ranking', JSON.stringify(r)); } catch { /* storage full/blocked */ } }
+    function saveRanking(r) { try { localStorage.setItem('ranking', JSON.stringify(r)); } catch { } }
     function displayRanking() {
       const ranking = loadRanking();
       rankingListOl.innerHTML = '';
@@ -401,9 +251,7 @@
     }
     function addScoreToRanking(name, finalScore) { let ranking = loadRanking(); ranking.push({ name, score: finalScore }); ranking.sort((a,b)=>b.score-a.score); ranking = ranking.slice(0, 10); saveRanking(ranking); displayRanking(); }
 
-    document.addEventListener('input', (e) => {
-      if(e.target === playerInput){ const hasName = playerInput.value.trim().length > 0; document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = !hasName); }
-    });
+    document.addEventListener('input', (e) => { if(e.target === playerInput){ const hasName = playerInput.value.trim().length > 0; document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = !hasName); } });
 
     function startGame(level) {
       playerName = playerInput.value.trim(); if (!playerName) { alert('Por favor, digite seu nome para começar!'); return; }
@@ -436,11 +284,9 @@
       else { gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden'); addScoreToRanking(playerName, score); alert(`Fim do Nível ${currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}! Sua pontuação final é: ${score}.`); score = 0; playerInput.value = ''; document.querySelectorAll('.level-btn').forEach(btn => btn.disabled = true); }
     }
 
-    // Mobile UX ajustes: fechar teclado ao fechar modal
-    modal.addEventListener('close', () => { document.activeElement?.blur?.(); });
-
-    function init(){ document.getElementById('year').textContent = new Date().getFullYear(); filterCards(); displayRanking(); }
-    init();
+    // Init
+    document.getElementById('year').textContent = new Date().getFullYear();
+    displayRanking();
   </script>
 </body>
 </html>
