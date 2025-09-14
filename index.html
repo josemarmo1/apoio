@@ -1,51 +1,346 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professora Julia Maria</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Jogo das Unidades de Medida</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f0f4f7;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        h1 {
+            color: #333;
+            font-size: clamp(1.5em, 5vw, 2em);
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: clamp(1em, 2.5vw, 1.1em);
+            color: #555;
+        }
+        .screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+        .option-btn {
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: clamp(1em, 3vw, 1.1em);
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .level-btn {
+            font-size: clamp(1.1em, 3.5vw, 1.2em);
+        }
+        .btn-green { background-color: #4CAF50; }
+        .btn-green:hover { background-color: #45a049; }
+        .btn-yellow { background-color: #FFC107; }
+        .btn-yellow:hover { background-color: #ffb300; }
+        .btn-red { background-color: #F44336; }
+        .btn-red:hover { background-color: #d32f2f; }
+        .btn-blue { background-color: #2196F3; }
+        .btn-blue:hover { background-color: #1e88e5; }
+
+        #feedback {
+            margin-top: 20px;
+            font-size: clamp(1.1em, 3vw, 1.2em);
+            font-weight: bold;
+        }
+        #score-display-game {
+            font-size: clamp(1.3em, 4vw, 1.5em);
+            color: #333;
+            margin-top: 15px;
+        }
+        .hidden {
+            display: none;
+        }
+        #player-input {
+            width: 80%;
+            max-width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: clamp(1em, 3vw, 1.1em);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        #ranking-list {
+            margin-top: 20px;
+            width: 100%;
+            text-align: left;
+        }
+        #ranking-list h2 {
+            font-size: clamp(1.3em, 4vw, 1.5em);
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        #ranking-list ol {
+            padding-left: 20px;
+            list-style-position: inside;
+        }
+        #ranking-list li {
+            padding: 8px;
+            font-size: clamp(1em, 3vw, 1.1em);
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo Professora Julia Maria">
+
+<div class="container">
+    <div id="start-screen" class="screen">
+        <h1>Jogo das Unidades de Medida</h1>
+        <p>Para começar, digite seu nome e escolha um nível!</p>
+        <input type="text" id="player-input" placeholder="Seu nome">
+        <div class="options">
+            <button id="easy-btn" class="option-btn btn-green level-btn" onclick="startGame('facil')" disabled>Fácil</button>
+            <button id="medium-btn" class="option-btn btn-yellow level-btn" onclick="startGame('medio')" disabled>Médio</button>
+            <button id="hard-btn" class="option-btn btn-red level-btn" onclick="startGame('dificil')" disabled>Difícil</button>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Projetos</a></li>
-                <li><a href="#">Contato</a></li>
-                <li><a href="#">Quem Somos</a></li>
-            </ul>
-        </nav>
-    </header>
+        
+        <div id="ranking-list">
+            <h2>Ranking</h2>
+            <ol id="ranking-ol"></ol>
+        </div>
+        
+    </div>
 
-    <main>
-        <section class="projetos">
-            <h2>Projetos</h2>
-            <div class="projeto">
-                <img src="https://via.placeholder.com/200?text=Projeto+1" alt="Projeto 1">
-                <p>Projeto 1</p>
-                <p>Descrição do projeto 1.</p>
-            </div>
-            <div class="projeto">
-                <img src="https://via.placeholder.com/200?text=Projeto+2" alt="Projeto 2">
-                <p>Projeto 2</p>
-                <p>Descrição do projeto 2.</p>
-            </div>
-            <div class="projeto">
-                <img src="https://via.placeholder.com/200?text=Projeto+3" alt="Projeto 3">
-                <p>Projeto 3</p>
-                <p>Descrição do projeto 3.</p>
-            </div>
-        </section>
-    </main>
+    <div id="game-screen" class="screen hidden">
+        <p id="level-display" style="font-weight: bold;"></p>
+        <hr style="width: 100%; border-color: #ddd;">
+        <div id="question-box" style="margin-bottom: 20px;">
+            <p id="question-text" style="font-size: 1.3em;"></p>
+        </div>
+        <div id="options-container" class="options">
+            <button id="option-a" class="option-btn" onclick="checkAnswer('a')"></button>
+            <button id="option-b" class="option-btn" onclick="checkAnswer('b')"></button>
+            <button id="option-c" class="option-btn" onclick="checkAnswer('c')"></button>
+        </div>
+        <div id="feedback" class="hidden"></div>
+        <p id="score-display-game" style="font-size: 1.5em; font-weight: bold;">Pontuação: 0</p>
+        <button id="next-btn" class="option-btn btn-blue hidden" onclick="nextQuestion()">Próxima Pergunta</button>
+    </div>
+</div>
 
-    <footer>
-        <p>Contato: <a href="mailto:contato@professorajuliamaria.com.br">contato@professorajuliamaria.com.br</a></p>
-        <p>Telefone: (00) 99999-9999</p>
-        <p>Endereço: Sua cidade, Estado</p>
-    </footer>
+<script>
+    const questions = {
+        facil: [
+            { q: 'O que é mais adequado para medir a altura de uma pessoa?', a: 'Metros', b: 'Litros', c: 'Quilos', correct: 'a' },
+            { q: 'Qual a unidade que usamos para medir o peso de uma melancia?', a: 'Grama', b: 'Mililitro', c: 'Quilograma', correct: 'c' },
+            { q: 'Se você precisa de 1 litro de água para uma receita, qual o instrumento mais usado para medir essa quantidade?', a: 'Balança', b: 'Fita métrica', c: 'Jarra medidora', correct: 'c' },
+            { q: 'Para medir a temperatura de uma febre, qual unidade é usada?', a: 'Graus Celsius', b: 'Quilômetros', c: 'Litros', correct: 'a' }
+        ],
+        medio: [
+            { q: 'Uma régua tem 30 centímetros (cm). Quantos milímetros (mm) ela tem?', a: '30 mm', b: '300 mm', c: '3.000 mm', correct: 'b' },
+            { q: 'Uma caixa de leite tem 1 litro. Quantos mililitros (ml) ela tem?', a: '100 ml', b: '1.000 ml', c: '10.000 ml', correct: 'b' },
+            { q: 'Um pacote de arroz tem 500 gramas (g). Se você comprar dois pacotes, qual a massa total?', a: '502 g', b: '1 kg', c: '100 g', correct: 'b' },
+            { q: 'A distância da sua casa até a escola é de 2 km. Quantos metros isso representa?', a: '200 m', b: '2.000 m', c: '20.000 m', correct: 'b' }
+        ],
+        dificil: [
+            { q: 'Uma jarra tem 1,5 litros de suco. Se você servir copos de 250 ml, quantos copos você consegue encher?', a: '4 copos', b: '5 copos', c: '6 copos', correct: 'c' },
+            { q: 'João comprou 2 kg de bananas, 500 g de uvas e 1.500 g de maçãs. Qual a massa total das frutas?', a: '3 kg', b: '4 kg', c: '5 kg', correct: 'b' },
+            { q: 'Se um carro viaja por 1h a 60 km/h, quantos metros ele percorre em 10 minutos?', a: '100 m', b: '1.000 m', c: '10.000 m', correct: 'c' }
+        ]
+    };
+
+    let currentLevel = '';
+    let questionIndex = 0;
+    let score = 0;
+    let answered = false;
+    let playerName = '';
+
+    const levelPoints = {
+        facil: { correct: 3, wrong: 1, color: '#4CAF50' },
+        medio: { correct: 5, wrong: 2, color: '#FFC107' },
+        dificil: { correct: 10, wrong: 3, color: '#F44336' }
+    };
+
+    const startScreen = document.getElementById('start-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const playerInput = document.getElementById('player-input');
+    const levelButtons = document.querySelectorAll('.level-btn');
+    const questionText = document.getElementById('question-text');
+    const optionA = document.getElementById('option-a');
+    const optionB = document.getElementById('option-b');
+    const optionC = document.getElementById('option-c');
+    const feedbackEl = document.getElementById('feedback');
+    const scoreDisplayGame = document.getElementById('score-display-game');
+    const levelDisplay = document.getElementById('level-display');
+    const nextBtn = document.getElementById('next-btn');
+    const rankingListOl = document.getElementById('ranking-ol');
+
+    // Funções do Ranking
+    function loadRanking() {
+        const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+        return ranking.sort((a, b) => b.score - a.score);
+    }
+
+    function saveRanking(ranking) {
+        localStorage.setItem('ranking', JSON.stringify(ranking));
+    }
+
+    function displayRanking() {
+        const ranking = loadRanking();
+        rankingListOl.innerHTML = '';
+        if (ranking.length === 0) {
+            rankingListOl.innerHTML = '<li>Nenhum recorde ainda! Seja o primeiro.</li>';
+        } else {
+            ranking.forEach((entry, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${index + 1}. ${entry.name}</span><span>${entry.score} pontos</span>`;
+                rankingListOl.appendChild(li);
+            });
+        }
+    }
+
+    function addScoreToRanking(name, finalScore) {
+        let ranking = loadRanking();
+        ranking.push({ name: name, score: finalScore });
+        ranking.sort((a, b) => b.score - a.score);
+        ranking = ranking.slice(0, 10);
+        saveRanking(ranking);
+        displayRanking();
+    }
+
+    // Lógica do jogo
+    playerInput.addEventListener('input', () => {
+        const hasName = playerInput.value.trim().length > 0;
+        levelButtons.forEach(btn => btn.disabled = !hasName);
+    });
+
+    function startGame(level) {
+        playerName = playerInput.value.trim();
+        if (!playerName) {
+            alert("Por favor, digite seu nome para começar!");
+            return;
+        }
+
+        currentLevel = level;
+        questionIndex = 0;
+        score = 0;
+        answered = false;
+        startScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
+        levelDisplay.textContent = `Nível: ${level.charAt(0).toUpperCase() + level.slice(1)}`;
+        levelDisplay.style.color = levelPoints[level].color;
+        scoreDisplayGame.textContent = `Pontuação: 0`;
+        showQuestion();
+    }
+
+    function showQuestion() {
+        answered = false;
+        feedbackEl.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+
+        const currentQuestion = questions[currentLevel][questionIndex];
+        questionText.textContent = currentQuestion.q;
+
+        optionA.textContent = `a) ${currentQuestion.a}`;
+        optionB.textContent = `b) ${currentQuestion.b}`;
+        optionC.textContent = `c) ${currentQuestion.c}`;
+        
+        const optionBtns = [optionA, optionB, optionC];
+        optionBtns.forEach(btn => {
+            btn.classList.remove('btn-green', 'btn-yellow', 'btn-red');
+            btn.classList.add('btn-blue');
+        });
+    }
+
+    function checkAnswer(answer) {
+        if (answered) return;
+        answered = true;
+
+        const currentQuestion = questions[currentLevel][questionIndex];
+        
+        let pointChange = 0;
+        if (answer === currentQuestion.correct) {
+            pointChange = levelPoints[currentLevel].correct;
+            score += pointChange;
+            feedbackEl.textContent = `Correto! (+${pointChange} pontos)`;
+            feedbackEl.style.color = 'green';
+            document.getElementById(`option-${answer}`).classList.remove('btn-blue');
+            document.getElementById(`option-${answer}`).classList.add('btn-green');
+        } else {
+            pointChange = levelPoints[currentLevel].wrong;
+            score -= pointChange;
+            feedbackEl.textContent = `Errado! (-${pointChange} pontos). A resposta correta era: ${currentQuestion.correct.toUpperCase()}`;
+            feedbackEl.style.color = 'red';
+            document.getElementById(`option-${answer}`).classList.remove('btn-blue');
+            document.getElementById(`option-${answer}`).classList.add('btn-red');
+            document.getElementById(`option-${currentQuestion.correct}`).classList.remove('btn-blue');
+            document.getElementById(`option-${currentQuestion.correct}`).classList.add('btn-green');
+        }
+
+        scoreDisplayGame.textContent = `Pontuação: ${score}`;
+        feedbackEl.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        questionIndex++;
+        if (questionIndex < questions[currentLevel].length) {
+            showQuestion();
+        } else {
+            gameScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+            
+            addScoreToRanking(playerName, score);
+
+            alert(`Fim do Nível ${currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}! Sua pontuação final é: ${score}.`);
+            score = 0;
+            playerInput.value = '';
+            levelButtons.forEach(btn => btn.disabled = true);
+        }
+    }
+    
+    displayRanking();
+</script>
+
 </body>
 </html>
