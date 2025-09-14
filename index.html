@@ -11,8 +11,7 @@
   <style>
     :root{
       --pink-50:#ffeef5; --pink-100:#ffd9e8; --pink-300:#ff9fc2; --pink-400:#ff80ae; --pink-500:#ff5c96;
-      --violet-200:#d9ccff; --mint-100:#def7f1;
-      --slate-900:#161a23; --slate-700:#2b2f36; --slate-500:#475062; --white:#fff;
+      --mint-100:#def7f1; --slate-900:#161a23; --slate-700:#2b2f36; --slate-500:#475062; --white:#fff;
       --shadow:0 10px 25px rgba(0,0,0,.08); --radius:18px; --space:clamp(14px,4vw,22px); --safe-top:env(safe-area-inset-top);
     }
     *{box-sizing:border-box} html,body{height:100%}
@@ -22,7 +21,7 @@
     }
     @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-    /* HEADER minimalista - wordmark única */
+    /* HEADER */
     header{position:sticky;top:0;z-index:20;background:rgba(255,238,245,.9);backdrop-filter:blur(8px);border-bottom:1px solid #f7cfe0;padding-top:calc(var(--safe-top)/2)}
     .wrap{max-width:1000px;margin:0 auto;padding:12px var(--space);display:grid;place-items:center}
     .brand{display:grid;place-items:center;gap:6px;text-align:center}
@@ -40,10 +39,15 @@
     .card p{margin:0;font-size:clamp(.95rem,3.8vw,1rem);color:var(--slate-500)}
     .tags{display:flex;gap:8px;flex-wrap:wrap}
     .tag{font-size:.75rem;padding:4px 10px;border-radius:999px;background:var(--pink-100);border:1px solid #ffd0e1;color:#7a3e53;font-weight:700}
-    .cta{display:inline-flex;align-items:center;gap:10px;border:none;padding:12px 16px;border-radius:999px;cursor:pointer;font-weight:800;font-size:1rem;background:linear-gradient(90deg,var(--pink-400),var(--pink-500));color:#fff;box-shadow:0 8px 20px rgba(255,92,150,.25);min-height:44px}
+    .card-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+    .cta{display:inline-flex;align-items:center;gap:10px;border:none;padding:12px 16px;border-radius:999px;cursor:pointer;font-weight:800;font-size:1rem;min-height:44px}
+    .cta-play{background:linear-gradient(90deg,var(--pink-400),var(--pink-500));color:#fff;box-shadow:0 8px 20px rgba(255,92,150,.25)}
+    .cta-rank{background:#fff;color:var(--slate-700);border:1px solid #f6d3e2}
+
     .cta:active{transform:translateY(1px)}
 
-    /* MODAL */
+    /* MODALS */
     dialog::backdrop{background:rgba(0,0,0,.35)}
     dialog{width:min(900px,96vw);border:none;border-radius:18px;padding:0;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.25)}
     @media (max-width:600px){
@@ -52,28 +56,39 @@
     }
     .modal-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--pink-100);border-bottom:1px solid #ffd0e1}
     .modal-title{font-weight:800;font-size:1rem}
-    .icon-btn{background:transparent;border:none;cursor:pointer;font-size:1.2rem;padding:8px;min-width:44px}
+    .icon-btn, .back-btn{background:transparent;border:1px solid #ffd0e1;border-radius:10px;cursor:pointer;font-size:.95rem;padding:8px 10px;min-height:40px}
     .modal-body{padding:0;background:#f7fbfd}
 
     /* JOGO */
     .container{background:#fff;padding:16px;border-radius:12px;box-shadow:0 6px 12px rgba(0,0,0,.06);text-align:center;max-width:760px;width:100%;display:flex;flex-direction:column;gap:10px;margin:0;border:1px solid #eef2f5}
     .screen{display:flex;flex-direction:column;align-items:center;width:100%;gap:10px}
     .options{display:flex;flex-direction:column;gap:10px;width:100%}
-    .option-btn{color:white;padding:14px;border:none;border-radius:12px;cursor:pointer;font-size:clamp(1rem,4.5vw,1.05rem);font-weight:800;transition:transform .15s,box-shadow .2s;min-height:48px}
-    .option-btn:active{transform:scale(.99)}
-    .btn-green{background-color:#58c39b}.btn-green:hover{background-color:#4db38e}
-    .btn-yellow{background-color:#f6c34f}.btn-yellow:hover{background-color:#e7b741}
-    .btn-red{background-color:#f05f5f}.btn-red:hover{background-color:#dd5454}
-    .btn-blue{background-color:#7b93ff}.btn-blue:hover{background-color:#6c85f0}
 
-    #player-input{width:100%;max-width:360px;padding:12px 14px;border-radius:12px;border:1px solid #e6e6e6;font-size:1rem;text-align:center}
+    /* Botões do jogo — menos destaque nos comuns */
+    .option-btn{color:#1f2a3a;background:#e9eefb;padding:14px;border:none;border-radius:12px;cursor:pointer;font-size:clamp(1rem,4.5vw,1.05rem);font-weight:700;min-height:48px}
+    .option-btn:active{transform:scale(.99)}
+    /* Destaque forte só no Começar */
+    .btn-start{background:linear-gradient(90deg,var(--pink-400),var(--pink-500));color:#fff;box-shadow:0 10px 24px rgba(255,92,150,.3);font-weight:800}
+
+    .btn-green{background-color:#58c39b;color:#fff}
+    .btn-yellow{background-color:#f6c34f;color:#fff}
+    .btn-red{background-color:#f05f5f;color:#fff}
+    .btn-blue{background-color:#7b93ff;color:#fff}
+
+    #player-input{width:100%;max-width:360px;padding:12px 14px;border-radius:12px;border:1px solid #e6e6e6;font-size:1rem;text-align:center;background:#fff}
     #feedback{margin-top:4px;font-size:clamp(1rem,4.5vw,1.05rem);font-weight:800}
     #score-display-game{font-size:clamp(1.05rem,5vw,1.2rem);color:var(--slate-900);margin-top:4px;font-weight:800}
-    #ranking-list{margin-top:8px;width:100%;text-align:left}
-    #ranking-list h2{font-size:clamp(1rem,4.5vw,1.1rem);color:var(--slate-700);margin:0 0 8px;text-align:center}
-    #ranking-list ol{padding-left:20px;list-style-position:inside;margin:0}
-    #ranking-list li{padding:8px 0;font-size:clamp(.95rem,4.5vw,1rem);border-bottom:1px solid #eee;display:flex;justify-content:space-between;gap:6px}
     .hidden{display:none}
+
+    /* RANKING MODAL */
+    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;background:#fff;border-bottom:1px solid #f1e2ea}
+    .chip{padding:8px 12px;border-radius:999px;background:#ffe9f2;border:1px solid #ffd0e1;font-weight:700;color:#7a3e53;cursor:pointer}
+    .chip[aria-pressed="true"]{background:var(--pink-400);color:#fff;border-color:var(--pink-500)}
+    .rank-wrap{padding:14px}
+    .rank-empty{opacity:.8}
+    .rank-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+    .rank-item{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #f1e2ea;border-radius:12px;padding:10px 12px}
+    .rank-item strong{font-weight:800;color:#2b2f36}
 
     /* FOOTER */
     footer{margin-top:10px;background:#fff;border-top:1px solid #ffe2ef}
@@ -82,7 +97,7 @@
   </style>
 </head>
 <body>
-  <!-- HEADER: logo único (wordmark) e subtítulo -->
+  <!-- HEADER -->
   <header>
     <div class="wrap">
       <div class="brand" aria-label="Professora Julia Maria">
@@ -101,61 +116,77 @@
     </div>
   </header>
 
-  <!-- LISTA DE JOGOS (botões só nos cards) -->
+  <!-- LISTA DE JOGOS -->
   <main class="section">
     <div class="grid" id="games-list">
       <article class="card">
         <h3>Unidades de Medida</h3>
         <p>Grandezas, conversões e instrumentos.</p>
         <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <button class="cta" onclick="openGame('unidades', true)">Jogar</button>
+        <div class="card-actions">
+          <button class="cta cta-play" onclick="openGame('unidades', true)">Jogar</button>
+          <button class="cta cta-rank" onclick="openRanking('unidades')">Ranking</button>
+        </div>
       </article>
 
       <article class="card">
         <h3>Frações: equivalência e comparação</h3>
         <p>Comparar, ordenar e reconhecer equivalências.</p>
         <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <button class="cta" onclick="openGame('fracoes', true)">Jogar</button>
+        <div class="card-actions">
+          <button class="cta cta-play" onclick="openGame('fracoes', true)">Jogar</button>
+          <button class="cta cta-rank" onclick="openRanking('fracoes')">Ranking</button>
+        </div>
       </article>
 
       <article class="card">
         <h3>Operações com Números Naturais</h3>
         <p>Adição, subtração, multiplicação e divisão.</p>
         <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <button class="cta" onclick="openGame('naturais', true)">Jogar</button>
+        <div class="card-actions">
+          <button class="cta cta-play" onclick="openGame('naturais', true)">Jogar</button>
+          <button class="cta cta-rank" onclick="openRanking('naturais')">Ranking</button>
+        </div>
       </article>
 
       <article class="card">
         <h3>Valor Posicional e Arredondamento</h3>
         <p>Leitura, comparação e arredondamento.</p>
         <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <button class="cta" onclick="openGame('posicional', true)">Jogar</button>
+        <div class="card-actions">
+          <button class="cta cta-play" onclick="openGame('posicional', true)">Jogar</button>
+          <button class="cta cta-rank" onclick="openRanking('posicional')">Ranking</button>
+        </div>
       </article>
 
       <article class="card">
         <h3>Perímetro e Área</h3>
         <p>Retângulos, quadrados e desafios.</p>
         <div class="tags"><span class="tag">5º ano</span><span class="tag">Geometria</span></div>
-        <button class="cta" onclick="openGame('area_perimetro', true)">Jogar</button>
+        <div class="card-actions">
+          <button class="cta cta-play" onclick="openGame('area_perimetro', true)">Jogar</button>
+          <button class="cta cta-rank" onclick="openRanking('area_perimetro')">Ranking</button>
+        </div>
       </article>
 
       <article class="card">
         <h3>Medidas de Tempo</h3>
         <p>Leitura de horas e tempo decorrido.</p>
         <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <button class="cta" onclick="openGame('tempo', true)">Jogar</button>
+        <div class="card-actions">
+          <button class="cta cta-play" onclick="openGame('tempo', true)">Jogar</button>
+          <button class="cta cta-rank" onclick="openRanking('tempo')">Ranking</button>
+        </div>
       </article>
     </div>
   </main>
 
-  <!-- MODAL: carrega o jogo escolhido, com níveis -->
+  <!-- MODAL DO JOGO -->
   <dialog id="game-modal" aria-label="Jogo">
     <div class="modal-header">
+      <button class="back-btn" onclick="backFromGame()">← Voltar</button>
       <div class="modal-title" id="modal-title">Jogo</div>
-      <div>
-        <button class="icon-btn" onclick="toggleFullscreen()" title="Tela cheia" aria-label="Tela cheia">⤢</button>
-        <button class="icon-btn" onclick="closeGame()" title="Fechar" aria-label="Fechar">✕</button>
-      </div>
+      <button class="icon-btn" onclick="toggleFullscreen()" title="Tela cheia" aria-label="Tela cheia">⤢</button>
     </div>
     <div class="modal-body">
       <div class="container">
@@ -164,18 +195,12 @@
           <h2 id="game-name" style="margin:2px 0 2px;color:#7a3e53;font-size:clamp(1.1rem,5vw,1.4rem)">Jogo</h2>
           <p style="margin:0 0 4px">Digite seu nome e escolha um nível:</p>
           <input type="text" id="player-input" placeholder="Seu nome" inputmode="text" autocomplete="name" />
-          <div class="options">
-            <div class="options" role="group" aria-label="Níveis">
-              <button class="option-btn btn-green"   id="btn-facil"   onclick="selectLevel('facil')"   disabled>Fácil</button>
-              <button class="option-btn btn-yellow"  id="btn-medio"   onclick="selectLevel('medio')"   disabled>Médio</button>
-              <button class="option-btn btn-red"     id="btn-dificil" onclick="selectLevel('dificil')" disabled>Difícil</button>
-            </div>
-            <button id="start-btn" class="option-btn btn-blue" onclick="startSelectedGame()" disabled>Começar</button>
+          <div class="options" role="group" aria-label="Níveis">
+            <button class="option-btn" id="btn-facil"   onclick="selectLevel('facil')"   disabled>Fácil (+3/−1)</button>
+            <button class="option-btn" id="btn-medio"   onclick="selectLevel('medio')"   disabled>Médio (+5/−2)</button>
+            <button class="option-btn" id="btn-dificil" onclick="selectLevel('dificil')" disabled>Difícil (+10/−3)</button>
           </div>
-          <div id="ranking-list">
-            <h2>Ranking (diário)</h2>
-            <ol id="ranking-ol"></ol>
-          </div>
+          <button id="start-btn" class="option-btn btn-start" onclick="startSelectedGame()" disabled>Começar</button>
         </div>
 
         <!-- QUIZ -->
@@ -184,14 +209,37 @@
           <hr style="width:100%;border-color:#eee;margin:0" />
           <div id="question-box"><p id="question-text" style="font-size:clamp(1.05rem,4.8vw,1.2rem)"></p></div>
           <div id="options-container" class="options">
-            <button id="option-a" class="option-btn btn-blue" onclick="checkAnswer('a')"></button>
-            <button id="option-b" class="option-btn btn-blue" onclick="checkAnswer('b')"></button>
-            <button id="option-c" class="option-btn btn-blue" onclick="checkAnswer('c')"></button>
+            <button id="option-a" class="option-btn" onclick="checkAnswer('a')"></button>
+            <button id="option-b" class="option-btn" onclick="checkAnswer('b')"></button>
+            <button id="option-c" class="option-btn" onclick="checkAnswer('c')"></button>
           </div>
           <div id="feedback" class="hidden"></div>
           <p id="score-display-game">Pontuação: 0</p>
-          <button id="next-btn" class="option-btn btn-yellow hidden" onclick="nextQuestion()">Próxima</button>
+          <button id="next-btn" class="option-btn" onclick="nextQuestion()">Próxima</button>
         </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL DE RANKING (separado, por jogo e nível, diário) -->
+  <dialog id="ranking-modal" aria-label="Ranking">
+    <div class="modal-header">
+      <button class="back-btn" onclick="closeRanking()">← Voltar</button>
+      <div class="modal-title" id="ranking-title">Ranking</div>
+      <span></span>
+    </div>
+    <div class="modal-body">
+      <div class="filter-bar">
+        <span id="rank-game-name" style="font-weight:800"></span>
+        <div style="flex:1"></div>
+        <button class="chip" data-level="facil" aria-pressed="true"  onclick="setRankingLevel('facil')">Fácil</button>
+        <button class="chip" data-level="medio" aria-pressed="false" onclick="setRankingLevel('medio')">Médio</button>
+        <button class="chip" data-level="dificil" aria-pressed="false" onclick="setRankingLevel('dificil')">Difícil</button>
+      </div>
+      <div class="rank-wrap">
+        <ul class="rank-list" id="rank-list"></ul>
+        <p class="rank-empty hidden" id="rank-empty">Nenhum recorde hoje! Seja o primeiro.</p>
+        <p style="margin-top:8px;opacity:.8"><small>Ranking diário — data: <span id="rank-date"></span></small></p>
       </div>
     </div>
   </dialog>
@@ -204,29 +252,76 @@
   </footer>
 
   <script>
-    // ---------- Modal e Fullscreen ----------
+    // ===== Modal & Fullscreen =====
     const modal = document.getElementById('game-modal');
     const modalTitle = document.getElementById('modal-title');
     const gameNameEl = document.getElementById('game-name');
 
     function openGame(key, autoFS=false){
       selectedGameKey = key;
-      selectedLevel = ''; // aguarda escolha
+      selectedLevel = ''; // escolher no menu
       modalTitle.textContent = gamesMeta[key].title;
       gameNameEl.textContent  = gamesMeta[key].title;
       resetGameState();
       if(!modal.open) modal.showModal();
 
-      // Preferir tela cheia quando pedido (cartão chama com autoFS=true)
-      if (autoFS) {
-        // Em alguns navegadores, fullscreen precisa de interação direta; se não entrar, o botão ⤢ está disponível
-        modal.requestFullscreen?.().catch(()=>{ /* silencioso */ });
-      }
+      // Tenta fullscreen; se não conseguir (permissão do navegador), botão ⤢ fica disponível
+      if (autoFS) modal.requestFullscreen?.().catch(()=>{});
+    }
+    function backFromGame(){
+      // Voltar: sai do fullscreen e fecha o modal do jogo
+      if (document.fullscreenElement) document.exitFullscreen?.();
+      closeGame();
     }
     function closeGame(){ if(modal.open) modal.close(); }
     function toggleFullscreen(){ if(!document.fullscreenElement){ modal.requestFullscreen?.(); } else { document.exitFullscreen?.(); } }
 
-    // ---------- Metadados de jogos ----------
+    // ===== Ranking Modal =====
+    const rmodal = document.getElementById('ranking-modal');
+    const rankTitle = document.getElementById('ranking-title');
+    const rankGameName = document.getElementById('rank-game-name');
+    const rankList = document.getElementById('rank-list');
+    const rankEmpty = document.getElementById('rank-empty');
+    const rankDate = document.getElementById('rank-date');
+    let rankingGameKey = null;
+    let rankingLevel = 'facil';
+
+    function openRanking(gameKey){
+      rankingGameKey = gameKey;
+      rankingLevel = 'facil';
+      rankTitle.textContent = 'Ranking de Hoje';
+      rankGameName.textContent = gamesMeta[gameKey].title;
+      // reset chips
+      document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+      document.querySelector('#ranking-modal .chip[data-level="facil"]').setAttribute('aria-pressed','true');
+      refreshRankingList();
+      if(!rmodal.open) rmodal.showModal();
+    }
+    function closeRanking(){ if(rmodal.open) rmodal.close(); }
+    function setRankingLevel(lvl){
+      rankingLevel = lvl;
+      document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+      document.querySelector(`#ranking-modal .chip[data-level="${lvl}"]`).setAttribute('aria-pressed','true');
+      refreshRankingList();
+    }
+    function refreshRankingList(){
+      rankList.innerHTML = '';
+      rankDate.textContent = todayKey();
+      const data = loadRankingFor(rankingGameKey, rankingLevel);
+      if (!data.length){
+        rankEmpty.classList.remove('hidden');
+        return;
+      }
+      rankEmpty.classList.add('hidden');
+      data.forEach((e,i)=>{
+        const li = document.createElement('li');
+        li.className = 'rank-item';
+        li.innerHTML = `<strong>${i+1}. ${e.name}</strong><span>${e.score} pts</span>`;
+        rankList.appendChild(li);
+      });
+    }
+
+    // ===== Metadados dos jogos =====
     const gamesMeta = {
       unidades:   { title: 'Unidades de Medida', color: '#58c39b' },
       fracoes:    { title: 'Frações: equivalência e comparação', color: '#7b93ff' },
@@ -236,7 +331,7 @@
       tempo:      { title: 'Medidas de Tempo', color: '#ff80ae' }
     };
 
-    // ---------- Banco de questões por jogo e nível ----------
+    // ===== Banco de questões (por nível) =====
     const gamesQuestions = {
       unidades: {
         facil: [
@@ -266,8 +361,8 @@
           { q:'Metade de uma pizza é…', a:'1/2', b:'1/3', c:'2/3', correct:'a' }
         ],
         medio: [
-          { q:'Ordene do menor para o maior: 1/2, 3/4, 2/3 (qual vem primeiro?)', a:'1/2', b:'2/3', c:'3/4', correct:'a' },
-          { q:'Frações equivalentes a 3/6:', a:'1/2', b:'2/3', c:'1/3', correct:'a' },
+          { q:'Qual vem primeiro (menor)? 1/2, 2/3, 3/4', a:'1/2', b:'2/3', c:'3/4', correct:'a' },
+          { q:'Equivalente a 3/6:', a:'1/2', b:'2/3', c:'1/3', correct:'a' },
           { q:'Qual é maior?', a:'5/10', b:'4/7', c:'3/8', correct:'b' },
           { q:'Complete: 2/3 = ?/9', a:'3', b:'6', c:'8', correct:'b' }
         ],
@@ -333,7 +428,7 @@
         ],
         dificil: [
           { q:'Retângulo 13×7, perímetro:', a:'36', b:'40', c:'46', correct:'c' },
-          { q:'Qual área é maior?', a:'8×8', b:'10×6', c:'12×5', correct:'a' }, /* 64 vs 60 vs 60 */
+          { q:'Qual área é maior?', a:'8×8', b:'10×6', c:'12×5', correct:'a' },
           { q:'Quadrado área 100, lado:', a:'8', b:'10', c:'12', correct:'b' },
           { q:'Retângulo 15×4, área:', a:'45', b:'54', c:'60', correct:'c' }
         ]
@@ -353,14 +448,14 @@
         ],
         dificil: [
           { q:'De 21:55 a 00:10:', a:'2h10', b:'2h15', c:'2h20', correct:'b' },
-          { q:'Tarefa 35 min + 50 min + 15 min:', a:'1h30', b:'1h40', c:'1h45', correct:'b' },
-          { q:'Saída 13:48, demora 1h12 → chegada:', a:'14:58', b:'15:00', c:'15:02', correct:'c' },
+          { q:'Tarefa 35 + 50 + 15 min:', a:'1h30', b:'1h40', c:'1h45', correct:'b' },
+          { q:'Saída 13:48 + 1h12 =', a:'14:58', b:'15:00', c:'15:02', correct:'c' },
           { q:'4h = ? min', a:'180', b:'220', c:'240', correct:'c' }
         ]
       }
     };
 
-    // ---------- Estado e lógica ----------
+    // ===== Estado & refs =====
     let selectedGameKey = null;
     let selectedLevel   = '';
     let questionIndex = 0, score = 0, answered = false, playerName = '';
@@ -376,60 +471,88 @@
     const optionC = document.getElementById('option-c');
     const feedbackEl = document.getElementById('feedback');
     const scoreDisplayGame = document.getElementById('score-display-game');
-    const rankingListOl = document.getElementById('ranking-ol');
 
-    const levelPoints = {
-      facil:   { correct: 3,  wrong: 1 },
-      medio:   { correct: 5,  wrong: 2 },
-      dificil: { correct: 10, wrong: 3 }
-    };
+    const levelPoints = { facil:{correct:3,wrong:1}, medio:{correct:5,wrong:2}, dificil:{correct:10,wrong:3} };
 
-    function resetGameState(){
-      questionIndex = 0; score = 0; answered = false; playerName = ''; selectedLevel = '';
-      playerInput.value = '';
-      startBtn.disabled = true;
-      // Desabilita níveis até digitar nome
-      document.getElementById('btn-facil').disabled = true;
-      document.getElementById('btn-medio').disabled = true;
-      document.getElementById('btn-dificil').disabled = true;
-      // Visibilidade
-      startScreen.classList.remove('hidden'); gameScreen.classList.add('hidden');
-      // Ranking diário por jogo/nível
-      displayRanking();
+    // ===== Áudio (sons) via Web Audio =====
+    let audioCtx;
+    function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }
+    function playTone(freq=440, ms=200, type='sine', gain=0.08){
+      ensureAudio();
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = type;
+      o.frequency.value = freq;
+      g.gain.value = gain;
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start();
+      setTimeout(()=>{ o.stop(); }, ms);
+    }
+    function playCorrect(){ // subidinha agradável
+      playTone(660,120,'sine',0.07);
+      setTimeout(()=>playTone(880,140,'sine',0.07),90);
+    }
+    function playWrong(){  // tom grave curto
+      playTone(240,180,'sawtooth',0.06);
+    }
+    function playEnd(){    // tríade rápida de finalização
+      playTone(523,120,'triangle',0.07);
+      setTimeout(()=>playTone(659,120,'triangle',0.07),110);
+      setTimeout(()=>playTone(784,160,'triangle',0.07),220);
     }
 
-    // Habilita níveis quando digitar nome
-    document.addEventListener('input', (e) => {
+    // ===== Helpers ranking =====
+    function todayKey(){ return new Date().toISOString().slice(0,10); } // AAAA-MM-DD
+    function rkKey(game,level){ return `ranking_${game}_${level}_${todayKey()}`; }
+    function loadRankingFor(game, level){
+      try{ return (JSON.parse(localStorage.getItem(rkKey(game,level)))||[]).sort((a,b)=>b.score-a.score); }catch{ return []; }
+    }
+    function saveRankingFor(game, level, arr){
+      try{ localStorage.setItem(rkKey(game,level), JSON.stringify(arr)); }catch{}
+    }
+    function addScoreToRanking(game, level, name, finalScore){
+      let ranking = loadRankingFor(game, level);
+      ranking.push({ name, score: finalScore });
+      ranking.sort((a,b)=>b.score-a.score);
+      ranking = ranking.slice(0,10);
+      saveRankingFor(game, level, ranking);
+    }
+
+    // ===== Fluxo do jogo =====
+    function resetGameState(){
+      questionIndex = 0; score = 0; answered = false; playerName = ''; selectedLevel = '';
+      playerInput.value = ''; startBtn.disabled = true;
+      ['btn-facil','btn-medio','btn-dificil'].forEach(id=>{
+        const el=document.getElementById(id); el.disabled = true; el.style.boxShadow='none';
+      });
+      startScreen.classList.remove('hidden'); gameScreen.classList.add('hidden');
+    }
+
+    // Habilita níveis ao digitar nome
+    document.addEventListener('input', (e)=>{
       if (e.target === playerInput){
         const ok = playerInput.value.trim().length > 0;
-        document.getElementById('btn-facil').disabled   = !ok;
-        document.getElementById('btn-medio').disabled   = !ok;
-        document.getElementById('btn-dificil').disabled = !ok;
+        ['btn-facil','btn-medio','btn-dificil'].forEach(id=>document.getElementById(id).disabled = !ok);
         startBtn.disabled = !ok || !selectedLevel;
       }
     });
 
     function selectLevel(lvl){
       selectedLevel = lvl;
-      // reforço visual: bordas por seleção
       ['btn-facil','btn-medio','btn-dificil'].forEach(id=>{
-        const el = document.getElementById(id);
-        el.style.outline = 'none';
-        el.style.boxShadow = 'none';
+        const el=document.getElementById(id); el.style.boxShadow='none';
       });
-      const map = {facil:'btn-facil', medio:'btn-medio', dificil:'btn-dificil'};
-      document.getElementById(map[lvl]).style.boxShadow = '0 0 0 3px rgba(0,0,0,.07), 0 0 0 4px #7b93ff';
-      // habilita começar
+      const map={facil:'btn-facil',medio:'btn-medio',dificil:'btn-dificil'};
+      document.getElementById(map[lvl]).style.boxShadow='0 0 0 3px rgba(0,0,0,.07), 0 0 0 4px #7b93ff';
       startBtn.disabled = !playerInput.value.trim().length;
-      displayRanking(); // ranking por nível
     }
 
     function startSelectedGame(){
       playerName = playerInput.value.trim();
-      if (!playerName){ alert('Digite seu nome para começar!'); return; }
-      if (!selectedLevel){ alert('Escolha um nível (Fácil / Médio / Difícil).'); return; }
+      if(!playerName){ alert('Digite seu nome para começar!'); return; }
+      if(!selectedLevel){ alert('Escolha um nível.'); return; }
       startScreen.classList.add('hidden'); gameScreen.classList.remove('hidden');
-      levelDisplay.textContent = `Nível: ${capitalize(selectedLevel)}`;
+      levelDisplay.textContent = `Nível: ${selectedLevel.charAt(0).toUpperCase()+selectedLevel.slice(1)}`;
       levelDisplay.style.color = gamesMeta[selectedGameKey].color;
       scoreDisplayGame.textContent = 'Pontuação: 0';
       showQuestion();
@@ -446,8 +569,10 @@
       optionA.textContent = `a) ${current.a}`;
       optionB.textContent = `b) ${current.b}`;
       optionC.textContent = `c) ${current.c}`;
+
       [optionA, optionB, optionC].forEach(btn=>{
-        btn.classList.remove('btn-green','btn-yellow','btn-red'); btn.classList.add('btn-blue');
+        btn.classList.remove('btn-green','btn-yellow','btn-red'); // volta ao neutro
+        btn.classList.add('option-btn'); // garantido
       });
     }
 
@@ -456,17 +581,20 @@
       const current = gamesQuestions[selectedGameKey][selectedLevel][questionIndex];
       const correct = current.correct;
       const pts = levelPoints[selectedLevel];
+
       if (answer === correct){
         score += pts.correct;
         feedbackEl.textContent = `Correto! (+${pts.correct})`;
         feedbackEl.style.color = 'green';
-        document.getElementById(`option-${answer}`).classList.replace('btn-blue','btn-green');
+        document.getElementById(`option-${answer}`).classList.add('btn-green');
+        playCorrect();
       } else {
         score -= pts.wrong;
-        feedbackEl.textContent = `Ops! Resposta correta: ${correct.toUpperCase()} (−${pts.wrong})`;
+        feedbackEl.textContent = `Ops! Correta: ${correct.toUpperCase()} (−${pts.wrong})`;
         feedbackEl.style.color = 'red';
-        document.getElementById(`option-${answer}`).classList.replace('btn-blue','btn-red');
-        document.getElementById(`option-${correct}`).classList.replace('btn-blue','btn-green');
+        document.getElementById(`option-${answer}`).classList.add('btn-red');
+        document.getElementById(`option-${correct}`).classList.add('btn-green');
+        playWrong();
       }
       scoreDisplayGame.textContent = `Pontuação: ${score}`;
       feedbackEl.classList.remove('hidden');
@@ -479,66 +607,20 @@
       if (questionIndex < arr.length){
         showQuestion();
       } else {
-        // fim
-        gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden');
-        addScoreToRanking(playerName, score);
-        alert(`Fim do jogo! Sua pontuação final é: ${score}.`);
-        resetNameAndLevels();
+        // fim do jogo
+        addScoreToRanking(selectedGameKey, selectedLevel, playerName, score);
+        playEnd();
+        setTimeout(()=>{
+          alert(`Fim do jogo! Sua pontuação final é: ${score}.`);
+          // volta para tela inicial do jogo
+          gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden');
+          // limpa nome/níveis para nova tentativa
+          resetGameState();
+        }, 100);
       }
     }
 
-    function resetNameAndLevels(){
-      playerInput.value = '';
-      document.getElementById('btn-facil').disabled   = true;
-      document.getElementById('btn-medio').disabled   = true;
-      document.getElementById('btn-dificil').disabled = true;
-      startBtn.disabled = true;
-      selectedLevel = '';
-      displayRanking();
-    }
-
-    // ---------- Ranking diário por jogo e nível ----------
-    function todayKey(){ return new Date().toISOString().slice(0,10); } // AAAA-MM-DD
-    function rankingKey(){ return `ranking_${selectedGameKey}_${selectedLevel}_${todayKey()}`; }
-
-    function loadRanking(){
-      try{ return (JSON.parse(localStorage.getItem(rankingKey())) || []).sort((a,b)=>b.score-a.score); }
-      catch{ return []; }
-    }
-    function saveRanking(r){ try{ localStorage.setItem(rankingKey(), JSON.stringify(r)); }catch{} }
-
-    function displayRanking(){
-      rankingListOl.innerHTML = '';
-      if (!selectedGameKey || !selectedLevel){
-        rankingListOl.innerHTML = '<li>Escolha um nível para ver o ranking de hoje.</li>';
-        return;
-      }
-      const ranking = loadRanking();
-      if (ranking.length === 0){
-        rankingListOl.innerHTML = '<li>Nenhum recorde hoje! Seja o primeiro.</li>';
-      } else {
-        ranking.forEach((e,i)=>{
-          const li = document.createElement('li');
-          li.innerHTML = `<span>${i+1}. ${e.name}</span><span>${e.score} pts</span>`;
-          rankingListOl.appendChild(li);
-        });
-      }
-    }
-
-    function addScoreToRanking(name, finalScore){
-      if (!selectedGameKey || !selectedLevel) return;
-      let ranking = loadRanking();
-      ranking.push({ name, score: finalScore });
-      ranking.sort((a,b)=>b.score-a.score);
-      ranking = ranking.slice(0,10);
-      saveRanking(ranking);
-      displayRanking();
-    }
-
-    // ---------- Util ----------
-    function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-    // ---------- Init ----------
+    // ===== Util =====
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
