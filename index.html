@@ -1,627 +1,643 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Profª Julia Maria — Jogos</title>
-  <meta name="description" content="Jogos pedagógicos da Profª Julia Maria para o 5º ano." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --pink-50:#ffeef5; --pink-100:#ffd9e8; --pink-300:#ff9fc2; --pink-400:#ff80ae; --pink-500:#ff5c96;
-      --mint-100:#def7f1; --slate-900:#161a23; --slate-700:#2b2f36; --slate-500:#475062; --white:#fff;
-      --shadow:0 10px 25px rgba(0,0,0,.08); --radius:18px; --space:clamp(14px,4vw,22px); --safe-top:env(safe-area-inset-top);
-    }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{
-      margin:0;padding:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background:linear-gradient(180deg,var(--pink-50),var(--mint-100)); color:var(--slate-700); -webkit-tap-highlight-color:transparent;
-    }
-    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Profª Julia Maria — Portal de Jogos</title>
+<meta name="description" content="Jogos pedagógicos — 5º ano — aprender se divertindo." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800;900&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink-50:#fff1f6; --pink-100:#ffd9e8; --pink-400:#ff80ae; --pink-500:#ff5c96;
+  --mint-100:#e9fff7; --slate-900:#141922; --slate-700:#273043; --slate-500:#61708d; --white:#fff;
+  --green:#3bbf8a; --yellow:#f1c232; --red:#ef6464; --blue:#5a8bff;
+  --radius:18px; --shadow:0 18px 40px rgba(20,25,34,.08); --space:clamp(14px,3vw,28px);
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{
+  margin:0; font-family:'Nunito',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:linear-gradient(180deg,var(--pink-50),#fff); color:var(--slate-700);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+body.immersive{overflow:hidden}
 
-    /* HEADER */
-    header{position:sticky;top:0;z-index:20;background:rgba(255,238,245,.9);backdrop-filter:blur(8px);border-bottom:1px solid #f7cfe0;padding-top:calc(var(--safe-top)/2)}
-    .wrap{max-width:1000px;margin:0 auto;padding:12px var(--space);display:grid;place-items:center}
-    .brand{display:grid;place-items:center;gap:6px;text-align:center}
-    .brand svg{width:clamp(200px,60vw,320px);height:auto;filter:drop-shadow(0 6px 14px rgba(255,92,150,.22))}
-    .brand-sub{margin:2px 0 0;font-size:clamp(.9rem,3.6vw,1.05rem);color:#7a3e53;opacity:.95;font-weight:700}
+/* ===== Topbar ===== */
+.topbar{
+  position:sticky; top:0; z-index:30; background:rgba(255,255,255,.9);
+  backdrop-filter:blur(8px); border-bottom:1px solid #ffe1ef;
+}
+.nav{
+  max-width:1200px; margin:0 auto; padding:10px var(--space);
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px;
+}
+.brand{display:flex; align-items:center; gap:12px}
+.brand img{height:52px; width:auto; border-radius:12px; box-shadow:0 6px 14px rgba(255,92,150,.18)}
+.t1{font-family:'Poppins',sans-serif; font-weight:900; color:var(--slate-900); font-size:clamp(1rem,2.2vw,1.4rem)}
+.t2{font-weight:800; font-size:clamp(.9rem,1.7vw,1.05rem); color:#7a3e53}
 
-    /* LISTA DE JOGOS */
-    .section{max-width:1000px;margin:0 auto;padding:var(--space);display:grid;gap:var(--space)}
-    .grid{display:grid;grid-template-columns:1fr;gap:12px}
-    @media (min-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
-    @media (min-width:1024px){.grid{grid-template-columns:repeat(3,1fr)}}
+.search{
+  justify-self:center; width:100%; max-width:680px;
+  display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:999px;
+  border:1px solid #ffe1ef; background:#fff;
+}
+.search input{border:none; outline:none; font-size:1rem; flex:1; min-width:120px}
+.select{
+  border:1px solid #ffe1ef; background:#fff; border-radius:999px; padding:10px 12px;
+  font-weight:800; color:#7a3e53;
+}
+.actions{display:flex; gap:10px}
 
-    .card{background:var(--white);border-radius:16px;border:1px solid #ffe2ef;box-shadow:var(--shadow);padding:16px;display:grid;gap:10px;min-height:170px}
-    .card h3{margin:0;font-size:clamp(1rem,4.4vw,1.15rem);color:var(--slate-900)}
-    .card p{margin:0;font-size:clamp(.95rem,3.8vw,1rem);color:var(--slate-500)}
-    .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{font-size:.75rem;padding:4px 10px;border-radius:999px;background:var(--pink-100);border:1px solid #ffd0e1;color:#7a3e53;font-weight:700}
-    .card-actions{display:flex;gap:8px;flex-wrap:wrap}
+/* ===== Hero ===== */
+.hero{
+  position:relative; overflow:hidden; background:linear-gradient(180deg,#ffe9f2,var(--mint-100));
+}
+.hero .wrap{
+  max-width:1200px; margin:0 auto; padding:38px var(--space) 12px; display:grid; gap:18px;
+  grid-template-columns:1.15fr .85fr; align-items:center;
+}
+@media (max-width:900px){ .hero .wrap{grid-template-columns:1fr} }
+.h-title{
+  margin:0; font-family:'Poppins',sans-serif; font-weight:900; color:var(--slate-900);
+  font-size:clamp(1.4rem,3.4vw,2.4rem); letter-spacing:.2px;
+}
+.h-sub{margin:6px 0 0; color:#7a3e53; font-weight:800; font-size:clamp(1rem,2vw,1.2rem)}
+.hero-illustration{
+  width:100%; aspect-ratio: 4/3; border-radius:22px; background:
+    radial-gradient(60% 80% at 30% 30%, #fff8fb 0 50%, transparent 51%),
+    radial-gradient(60% 80% at 70% 65%, #e7fff8 0 50%, transparent 51%),
+    linear-gradient(140deg,#ffd9e8 0%, #e3fff6 100%);
+  box-shadow:var(--shadow); border:1px solid #ffe1ef;
+}
+.wave{display:block;width:100%;height:auto}
 
-    .cta{display:inline-flex;align-items:center;gap:10px;border:none;padding:12px 16px;border-radius:999px;cursor:pointer;font-weight:800;font-size:1rem;min-height:44px}
-    .cta-play{background:linear-gradient(90deg,var(--pink-400),var(--pink-500));color:#fff;box-shadow:0 8px 20px rgba(255,92,150,.25)}
-    .cta-rank{background:#fff;color:var(--slate-700);border:1px solid #f6d3e2}
+/* ===== Jogos ===== */
+.section{max-width:1200px; margin:0 auto; padding:24px var(--space)}
+.sec-title h2{
+  margin:0; font-family:'Poppins',sans-serif; font-weight:900; color:var(--slate-900);
+  font-size:clamp(1.2rem,2.4vw,1.8rem)
+}
+.grid{
+  display:grid; gap:clamp(12px,2vw,20px); margin-top:14px;
+  grid-template-columns:repeat(1,minmax(0,1fr));
+}
+@media (min-width:760px){ .grid{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1060px){ .grid{grid-template-columns:repeat(3,1fr)} }
+@media (min-width:1360px){ .grid{grid-template-columns:repeat(4,1fr)} }
 
-    .cta:active{transform:translateY(1px)}
+.card{
+  background:#fff; border:1px solid #ffe1ef; border-radius:18px; box-shadow:var(--shadow);
+  display:grid; grid-template-rows:auto 1fr auto; overflow:hidden;
+}
+.thumb{display:grid; place-items:center; height:170px; border-bottom:1px solid #ffe1ef}
+.thumb span{font-size:48px}
+.card-body{padding:14px}
+.card h3{margin:0 0 6px; font-size:clamp(1.06rem,1.4vw,1.25rem); color:var(--slate-900); font-weight:900}
+.card p{margin:0; color:var(--slate-500); font-size:clamp(.95rem,1vw,1.05rem)}
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+.tag{font-size:.85rem; padding:6px 10px; border-radius:999px; background:#fff; border:1px solid #ffd3e4; color:#7a3e53; font-weight:800}
+.card-actions{display:flex; gap:10px; padding:12px; border-top:1px solid #ffe1ef; background:#fff}
+.btn{flex:1; border:none; border-radius:12px; padding:14px 16px; font-weight:900; cursor:pointer; min-height:52px}
+.btn-play{background:linear-gradient(90deg,var(--pink-400),var(--pink-500)); color:#fff}
+.btn-rank{background:#fff; border:1px solid #ffd3e4; color:var(--slate-700)}
 
-    /* MODALS */
-    dialog::backdrop{background:rgba(0,0,0,.35)}
-    dialog{width:min(900px,96vw);border:none;border-radius:18px;padding:0;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.25)}
-    @media (max-width:600px){
-      dialog{width:100vw;height:100dvh;border-radius:0}
-      .modal-body{height:calc(100dvh - 56px);overflow:auto;-webkit-overflow-scrolling:touch}
-    }
-    .modal-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--pink-100);border-bottom:1px solid #ffd0e1}
-    .modal-title{font-weight:800;font-size:1rem}
-    .icon-btn, .back-btn{background:transparent;border:1px solid #ffd0e1;border-radius:10px;cursor:pointer;font-size:.95rem;padding:8px 10px;min-height:40px}
-    .modal-body{padding:0;background:#f7fbfd}
+/* ===== Modais ===== */
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog{border:none; border-radius:20px; padding:0; overflow:hidden; box-shadow:0 40px 110px rgba(0,0,0,.25); width:min(1100px,96vw)}
+.modal-header{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; background:var(--pink-100); border-bottom:1px solid #ffd3e4}
+.modal-title{font-weight:900; color:var(--slate-900)}
+.icon-btn{background:#fff; border:1px solid #ffd3e4; border-radius:10px; padding:8px 12px; cursor:pointer; font-weight:900}
+.modal-body{background:#f8fbff; padding:0}
 
-    /* JOGO */
-    .container{background:#fff;padding:16px;border-radius:12px;box-shadow:0 6px 12px rgba(0,0,0,.06);text-align:center;max-width:760px;width:100%;display:flex;flex-direction:column;gap:10px;margin:0;border:1px solid #eef2f5}
-    .screen{display:flex;flex-direction:column;align-items:center;width:100%;gap:10px}
-    .options{display:flex;flex-direction:column;gap:10px;width:100%}
+/* ===== Modal “imersivo” ===== */
+dialog.fullscreen{
+  width:100vw; height:100dvh; max-width:none; border-radius:0;
+}
+@media (min-width:1024px){
+  dialog.fullscreen .container{max-width:920px}
+}
 
-    /* Botões do jogo — menos destaque nos comuns */
-    .option-btn{color:#1f2a3a;background:#e9eefb;padding:14px;border:none;border-radius:12px;cursor:pointer;font-size:clamp(1rem,4.5vw,1.05rem);font-weight:700;min-height:48px}
-    .option-btn:active{transform:scale(.99)}
-    /* Destaque forte só no Começar */
-    .btn-start{background:linear-gradient(90deg,var(--pink-400),var(--pink-500));color:#fff;box-shadow:0 10px 24px rgba(255,92,150,.3);font-weight:800}
+/* ===== Jogo ===== */
+.container{
+  background:#fff; border:1px solid #eef2f5; border-radius:14px; box-shadow:0 6px 12px rgba(0,0,0,.06);
+  padding:clamp(16px,2vw,26px); margin:14px; display:flex; flex-direction:column; gap:12px; text-align:center;
+}
+.screen{display:flex; flex-direction:column; align-items:center; gap:12px}
+.options{display:flex; flex-direction:column; gap:12px; width:min(760px,100%)}
 
-    .btn-green{background-color:#58c39b;color:#fff}
-    .btn-yellow{background-color:#f6c34f;color:#fff}
-    .btn-red{background-color:#f05f5f;color:#fff}
-    .btn-blue{background-color:#7b93ff;color:#fff}
+.option-btn{
+  background:#eef2ff; color:#1f2a3a; border:none; border-radius:12px;
+  padding:16px; font-weight:900; cursor:pointer; font-size:clamp(1rem,1.2vw,1.2rem); min-height:56px;
+  transition:transform .05s ease;
+}
+.option-btn:active{transform:scale(.99)}
+.btn-start{background:linear-gradient(90deg,var(--pink-400),var(--pink-500)); color:#fff; box-shadow:0 10px 24px rgba(255,92,150,.25)}
+/* cores dos níveis */
+.btn-level-f{background:var(--green); color:#fff}
+.btn-level-m{background:var(--yellow); color:#fff}
+.btn-level-d{background:var(--red); color:#fff}
 
-    #player-input{width:100%;max-width:360px;padding:12px 14px;border-radius:12px;border:1px solid #e6e6e6;font-size:1rem;text-align:center;background:#fff}
-    #feedback{margin-top:4px;font-size:clamp(1rem,4.5vw,1.05rem);font-weight:800}
-    #score-display-game{font-size:clamp(1.05rem,5vw,1.2rem);color:var(--slate-900);margin-top:4px;font-weight:800}
-    .hidden{display:none}
+.btn-green{background-color:var(--green); color:#fff}
+.btn-red{background-color:var(--red); color:#fff}
 
-    /* RANKING MODAL */
-    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;background:#fff;border-bottom:1px solid #f1e2ea}
-    .chip{padding:8px 12px;border-radius:999px;background:#ffe9f2;border:1px solid #ffd0e1;font-weight:700;color:#7a3e53;cursor:pointer}
-    .chip[aria-pressed="true"]{background:var(--pink-400);color:#fff;border-color:var(--pink-500)}
-    .rank-wrap{padding:14px}
-    .rank-empty{opacity:.8}
-    .rank-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-    .rank-item{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #f1e2ea;border-radius:12px;padding:10px 12px}
-    .rank-item strong{font-weight:800;color:#2b2f36}
+#player-input{width:min(420px,100%); padding:14px 16px; border:1px solid #e6e6e6; border-radius:12px; text-align:center; font-size:1.05rem}
+#level-display{font-weight:900}
+.hidden{display:none}
 
-    /* FOOTER */
-    footer{margin-top:10px;background:#fff;border-top:1px solid #ffe2ef}
-    .foot{max-width:1000px;margin:0 auto;padding:14px var(--space);text-align:center;color:var(--slate-500);font-size:.95rem}
-    .foot small{display:block;margin-top:4px;color:#7a3e53}
-  </style>
+/* ===== Ranking modal ===== */
+.filter-bar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:10px 12px; background:#fff; border-bottom:1px solid #f1e2ea}
+.chip{padding:10px 14px; border-radius:999px; background:#ffe9f2; border:1px solid #ffd0e1; font-weight:900; color:#7a3e53; cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--pink-400); color:#fff; border-color:var(--pink-500)}
+.rank-wrap{padding:14px}
+.rank-list{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+.rank-item{display:flex; justify-content:space-between; align-items:center; background:#fff; border:1px solid #f1e2ea; border-radius:12px; padding:12px 14px}
+
+/* ===== Footer ===== */
+footer{background:#fff; border-top:1px solid #ffe1ef; margin-top:20px}
+.foot{max-width:1200px; margin:0 auto; padding:18px var(--space); text-align:center; color:var(--slate-500)}
+.foot small{display:block; color:#7a3e53}
+</style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="wrap">
-      <div class="brand" aria-label="Professora Julia Maria">
-        <svg viewBox="0 0 520 120" role="img" aria-label="Logo Profª Julia Maria">
-          <defs>
-            <linearGradient id="lg-shield" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#ff80ae"/><stop offset="100%" stop-color="#ff5c96"/>
-            </linearGradient>
-          </defs>
-          <path d="M30 18h90a8 8 0 0 1 8 8v44c0 33-31 48-53 56-22-8-53-23-53-56V26a8 8 0 0 1 8-8z" fill="url(#lg-shield)"/>
-          <text x="75" y="68" text-anchor="middle" font-size="40" font-family="Poppins, sans-serif" font-weight="800" fill="#fff">JM</text>
-          <text x="140" y="60" font-size="32" font-family="Poppins, sans-serif" font-weight="800" fill="#2b2f36">Profª Julia Maria</text>
-        </svg>
-        <p class="brand-sub">Jogos pedagógicos para aprender se divertindo</p>
+
+<!-- ===== Topbar ===== -->
+<div class="topbar">
+  <div class="nav">
+    <div class="brand">
+      <!-- troque o arquivo logo.png pelo seu logo -->
+      <img src="logo.png" alt="Logo Profª Julia Maria" />
+      <div>
+        <div class="t1">Profª Julia Maria</div>
+        <div class="t2">Jogos pedagógicos para aprender se divertindo</div>
       </div>
     </div>
-  </header>
 
-  <!-- LISTA DE JOGOS -->
-  <main class="section">
-    <div class="grid" id="games-list">
-      <article class="card">
-        <h3>Unidades de Medida</h3>
-        <p>Grandezas, conversões e instrumentos.</p>
-        <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <div class="card-actions">
-          <button class="cta cta-play" onclick="openGame('unidades', true)">Jogar</button>
-          <button class="cta cta-rank" onclick="openRanking('unidades')">Ranking</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>Frações: equivalência e comparação</h3>
-        <p>Comparar, ordenar e reconhecer equivalências.</p>
-        <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <div class="card-actions">
-          <button class="cta cta-play" onclick="openGame('fracoes', true)">Jogar</button>
-          <button class="cta cta-rank" onclick="openRanking('fracoes')">Ranking</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>Operações com Números Naturais</h3>
-        <p>Adição, subtração, multiplicação e divisão.</p>
-        <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <div class="card-actions">
-          <button class="cta cta-play" onclick="openGame('naturais', true)">Jogar</button>
-          <button class="cta cta-rank" onclick="openRanking('naturais')">Ranking</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>Valor Posicional e Arredondamento</h3>
-        <p>Leitura, comparação e arredondamento.</p>
-        <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <div class="card-actions">
-          <button class="cta cta-play" onclick="openGame('posicional', true)">Jogar</button>
-          <button class="cta cta-rank" onclick="openRanking('posicional')">Ranking</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>Perímetro e Área</h3>
-        <p>Retângulos, quadrados e desafios.</p>
-        <div class="tags"><span class="tag">5º ano</span><span class="tag">Geometria</span></div>
-        <div class="card-actions">
-          <button class="cta cta-play" onclick="openGame('area_perimetro', true)">Jogar</button>
-          <button class="cta cta-rank" onclick="openRanking('area_perimetro')">Ranking</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>Medidas de Tempo</h3>
-        <p>Leitura de horas e tempo decorrido.</p>
-        <div class="tags"><span class="tag">5º ano</span><span class="tag">Matemática</span></div>
-        <div class="card-actions">
-          <button class="cta cta-play" onclick="openGame('tempo', true)">Jogar</button>
-          <button class="cta cta-rank" onclick="openRanking('tempo')">Ranking</button>
-        </div>
-      </article>
+    <div class="search" role="search">
+      🔎
+      <input id="q" type="search" placeholder="Buscar jogo..." oninput="applyFilters()" />
+      <select id="filter-subj" class="select" onchange="applyFilters()">
+        <option value="">Matéria</option>
+        <option>Matemática</option>
+        <option>Ciências da Natureza</option>
+        <option>Ciências Humanas</option>
+        <option>Língua Portuguesa</option>
+      </select>
+      <select id="filter-year" class="select" onchange="applyFilters()">
+        <option value="">Ano</option>
+        <option>5º ano</option>
+      </select>
     </div>
-  </main>
 
-  <!-- MODAL DO JOGO -->
-  <dialog id="game-modal" aria-label="Jogo">
-    <div class="modal-header">
-      <button class="back-btn" onclick="backFromGame()">← Voltar</button>
-      <div class="modal-title" id="modal-title">Jogo</div>
-      <button class="icon-btn" onclick="toggleFullscreen()" title="Tela cheia" aria-label="Tela cheia">⤢</button>
+    <div class="actions"><!-- removido “Ver jogos” --></div>
+  </div>
+</div>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1 class="h-title">Aprender brincando: jogos curtos, objetivos e divertidos</h1>
+      <p class="h-sub">Conteúdos do 5º ano — Matemática e Geometria — com níveis Fácil, Médio e Difícil.</p>
     </div>
-    <div class="modal-body">
-      <div class="container">
-        <!-- INÍCIO -->
-        <div id="start-screen" class="screen">
-          <h2 id="game-name" style="margin:2px 0 2px;color:#7a3e53;font-size:clamp(1.1rem,5vw,1.4rem)">Jogo</h2>
-          <p style="margin:0 0 4px">Digite seu nome e escolha um nível:</p>
-          <input type="text" id="player-input" placeholder="Seu nome" inputmode="text" autocomplete="name" />
-          <div class="options" role="group" aria-label="Níveis">
-            <button class="option-btn" id="btn-facil"   onclick="selectLevel('facil')"   disabled>Fácil (+3/−1)</button>
-            <button class="option-btn" id="btn-medio"   onclick="selectLevel('medio')"   disabled>Médio (+5/−2)</button>
-            <button class="option-btn" id="btn-dificil" onclick="selectLevel('dificil')" disabled>Difícil (+10/−3)</button>
-          </div>
-          <button id="start-btn" class="option-btn btn-start" onclick="startSelectedGame()" disabled>Começar</button>
-        </div>
+    <div class="hero-illustration" aria-hidden="true"></div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#ffffff" d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,85.3C840,96,960,96,1080,85.3C1200,75,1320,53,1380,42.7L1440,32L1440,0L0,0Z"></path>
+  </svg>
+</section>
 
-        <!-- QUIZ -->
-        <div id="game-screen" class="screen hidden">
-          <p id="level-display" style="font-weight:800;"></p>
-          <hr style="width:100%;border-color:#eee;margin:0" />
-          <div id="question-box"><p id="question-text" style="font-size:clamp(1.05rem,4.8vw,1.2rem)"></p></div>
-          <div id="options-container" class="options">
-            <button id="option-a" class="option-btn" onclick="checkAnswer('a')"></button>
-            <button id="option-b" class="option-btn" onclick="checkAnswer('b')"></button>
-            <button id="option-c" class="option-btn" onclick="checkAnswer('c')"></button>
-          </div>
-          <div id="feedback" class="hidden"></div>
-          <p id="score-display-game">Pontuação: 0</p>
-          <button id="next-btn" class="option-btn" onclick="nextQuestion()">Próxima</button>
+<!-- ===== Seção de Jogos ===== -->
+<section class="section" id="games">
+  <div class="sec-title"><h2>Jogos em destaque</h2></div>
+  <div class="grid" id="games-grid"></div>
+</section>
+
+<!-- ===== Modal do Jogo (imersivo) ===== -->
+<dialog id="game-modal" aria-label="Jogo" class="fullscreen">
+  <div class="modal-header">
+    <button class="icon-btn" onclick="backFromGame()">← Voltar</button>
+    <div class="modal-title" id="modal-title">Jogo</div>
+    <button class="icon-btn" onclick="toggleFullscreen()" title="Tela cheia">⤢</button>
+  </div>
+  <div class="modal-body">
+    <div class="container" id="game-container">
+      <!-- Start -->
+      <div id="start-screen" class="screen">
+        <h3 id="game-name" style="margin:0;color:#7a3e53;font-weight:900">Jogo</h3>
+        <p style="margin:0">Digite seu nome e escolha um nível:</p>
+        <input type="text" id="player-input" placeholder="Seu nome" autocomplete="name" />
+        <div class="options" role="group" aria-label="Níveis">
+          <button class="option-btn btn-level-f" id="btn-facil"   onclick="selectLevel('facil')"   disabled>Fácil (+3/−1)</button>
+          <button class="option-btn btn-level-m" id="btn-medio"   onclick="selectLevel('medio')"   disabled>Médio (+5/−2)</button>
+          <button class="option-btn btn-level-d" id="btn-dificil" onclick="selectLevel('dificil')" disabled>Difícil (+10/−3)</button>
         </div>
+        <button id="start-btn" class="option-btn btn-start" onclick="startSelectedGame()" disabled>Começar</button>
+      </div>
+
+      <!-- Quiz -->
+      <div id="game-screen" class="screen hidden">
+        <p id="level-display" style="font-weight:900;"></p>
+        <div id="question-box"><p id="question-text" style="font-size:1.12rem"></p></div>
+        <div id="options-container" class="options">
+          <button id="option-a" class="option-btn" onclick="checkAnswer('a')"></button>
+          <button id="option-b" class="option-btn" onclick="checkAnswer('b')"></button>
+          <button id="option-c" class="option-btn" onclick="checkAnswer('c')"></button>
+        </div>
+        <div id="feedback" class="hidden"></div>
+        <p id="score-display-game">Pontuação: 0</p>
+        <button id="next-btn" class="option-btn" onclick="nextQuestion()">Próxima</button>
       </div>
     </div>
-  </dialog>
+  </div>
+</dialog>
 
-  <!-- MODAL DE RANKING (separado, por jogo e nível, diário) -->
-  <dialog id="ranking-modal" aria-label="Ranking">
-    <div class="modal-header">
-      <button class="back-btn" onclick="closeRanking()">← Voltar</button>
-      <div class="modal-title" id="ranking-title">Ranking</div>
-      <span></span>
+<!-- ===== Modal de Ranking ===== -->
+<dialog id="ranking-modal" aria-label="Ranking">
+  <div class="modal-header">
+    <button class="icon-btn" onclick="closeRanking()">← Voltar</button>
+    <div class="modal-title" id="ranking-title">Ranking</div>
+    <span></span>
+  </div>
+  <div class="modal-body">
+    <div class="filter-bar">
+      <span id="rank-game-name" style="font-weight:900"></span>
+      <div style="flex:1"></div>
+      <button class="chip" data-level="facil"  aria-pressed="true" onclick="setRankingLevel('facil')">Fácil</button>
+      <button class="chip" data-level="medio"  aria-pressed="false" onclick="setRankingLevel('medio')">Médio</button>
+      <button class="chip" data-level="dificil" aria-pressed="false" onclick="setRankingLevel('dificil')">Difícil</button>
     </div>
-    <div class="modal-body">
-      <div class="filter-bar">
-        <span id="rank-game-name" style="font-weight:800"></span>
-        <div style="flex:1"></div>
-        <button class="chip" data-level="facil" aria-pressed="true"  onclick="setRankingLevel('facil')">Fácil</button>
-        <button class="chip" data-level="medio" aria-pressed="false" onclick="setRankingLevel('medio')">Médio</button>
-        <button class="chip" data-level="dificil" aria-pressed="false" onclick="setRankingLevel('dificil')">Difícil</button>
+    <div class="rank-wrap">
+      <ul class="rank-list" id="rank-list"></ul>
+      <p class="rank-empty hidden" id="rank-empty">Nenhum recorde hoje! Seja o primeiro.</p>
+      <p style="margin-top:8px;opacity:.8"><small>Ranking diário — <span id="rank-date"></span></small></p>
+    </div>
+  </div>
+</dialog>
+
+<footer>
+  <div class="foot">
+    © <span id="year"></span> Profª Julia Maria — Repositório de Jogos
+    <small>Desenvolvido por José Marmo e Julia Maria.</small>
+  </div>
+</footer>
+
+<script>
+/* ========== GRID: cards ========== */
+const gamesMeta = [
+  { key:'unidades', title:'Unidades de Medida', desc:'Grandezas, conversões e instrumentos.',
+    emoji:'📏', subj:'Matemática', year:'5º ano', color:'#3bbf8a' },
+  { key:'fracoes', title:'Frações: equivalência e comparação', desc:'Comparar, ordenar e reconhecer equivalências.',
+    emoji:'🍕', subj:'Matemática', year:'5º ano', color:'#5a8bff' },
+  { key:'naturais', title:'Operações com Números Naturais', desc:'Adição, subtração, multiplicação e divisão.',
+    emoji:'➕', subj:'Matemática', year:'5º ano', color:'#f1c232' },
+  { key:'posicional', title:'Valor Posicional e Arredondamento', desc:'Leitura, comparação e arredondamento.',
+    emoji:'🔢', subj:'Matemática', year:'5º ano', color:'#ef6464' },
+  { key:'area_perimetro', title:'Perímetro e Área', desc:'Retângulos, quadrados e desafios.',
+    emoji:'📐', subj:'Matemática', year:'5º ano', color:'#9c7bff' },
+  { key:'tempo', title:'Medidas de Tempo', desc:'Leitura de horas e tempo decorrido.',
+    emoji:'⏰', subj:'Matemática', year:'5º ano', color:'#ff80ae' },
+];
+function renderCards(){
+  const grid=document.getElementById('games-grid'); grid.innerHTML='';
+  gamesMeta.forEach(g=>{
+    const el=document.createElement('article'); el.className='card';
+    el.dataset.subj=g.subj; el.dataset.year=g.year;
+    el.dataset.search=(g.title+' '+g.desc+' '+g.subj+' '+g.year).toLowerCase();
+    el.innerHTML=`
+      <div class="thumb"><span>${g.emoji}</span></div>
+      <div class="card-body">
+        <h3>${g.title}</h3>
+        <p>${g.desc}</p>
+        <div class="tags">
+          <span class="tag">${g.year}</span>
+          <span class="tag">${g.subj}</span>
+        </div>
       </div>
-      <div class="rank-wrap">
-        <ul class="rank-list" id="rank-list"></ul>
-        <p class="rank-empty hidden" id="rank-empty">Nenhum recorde hoje! Seja o primeiro.</p>
-        <p style="margin-top:8px;opacity:.8"><small>Ranking diário — data: <span id="rank-date"></span></small></p>
-      </div>
-    </div>
-  </dialog>
+      <div class="card-actions">
+        <button class="btn btn-play" onclick="openGame('${g.key}', true)">Jogar</button>
+        <button class="btn btn-rank" onclick="openRanking('${g.key}')">Ranking</button>
+      </div>`;
+    grid.appendChild(el);
+  });
+}
 
-  <footer>
-    <div class="foot">
-      © <span id="year"></span> Profª Julia Maria — Repositório de Jogos
-      <small>Jogos pensados para o 5º ano com foco em resolução de problemas e letramento matemático.</small>
-    </div>
-  </footer>
+/* ========== Filtros ========== */
+function applyFilters(){
+  const q=document.getElementById('q').value.toLowerCase().trim();
+  const subj=document.getElementById('filter-subj').value;
+  const year=document.getElementById('filter-year').value;
+  document.querySelectorAll('.card').forEach(card=>{
+    const text=card.dataset.search;
+    const okQ=!q || text.includes(q);
+    const okS=!subj || card.dataset.subj===subj;
+    const okY=!year || card.dataset.year===year;
+    card.style.display=(okQ&&okS&&okY)?'':'none';
+  });
+}
 
-  <script>
-    // ===== Modal & Fullscreen =====
-    const modal = document.getElementById('game-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const gameNameEl = document.getElementById('game-name');
+/* ========== Banco de questões (mesmos conteúdos) ========== */
+const gamesQuestions = {
+  unidades: {
+    facil: [
+      { q:'O que mede melhor a altura de uma pessoa?', a:'Metros', b:'Litros', c:'Quilos', correct:'a' },
+      { q:'1 L = ?', a:'100 mL', b:'1.000 mL', c:'10.000 mL', correct:'b' },
+      { q:'Régua de 30 cm tem…', a:'30 mm', b:'300 mm', c:'3.000 mm', correct:'b' },
+      { q:'Temperatura do corpo em…', a:'Graus Celsius', b:'Quilômetros', c:'Litros', correct:'a' }
+    ],
+    medio: [
+      { q:'Uma jarra tem 1,5 L. Quantos copos de 250 mL cabem?', a:'4', b:'5', c:'6', correct:'c' },
+      { q:'2 km equivalem a…', a:'200 m', b:'2.000 m', c:'20.000 m', correct:'b' },
+      { q:'500 g + 500 g =', a:'1 kg', b:'900 g', c:'1.100 g', correct:'a' },
+      { q:'0,75 L é igual a…', a:'750 mL', b:'75 mL', c:'7.500 mL', correct:'a' }
+    ],
+    dificil: [
+      { q:'Carro a 60 km/h por 10 min percorre…', a:'100 m', b:'1.000 m', c:'10.000 m', correct:'c' },
+      { q:'3,2 kg = ? g', a:'320 g', b:'3.200 g', c:'32.000 g', correct:'b' },
+      { q:'2,5 m = ? cm', a:'25 cm', b:'250 cm', c:'2.500 cm', correct:'b' },
+      { q:'Mistura 800 mL + 0,35 L =', a:'1,05 L', b:'1,10 L', c:'1,15 L', correct:'c' }
+    ]
+  },
+  fracoes: {
+    facil: [
+      { q:'Qual é maior?', a:'1/2', b:'1/3', c:'1/4', correct:'a' },
+      { q:'2/4 é equivalente a…', a:'1/2', b:'1/3', c:'3/4', correct:'a' },
+      { q:'Qual é menor?', a:'3/6', b:'2/5', c:'4/8', correct:'b' },
+      { q:'Metade de uma pizza é…', a:'1/2', b:'1/3', c:'2/3', correct:'a' }
+    ],
+    medio: [
+      { q:'Qual vem primeiro (menor)? 1/2, 2/3, 3/4', a:'1/2', b:'2/3', c:'3/4', correct:'a' },
+      { q:'Equivalente a 3/6:', a:'1/2', b:'2/3', c:'1/3', correct:'a' },
+      { q:'Qual é maior?', a:'5/10', b:'4/7', c:'3/8', correct:'b' },
+      { q:'Complete: 2/3 = ?/9', a:'3', b:'6', c:'8', correct:'b' }
+    ],
+    dificil: [
+      { q:'Qual é maior? 7/12 ou 2/3', a:'7/12', b:'2/3', c:'iguais', correct:'b' },
+      { q:'1/4 + 2/4 =', a:'2/8', b:'3/4', c:'1/2', correct:'b' },
+      { q:'3/5 − 1/10 =', a:'1/2', b:'5/10', c:'1/10', correct:'a' },
+      { q:'Equivalente a 9/12', a:'3/4', b:'2/3', c:'1/4', correct:'a' }
+    ]
+  },
+  naturais: {
+    facil: [
+      { q:'7 × 6 =', a:'42', b:'36', c:'48', correct:'a' },
+      { q:'45 + 27 =', a:'62', b:'70', c:'72', correct:'c' },
+      { q:'90 − 25 =', a:'75', b:'65', c:'70', correct:'b' },
+      { q:'56 ÷ 7 =', a:'9', b:'8', c:'7', correct:'b' }
+    ],
+    medio: [
+      { q:'12 × 8 =', a:'96', b:'84', c:'108', correct:'a' },
+      { q:'125 + 298 =', a:'413', b:'423', c:'4230', correct:'b' },
+      { q:'420 − 185 =', a:'225', b:'235', c:'240', correct:'a' },
+      { q:'96 ÷ 12 =', a:'6', b:'7', c:'8', correct:'c' }
+    ],
+    dificil: [
+      { q:'(37 + 28) × 2 =', a:'120', b:'130', c:'140', correct:'c' },
+      { q:'720 ÷ 9 =', a:'70', b:'80', c:'90', correct:'b' },
+      { q:'15 × 14 =', a:'190', b:'210', c:'225', correct:'b' },
+      { q:'600 − (125 + 148) =', a:'327', b:'335', c:'343', correct:'a' }
+    ]
+  },
+  posicional: {
+    facil: [
+      { q:'No número 3.486, o 4 vale…', a:'4 centenas', b:'4 dezenas', c:'4 unidades', correct:'a' },
+      { q:'Maior número:', a:'4.905', b:'4.095', c:'4.590', correct:'a' },
+      { q:'Arredonde 3.486 para a dezena:', a:'3.480', b:'3.490', c:'3.500', correct:'b' },
+      { q:'O 8 em 18.253:', a:'8 dezenas', b:'8 centenas', c:'8 milhar', correct:'c' }
+    ],
+    medio: [
+      { q:'Arredonde 4.749 para a centena:', a:'4.700', b:'4.800', c:'4.750', correct:'b' },
+      { q:'Qual é menor?', a:'5.032', b:'5.203', c:'5.230', correct:'a' },
+      { q:'Valor do 6 em 6.540:', a:'6 milhar', b:'6 centena', c:'6 dezena', correct:'a' },
+      { q:'Complete: 3.5__ ~ 3.500 (centena mais próxima)', a:'3.400', b:'3.500', c:'3.600', correct:'b' }
+    ],
+    dificil: [
+      { q:'Compare: 12.098 __ 12.89 (use < ou >)', a:'<', b:'>', c:'=', correct:'a' },
+      { q:'Arredonde 9.951 para o milhar:', a:'9.000', b:'10.000', c:'9.900', correct:'b' },
+      { q:'Número entre 7.209 e 7.219:', a:'7.218', b:'7.229', c:'7.119', correct:'a' },
+      { q:'Maior: 30.050 ou 29.950?', a:'30.050', b:'iguais', c:'29.950', correct:'a' }
+    ]
+  },
+  area_perimetro: {
+    facil: [
+      { q:'Área do retângulo 6×4:', a:'24 cm²', b:'20 cm²', c:'10 cm²', correct:'a' },
+      { q:'Perímetro do quadrado lado 5:', a:'20', b:'25', c:'15', correct:'a' },
+      { q:'Qual tem maior área?', a:'5×5', b:'4×7', c:'6×4', correct:'b' },
+      { q:'Retângulo 8×3 perímetro:', a:'22', b:'24', c:'26', correct:'c' }
+    ],
+    medio: [
+      { q:'Quadrado área 49 cm², lado:', a:'6', b:'7', c:'8', correct:'b' },
+      { q:'Retângulo 9×5, área:', a:'45', b:'40', c:'52', correct:'a' },
+      { q:'Quadrado lado 12, perímetro:', a:'36', b:'44', c:'48', correct:'c' },
+      { q:'Retângulo 10×2, perímetro:', a:'20', b:'24', c:'28', correct:'b' }
+    ],
+    dificil: [
+      { q:'Retângulo 13×7, perímetro:', a:'36', b:'40', c:'46', correct:'c' },
+      { q:'Qual área é maior?', a:'8×8', b:'10×6', c:'12×5', correct:'a' },
+      { q:'Quadrado área 100, lado:', a:'8', b:'10', c:'12', correct:'b' },
+      { q:'Retângulo 15×4, área:', a:'45', b:'54', c:'60', correct:'c' }
+    ]
+  },
+  tempo: {
+    facil: [
+      { q:'De 14:15 a 15:05:', a:'40 min', b:'50 min', c:'55 min', correct:'b' },
+      { q:'Faltam 25 min para 12:00 →', a:'11:25', b:'11:35', c:'11:45', correct:'c' },
+      { q:'Das 09:20 às 10:00:', a:'30 min', b:'40 min', c:'50 min', correct:'b' },
+      { q:'1h =', a:'60 min', b:'100 min', c:'120 min', correct:'a' }
+    ],
+    medio: [
+      { q:'Filme 18:30 + 1h45 =', a:'20:05', b:'20:10', c:'20:15', correct:'a' },
+      { q:'Recreio 10:10 a 10:30:', a:'15 min', b:'20 min', c:'25 min', correct:'b' },
+      { q:'3h 20min =', a:'180 min', b:'200 min', c:'220 min', correct:'c' },
+      { q:'Aula 07:40 → 50 min →', a:'08:20', b:'08:25', c:'08:30', correct:'b' }
+    ],
+    dificil: [
+      { q:'De 21:55 a 00:10:', a:'2h10', b:'2h15', c:'2h20', correct:'b' },
+      { q:'Tarefa 35 + 50 + 15 min:', a:'1h30', b:'1h40', c:'1h45', correct:'b' },
+      { q:'Saída 13:48 + 1h12 =', a:'14:58', b:'15:00', c:'15:02', correct:'c' },
+      { q:'4h = ? min', a:'180', b:'220', c:'240', correct:'c' }
+    ]
+  }
+};
 
-    function openGame(key, autoFS=false){
-      selectedGameKey = key;
-      selectedLevel = ''; // escolher no menu
-      modalTitle.textContent = gamesMeta[key].title;
-      gameNameEl.textContent  = gamesMeta[key].title;
-      resetGameState();
-      if(!modal.open) modal.showModal();
+/* ========== Estado do jogo e refs ========== */
+let selectedGameKey=null, selectedLevel='', questionIndex=0, score=0, answered=false, playerName='';
+const modal=document.getElementById('game-modal');
+const modalTitle=document.getElementById('modal-title');
+const gameNameEl=document.getElementById('game-name');
+const playerInput=document.getElementById('player-input');
+const startBtn=document.getElementById('start-btn');
+const startScreen=document.getElementById('start-screen');
+const gameScreen=document.getElementById('game-screen');
+const levelDisplay=document.getElementById('level-display');
+const questionText=document.getElementById('question-text');
+const optionA=document.getElementById('option-a');
+const optionB=document.getElementById('option-b');
+const optionC=document.getElementById('option-c');
+const feedbackEl=document.getElementById('feedback');
+const scoreDisplayGame=document.getElementById('score-display-game');
 
-      // Tenta fullscreen; se não conseguir (permissão do navegador), botão ⤢ fica disponível
-      if (autoFS) modal.requestFullscreen?.().catch(()=>{});
-    }
-    function backFromGame(){
-      // Voltar: sai do fullscreen e fecha o modal do jogo
-      if (document.fullscreenElement) document.exitFullscreen?.();
-      closeGame();
-    }
-    function closeGame(){ if(modal.open) modal.close(); }
-    function toggleFullscreen(){ if(!document.fullscreenElement){ modal.requestFullscreen?.(); } else { document.exitFullscreen?.(); } }
+const levelPoints={facil:{correct:3,wrong:1}, medio:{correct:5,wrong:2}, dificil:{correct:10,wrong:3}};
 
-    // ===== Ranking Modal =====
-    const rmodal = document.getElementById('ranking-modal');
-    const rankTitle = document.getElementById('ranking-title');
-    const rankGameName = document.getElementById('rank-game-name');
-    const rankList = document.getElementById('rank-list');
-    const rankEmpty = document.getElementById('rank-empty');
-    const rankDate = document.getElementById('rank-date');
-    let rankingGameKey = null;
-    let rankingLevel = 'facil';
+/* ========== Abrir jogo — tela cheia imersiva ========== */
+function openGame(key, autoFS=false){
+  selectedGameKey=key; selectedLevel='';
+  modalTitle.textContent = gamesMeta.find(g=>g.key===key).title;
+  gameNameEl.textContent = modalTitle.textContent;
+  resetGameState();
+  if(!modal.open) modal.showModal();
+  modal.classList.add('fullscreen');               // ocupa 100% da viewport
+  document.body.classList.add('immersive');        // bloqueia scroll de fundo
+  if (autoFS) modal.requestFullscreen?.().catch(()=>{});
+}
+function backFromGame(){
+  if(document.fullscreenElement) document.exitFullscreen?.();
+  document.body.classList.remove('immersive');
+  if(modal.open) modal.close();
+}
+function toggleFullscreen(){
+  if(!document.fullscreenElement){ modal.requestFullscreen?.(); }
+  else{ document.exitFullscreen?.(); }
+}
 
-    function openRanking(gameKey){
-      rankingGameKey = gameKey;
-      rankingLevel = 'facil';
-      rankTitle.textContent = 'Ranking de Hoje';
-      rankGameName.textContent = gamesMeta[gameKey].title;
-      // reset chips
-      document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
-      document.querySelector('#ranking-modal .chip[data-level="facil"]').setAttribute('aria-pressed','true');
-      refreshRankingList();
-      if(!rmodal.open) rmodal.showModal();
-    }
-    function closeRanking(){ if(rmodal.open) rmodal.close(); }
-    function setRankingLevel(lvl){
-      rankingLevel = lvl;
-      document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
-      document.querySelector(`#ranking-modal .chip[data-level="${lvl}"]`).setAttribute('aria-pressed','true');
-      refreshRankingList();
-    }
-    function refreshRankingList(){
-      rankList.innerHTML = '';
-      rankDate.textContent = todayKey();
-      const data = loadRankingFor(rankingGameKey, rankingLevel);
-      if (!data.length){
-        rankEmpty.classList.remove('hidden');
-        return;
-      }
-      rankEmpty.classList.add('hidden');
-      data.forEach((e,i)=>{
-        const li = document.createElement('li');
-        li.className = 'rank-item';
-        li.innerHTML = `<strong>${i+1}. ${e.name}</strong><span>${e.score} pts</span>`;
-        rankList.appendChild(li);
-      });
-    }
+/* ========== Fluxo do jogo ========== */
+function resetGameState(){
+  questionIndex=0; score=0; answered=false; playerName=''; selectedLevel='';
+  playerInput.value=''; startBtn.disabled=true;
+  ['btn-facil','btn-medio','btn-dificil'].forEach(id=>{
+    const el=document.getElementById(id); el.disabled=true; el.style.boxShadow='none';
+  });
+  startScreen.classList.remove('hidden'); gameScreen.classList.add('hidden');
+}
+document.addEventListener('input', e=>{
+  if (e.target===playerInput){
+    const ok=playerInput.value.trim().length>0;
+    ['btn-facil','btn-medio','btn-dificil'].forEach(id=>document.getElementById(id).disabled=!ok);
+    startBtn.disabled=!ok || !selectedLevel;
+  }
+});
+function selectLevel(lvl){
+  selectedLevel=lvl;
+  const map={facil:'btn-facil',medio:'btn-medio',dificil:'btn-dificil'};
+  ['btn-facil','btn-medio','btn-dificil'].forEach(id=>document.getElementById(id).style.boxShadow='none');
+  document.getElementById(map[lvl]).style.boxShadow='0 0 0 3px rgba(0,0,0,.07), 0 0 0 4px var(--blue)';
+  startBtn.disabled=!playerInput.value.trim().length;
+}
+function startSelectedGame(){
+  playerName=playerInput.value.trim();
+  if(!playerName){ alert('Digite seu nome para começar.'); return; }
+  if(!selectedLevel){ alert('Escolha um nível.'); return; }
+  startScreen.classList.add('hidden'); gameScreen.classList.remove('hidden');
+  levelDisplay.textContent=`Nível: ${selectedLevel.charAt(0).toUpperCase()+selectedLevel.slice(1)}`;
+  scoreDisplayGame.textContent='Pontuação: 0';
+  showQuestion();
+}
+function showQuestion(){
+  answered=false; feedbackEl.classList.add('hidden'); document.getElementById('next-btn').classList.add('hidden');
+  const current=gamesQuestions[selectedGameKey][selectedLevel][questionIndex];
+  questionText.textContent=current.q;
+  optionA.textContent=`a) ${current.a}`; optionB.textContent=`b) ${current.b}`; optionC.textContent=`c) ${current.c}`;
+  [optionA,optionB,optionC].forEach(btn=>btn.classList.remove('btn-green','btn-red'));
+}
+function checkAnswer(answer){
+  if(answered) return; answered=true;
+  const current=gamesQuestions[selectedGameKey][selectedLevel][questionIndex];
+  const pts=levelPoints[selectedLevel];
+  if(answer===current.correct){
+    score+=pts.correct; feedbackEl.textContent=`Correto! (+${pts.correct})`; feedbackEl.style.color='green';
+    document.getElementById(`option-${answer}`).classList.add('btn-green'); playCorrect();
+  }else{
+    score-=pts.wrong; feedbackEl.textContent=`Ops! Correta: ${current.correct.toUpperCase()} (−${pts.wrong})`; feedbackEl.style.color='#b00020';
+    document.getElementById(`option-${answer}`).classList.add('btn-red'); document.getElementById(`option-${current.correct}`).classList.add('btn-green'); playWrong();
+  }
+  scoreDisplayGame.textContent=`Pontuação: ${score}`;
+  feedbackEl.classList.remove('hidden'); document.getElementById('next-btn').classList.remove('hidden');
+}
+function nextQuestion(){
+  questionIndex++;
+  const arr=gamesQuestions[selectedGameKey][selectedLevel];
+  if(questionIndex < arr.length){ showQuestion(); }
+  else{
+    addScoreToRanking(selectedGameKey, selectedLevel, playerName, score);
+    playEnd();
+    setTimeout(()=>{
+      alert(`Fim do jogo! Sua pontuação final é: ${score}.`);
+      gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden'); resetGameState();
+    },100);
+  }
+}
 
-    // ===== Metadados dos jogos =====
-    const gamesMeta = {
-      unidades:   { title: 'Unidades de Medida', color: '#58c39b' },
-      fracoes:    { title: 'Frações: equivalência e comparação', color: '#7b93ff' },
-      naturais:   { title: 'Operações com Números Naturais', color: '#f6c34f' },
-      posicional: { title: 'Valor Posicional e Arredondamento', color: '#f05f5f' },
-      area_perimetro: { title: 'Perímetro e Área', color: '#9c7bff' },
-      tempo:      { title: 'Medidas de Tempo', color: '#ff80ae' }
-    };
+/* ========== Sons (clique + acerto/erro/final) ========== */
+let audioCtx;
+function ensureAudio(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }
+function tone(freq=440, ms=180, type='sine', gain=0.08){
+  ensureAudio(); const o=audioCtx.createOscillator(); const g=audioCtx.createGain();
+  o.type=type; o.frequency.value=freq; g.gain.value=gain; o.connect(g); g.connect(audioCtx.destination);
+  o.start(); setTimeout(()=>o.stop(),ms);
+}
+function playClick(){ tone(420,80,'triangle',0.05); }    // som de clique
+function playCorrect(){ tone(660,120,'sine',0.07); setTimeout(()=>tone(880,140,'sine',0.07),90); }
+function playWrong(){ tone(240,180,'sawtooth',0.06); }
+function playEnd(){ tone(523,120,'triangle',0.07); setTimeout(()=>tone(659,120,'triangle',0.07),110); setTimeout(()=>tone(784,160,'triangle',0.07),220); }
 
-    // ===== Banco de questões (por nível) =====
-    const gamesQuestions = {
-      unidades: {
-        facil: [
-          { q:'O que mede melhor a altura de uma pessoa?', a:'Metros', b:'Litros', c:'Quilos', correct:'a' },
-          { q:'1 L = ?', a:'100 mL', b:'1.000 mL', c:'10.000 mL', correct:'b' },
-          { q:'Régua de 30 cm tem…', a:'30 mm', b:'300 mm', c:'3.000 mm', correct:'b' },
-          { q:'Temperatura do corpo em…', a:'Graus Celsius', b:'Quilômetros', c:'Litros', correct:'a' }
-        ],
-        medio: [
-          { q:'Uma jarra tem 1,5 L. Quantos copos de 250 mL cabem?', a:'4', b:'5', c:'6', correct:'c' },
-          { q:'2 km equivalem a…', a:'200 m', b:'2.000 m', c:'20.000 m', correct:'b' },
-          { q:'500 g + 500 g =', a:'1 kg', b:'900 g', c:'1.100 g', correct:'a' },
-          { q:'0,75 L é igual a…', a:'750 mL', b:'75 mL', c:'7.500 mL', correct:'a' }
-        ],
-        dificil: [
-          { q:'Carro a 60 km/h por 10 min percorre…', a:'100 m', b:'1.000 m', c:'10.000 m', correct:'c' },
-          { q:'3,2 kg = ? g', a:'320 g', b:'3.200 g', c:'32.000 g', correct:'b' },
-          { q:'2,5 m = ? cm', a:'25 cm', b:'250 cm', c:'2.500 cm', correct:'b' },
-          { q:'Mistura 800 mL + 0,35 L =', a:'1,05 L', b:'1,10 L', c:'1,15 L', correct:'c' }
-        ]
-      },
-      fracoes: {
-        facil: [
-          { q:'Qual é maior?', a:'1/2', b:'1/3', c:'1/4', correct:'a' },
-          { q:'2/4 é equivalente a…', a:'1/2', b:'1/3', c:'3/4', correct:'a' },
-          { q:'Qual é menor?', a:'3/6', b:'2/5', c:'4/8', correct:'b' },
-          { q:'Metade de uma pizza é…', a:'1/2', b:'1/3', c:'2/3', correct:'a' }
-        ],
-        medio: [
-          { q:'Qual vem primeiro (menor)? 1/2, 2/3, 3/4', a:'1/2', b:'2/3', c:'3/4', correct:'a' },
-          { q:'Equivalente a 3/6:', a:'1/2', b:'2/3', c:'1/3', correct:'a' },
-          { q:'Qual é maior?', a:'5/10', b:'4/7', c:'3/8', correct:'b' },
-          { q:'Complete: 2/3 = ?/9', a:'3', b:'6', c:'8', correct:'b' }
-        ],
-        dificil: [
-          { q:'Qual é maior? 7/12 ou 2/3', a:'7/12', b:'2/3', c:'iguais', correct:'b' },
-          { q:'1/4 + 2/4 =', a:'2/8', b:'3/4', c:'1/2', correct:'b' },
-          { q:'3/5 − 1/10 =', a:'1/2', b:'5/10', c:'1/10', correct:'a' },
-          { q:'Equivalente a 9/12', a:'3/4', b:'2/3', c:'1/4', correct:'a' }
-        ]
-      },
-      naturais: {
-        facil: [
-          { q:'7 × 6 =', a:'42', b:'36', c:'48', correct:'a' },
-          { q:'45 + 27 =', a:'62', b:'70', c:'72', correct:'c' },
-          { q:'90 − 25 =', a:'75', b:'65', c:'70', correct:'b' },
-          { q:'56 ÷ 7 =', a:'9', b:'8', c:'7', correct:'b' }
-        ],
-        medio: [
-          { q:'12 × 8 =', a:'96', b:'84', c:'108', correct:'a' },
-          { q:'125 + 298 =', a:'413', b:'423', c:'4230', correct:'b' },
-          { q:'420 − 185 =', a:'225', b:'235', c:'240', correct:'a' },
-          { q:'96 ÷ 12 =', a:'6', b:'7', c:'8', correct:'c' }
-        ],
-        dificil: [
-          { q:'(37 + 28) × 2 =', a:'120', b:'130', c:'140', correct:'c' },
-          { q:'720 ÷ 9 =', a:'70', b:'80', c:'90', correct:'b' },
-          { q:'15 × 14 =', a:'190', b:'210', c:'225', correct:'b' },
-          { q:'600 − (125 + 148) =', a:'327', b:'335', c:'343', correct:'a' }
-        ]
-      },
-      posicional: {
-        facil: [
-          { q:'No número 3.486, o 4 vale…', a:'4 centenas', b:'4 dezenas', c:'4 unidades', correct:'a' },
-          { q:'Maior número:', a:'4.905', b:'4.095', c:'4.590', correct:'a' },
-          { q:'Arredonde 3.486 para a dezena:', a:'3.480', b:'3.490', c:'3.500', correct:'b' },
-          { q:'O 8 em 18.253:', a:'8 dezenas', b:'8 centenas', c:'8 milhar', correct:'c' }
-        ],
-        medio: [
-          { q:'Arredonde 4.749 para a centena:', a:'4.700', b:'4.800', c:'4.750', correct:'b' },
-          { q:'Qual é menor?', a:'5.032', b:'5.203', c:'5.230', correct:'a' },
-          { q:'Valor do 6 em 6.540:', a:'6 milhar', b:'6 centena', c:'6 dezena', correct:'a' },
-          { q:'Complete: 3.5__ ~ 3.500 (centena mais próxima)', a:'3.400', b:'3.500', c:'3.600', correct:'b' }
-        ],
-        dificil: [
-          { q:'Compare: 12.098 __ 12.89 (use < ou >)', a:'<', b:'>', c:'=', correct:'a' },
-          { q:'Arredonde 9.951 para o milhar:', a:'9.000', b:'10.000', c:'9.900', correct:'b' },
-          { q:'Número entre 7.209 e 7.219:', a:'7.218', b:'7.229', c:'7.119', correct:'a' },
-          { q:'Maior: 30.050 ou 29.950?', a:'30.050', b:'iguais', c:'29.950', correct:'a' }
-        ]
-      },
-      area_perimetro: {
-        facil: [
-          { q:'Área do retângulo 6×4:', a:'24 cm²', b:'20 cm²', c:'10 cm²', correct:'a' },
-          { q:'Perímetro do quadrado lado 5:', a:'20', b:'25', c:'15', correct:'a' },
-          { q:'Qual tem maior área?', a:'5×5', b:'4×7', c:'6×4', correct:'b' },
-          { q:'Retângulo 8×3 perímetro:', a:'22', b:'24', c:'26', correct:'c' }
-        ],
-        medio: [
-          { q:'Quadrado área 49 cm², lado:', a:'6', b:'7', c:'8', correct:'b' },
-          { q:'Retângulo 9×5, área:', a:'45', b:'40', c:'52', correct:'a' },
-          { q:'Quadrado lado 12, perímetro:', a:'36', b:'44', c:'48', correct:'c' },
-          { q:'Retângulo 10×2, perímetro:', a:'20', b:'24', c:'28', correct:'b' }
-        ],
-        dificil: [
-          { q:'Retângulo 13×7, perímetro:', a:'36', b:'40', c:'46', correct:'c' },
-          { q:'Qual área é maior?', a:'8×8', b:'10×6', c:'12×5', correct:'a' },
-          { q:'Quadrado área 100, lado:', a:'8', b:'10', c:'12', correct:'b' },
-          { q:'Retângulo 15×4, área:', a:'45', b:'54', c:'60', correct:'c' }
-        ]
-      },
-      tempo: {
-        facil: [
-          { q:'De 14:15 a 15:05:', a:'40 min', b:'50 min', c:'55 min', correct:'b' },
-          { q:'Faltam 25 min para 12:00 →', a:'11:25', b:'11:35', c:'11:45', correct:'c' },
-          { q:'Das 09:20 às 10:00:', a:'30 min', b:'40 min', c:'50 min', correct:'b' },
-          { q:'1h =', a:'60 min', b:'100 min', c:'120 min', correct:'a' }
-        ],
-        medio: [
-          { q:'Filme 18:30 + 1h45 =', a:'20:05', b:'20:10', c:'20:15', correct:'a' },
-          { q:'Recreio 10:10 a 10:30:', a:'15 min', b:'20 min', c:'25 min', correct:'b' },
-          { q:'3h 20min =', a:'180 min', b:'200 min', c:'220 min', correct:'c' },
-          { q:'Aula 07:40 → 50 min →', a:'08:20', b:'08:25', c:'08:30', correct:'b' }
-        ],
-        dificil: [
-          { q:'De 21:55 a 00:10:', a:'2h10', b:'2h15', c:'2h20', correct:'b' },
-          { q:'Tarefa 35 + 50 + 15 min:', a:'1h30', b:'1h40', c:'1h45', correct:'b' },
-          { q:'Saída 13:48 + 1h12 =', a:'14:58', b:'15:00', c:'15:02', correct:'c' },
-          { q:'4h = ? min', a:'180', b:'220', c:'240', correct:'c' }
-        ]
-      }
-    };
+/* clique sonoro em todos os botões DENTRO do jogo */
+document.getElementById('game-container').addEventListener('click', (e)=>{
+  if(e.target.tagName==='BUTTON'){ playClick(); }
+});
 
-    // ===== Estado & refs =====
-    let selectedGameKey = null;
-    let selectedLevel   = '';
-    let questionIndex = 0, score = 0, answered = false, playerName = '';
+/* ========== Ranking diário por jogo e nível ========== */
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+function rkKey(game,level){ return `ranking_${game}_${level}_${todayKey()}`; }
+function loadRankingFor(game,level){ try{ return (JSON.parse(localStorage.getItem(rkKey(game,level)))||[]).sort((a,b)=>b.score-a.score); }catch{return [];} }
+function saveRankingFor(game,level,arr){ try{ localStorage.setItem(rkKey(game,level), JSON.stringify(arr)); }catch{} }
+function addScoreToRanking(game,level,name,finalScore){
+  let ranking=loadRankingFor(game,level);
+  ranking.push({name,score:finalScore});
+  ranking.sort((a,b)=>b.score-a.score);
+  saveRankingFor(game,level,ranking.slice(0,10));
+}
 
-    const playerInput = document.getElementById('player-input');
-    const startBtn = document.getElementById('start-btn');
-    const startScreen = document.getElementById('start-screen');
-    const gameScreen  = document.getElementById('game-screen');
-    const levelDisplay = document.getElementById('level-display');
-    const questionText = document.getElementById('question-text');
-    const optionA = document.getElementById('option-a');
-    const optionB = document.getElementById('option-b');
-    const optionC = document.getElementById('option-c');
-    const feedbackEl = document.getElementById('feedback');
-    const scoreDisplayGame = document.getElementById('score-display-game');
+/* ========== Modal Ranking ========== */
+const rmodal=document.getElementById('ranking-modal');
+const rankTitle=document.getElementById('ranking-title');
+const rankGameName=document.getElementById('rank-game-name');
+const rankList=document.getElementById('rank-list');
+const rankEmpty=document.getElementById('rank-empty');
+const rankDate=document.getElementById('rank-date');
+let rankingGameKey=null, rankingLevel='facil';
 
-    const levelPoints = { facil:{correct:3,wrong:1}, medio:{correct:5,wrong:2}, dificil:{correct:10,wrong:3} };
+function openRanking(gameKey){
+  rankingGameKey=gameKey; rankingLevel='facil';
+  rankTitle.textContent='Ranking de Hoje'; rankGameName.textContent=gamesMeta.find(g=>g.key===gameKey).title;
+  document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+  document.querySelector('#ranking-modal .chip[data-level="facil"]').setAttribute('aria-pressed','true');
+  refreshRankingList(); if(!rmodal.open) rmodal.showModal();
+}
+function closeRanking(){ if(rmodal.open) rmodal.close(); }
+function setRankingLevel(lvl){
+  rankingLevel=lvl;
+  document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+  document.querySelector(`#ranking-modal .chip[data-level="${lvl}"]`).setAttribute('aria-pressed','true');
+  refreshRankingList();
+}
+function refreshRankingList(){
+  rankList.innerHTML=''; rankDate.textContent=todayKey();
+  const data=loadRankingFor(rankingGameKey, rankingLevel);
+  if(!data.length){ rankEmpty.classList.remove('hidden'); return; }
+  rankEmpty.classList.add('hidden');
+  data.forEach((e,i)=>{
+    const li=document.createElement('li'); li.className='rank-item';
+    li.innerHTML=`<strong>${i+1}. ${e.name}</strong><span>${e.score} pts</span>`;
+    rankList.appendChild(li);
+  });
+}
 
-    // ===== Áudio (sons) via Web Audio =====
-    let audioCtx;
-    function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }
-    function playTone(freq=440, ms=200, type='sine', gain=0.08){
-      ensureAudio();
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = type;
-      o.frequency.value = freq;
-      g.gain.value = gain;
-      o.connect(g); g.connect(audioCtx.destination);
-      o.start();
-      setTimeout(()=>{ o.stop(); }, ms);
-    }
-    function playCorrect(){ // subidinha agradável
-      playTone(660,120,'sine',0.07);
-      setTimeout(()=>playTone(880,140,'sine',0.07),90);
-    }
-    function playWrong(){  // tom grave curto
-      playTone(240,180,'sawtooth',0.06);
-    }
-    function playEnd(){    // tríade rápida de finalização
-      playTone(523,120,'triangle',0.07);
-      setTimeout(()=>playTone(659,120,'triangle',0.07),110);
-      setTimeout(()=>playTone(784,160,'triangle',0.07),220);
-    }
-
-    // ===== Helpers ranking =====
-    function todayKey(){ return new Date().toISOString().slice(0,10); } // AAAA-MM-DD
-    function rkKey(game,level){ return `ranking_${game}_${level}_${todayKey()}`; }
-    function loadRankingFor(game, level){
-      try{ return (JSON.parse(localStorage.getItem(rkKey(game,level)))||[]).sort((a,b)=>b.score-a.score); }catch{ return []; }
-    }
-    function saveRankingFor(game, level, arr){
-      try{ localStorage.setItem(rkKey(game,level), JSON.stringify(arr)); }catch{}
-    }
-    function addScoreToRanking(game, level, name, finalScore){
-      let ranking = loadRankingFor(game, level);
-      ranking.push({ name, score: finalScore });
-      ranking.sort((a,b)=>b.score-a.score);
-      ranking = ranking.slice(0,10);
-      saveRankingFor(game, level, ranking);
-    }
-
-    // ===== Fluxo do jogo =====
-    function resetGameState(){
-      questionIndex = 0; score = 0; answered = false; playerName = ''; selectedLevel = '';
-      playerInput.value = ''; startBtn.disabled = true;
-      ['btn-facil','btn-medio','btn-dificil'].forEach(id=>{
-        const el=document.getElementById(id); el.disabled = true; el.style.boxShadow='none';
-      });
-      startScreen.classList.remove('hidden'); gameScreen.classList.add('hidden');
-    }
-
-    // Habilita níveis ao digitar nome
-    document.addEventListener('input', (e)=>{
-      if (e.target === playerInput){
-        const ok = playerInput.value.trim().length > 0;
-        ['btn-facil','btn-medio','btn-dificil'].forEach(id=>document.getElementById(id).disabled = !ok);
-        startBtn.disabled = !ok || !selectedLevel;
-      }
-    });
-
-    function selectLevel(lvl){
-      selectedLevel = lvl;
-      ['btn-facil','btn-medio','btn-dificil'].forEach(id=>{
-        const el=document.getElementById(id); el.style.boxShadow='none';
-      });
-      const map={facil:'btn-facil',medio:'btn-medio',dificil:'btn-dificil'};
-      document.getElementById(map[lvl]).style.boxShadow='0 0 0 3px rgba(0,0,0,.07), 0 0 0 4px #7b93ff';
-      startBtn.disabled = !playerInput.value.trim().length;
-    }
-
-    function startSelectedGame(){
-      playerName = playerInput.value.trim();
-      if(!playerName){ alert('Digite seu nome para começar!'); return; }
-      if(!selectedLevel){ alert('Escolha um nível.'); return; }
-      startScreen.classList.add('hidden'); gameScreen.classList.remove('hidden');
-      levelDisplay.textContent = `Nível: ${selectedLevel.charAt(0).toUpperCase()+selectedLevel.slice(1)}`;
-      levelDisplay.style.color = gamesMeta[selectedGameKey].color;
-      scoreDisplayGame.textContent = 'Pontuação: 0';
-      showQuestion();
-    }
-
-    function showQuestion(){
-      answered = false;
-      feedbackEl.classList.add('hidden');
-      document.getElementById('next-btn').classList.add('hidden');
-
-      const arr = gamesQuestions[selectedGameKey][selectedLevel];
-      const current = arr[questionIndex];
-      questionText.textContent = current.q;
-      optionA.textContent = `a) ${current.a}`;
-      optionB.textContent = `b) ${current.b}`;
-      optionC.textContent = `c) ${current.c}`;
-
-      [optionA, optionB, optionC].forEach(btn=>{
-        btn.classList.remove('btn-green','btn-yellow','btn-red'); // volta ao neutro
-        btn.classList.add('option-btn'); // garantido
-      });
-    }
-
-    function checkAnswer(answer){
-      if (answered) return; answered = true;
-      const current = gamesQuestions[selectedGameKey][selectedLevel][questionIndex];
-      const correct = current.correct;
-      const pts = levelPoints[selectedLevel];
-
-      if (answer === correct){
-        score += pts.correct;
-        feedbackEl.textContent = `Correto! (+${pts.correct})`;
-        feedbackEl.style.color = 'green';
-        document.getElementById(`option-${answer}`).classList.add('btn-green');
-        playCorrect();
-      } else {
-        score -= pts.wrong;
-        feedbackEl.textContent = `Ops! Correta: ${correct.toUpperCase()} (−${pts.wrong})`;
-        feedbackEl.style.color = 'red';
-        document.getElementById(`option-${answer}`).classList.add('btn-red');
-        document.getElementById(`option-${correct}`).classList.add('btn-green');
-        playWrong();
-      }
-      scoreDisplayGame.textContent = `Pontuação: ${score}`;
-      feedbackEl.classList.remove('hidden');
-      document.getElementById('next-btn').classList.remove('hidden');
-    }
-
-    function nextQuestion(){
-      questionIndex++;
-      const arr = gamesQuestions[selectedGameKey][selectedLevel];
-      if (questionIndex < arr.length){
-        showQuestion();
-      } else {
-        // fim do jogo
-        addScoreToRanking(selectedGameKey, selectedLevel, playerName, score);
-        playEnd();
-        setTimeout(()=>{
-          alert(`Fim do jogo! Sua pontuação final é: ${score}.`);
-          // volta para tela inicial do jogo
-          gameScreen.classList.add('hidden'); startScreen.classList.remove('hidden');
-          // limpa nome/níveis para nova tentativa
-          resetGameState();
-        }, 100);
-      }
-    }
-
-    // ===== Util =====
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+/* ========== Init ========== */
+function init(){
+  renderCards(); applyFilters();
+  document.getElementById('year').textContent=new Date().getFullYear();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
