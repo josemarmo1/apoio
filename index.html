@@ -21,6 +21,14 @@
       --mint-100:#e9fff7; --slate-900:#141922; --slate-700:#273043; --slate-500:#61708d; --white:#fff;
       --green:#34c38f; --yellow:#f1c232; --red:#ef6464; --blue:#5a8bff;
       --radius:18px; --shadow:0 18px 40px rgba(20,25,34,.08); --space:clamp(14px,3vw,28px);
+      --safe-top: env(safe-area-inset-top, 0px);
+
+      /* 🔧 ALTERE AQUI O TAMANHO DO LOGO
+         - Desktop/tablet: --logo-size-desktop
+         - Celular:        --logo-size-mobile
+         Dica: 140–180px fica bem grande; 90–120px fica médio. */
+      --logo-size-desktop: 180px;
+      --logo-size-mobile: 110px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -31,38 +39,80 @@
     }
     body.immersive{overflow:hidden}
 
-    /* ===== Topbar ===== */
+    /* ===== Topbar – otimizado para iPad/iPhone Safari ===== */
     .topbar{
-      position:sticky; top:0; z-index:30; background:rgba(255,255,255,.9);
-      -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,.88);
+      -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
       border-bottom:1px solid #ffe1ef;
+      padding-top:calc(var(--safe-top) * 1);
     }
     .nav{
       max-width:1200px; margin:0 auto; padding:10px var(--space);
-      display:grid; grid-template-columns:auto 1fr; align-items:center; gap:14px;
-    }
-    /* LOGO sem texto, maior e colado à busca */
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
-    .brand img{
-      height:64px; width:64px; display:block; object-fit:contain;
-      border-radius:14px; box-shadow:0 6px 14px rgba(255,92,150,.18); background:#fff;
-    }
-    @media (min-width:1024px){
-      .brand img{ height:72px; width:72px; }
+      display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center;
     }
 
-    .search{
-      justify-self:stretch; width:100%;
-      display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:999px;
-      border:1px solid #ffe1ef; background:#fff;
+    /* LOGO: sem quadrado, sem fundo, sem borda arredondada */
+    .brand{display:flex; align-items:center; gap:10px; min-width:0}
+    .brand img{
+      width:var(--logo-size-desktop);   /* 🔧 tamanho do logo no desktop/tablet */
+      height:var(--logo-size-desktop);  /* 🔧 tamanho do logo no desktop/tablet */
+      object-fit:contain; display:block;
+      background:transparent; border-radius:0; box-shadow:none;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.08)) saturate(1.04) contrast(1.03);
+      image-rendering:-webkit-optimize-contrast;
+      -webkit-user-select:none; user-select:none; touch-action:manipulation;
     }
-    .search input{border:none; outline:none; font-size:1rem; flex:1; min-width:120px}
+    @media (max-width:900px){
+      .brand img{
+        width:var(--logo-size-mobile);   /* 🔧 tamanho do logo no celular */
+        height:var(--logo-size-mobile);  /* 🔧 tamanho do logo no celular */
+      }
+    }
+
+    /* Busca + filtros (desktop) */
+    .search{
+      display:flex; align-items:center; gap:10px; width:100%;
+      padding:10px 12px; border-radius:999px; border:1px solid #ffe1ef; background:#fff;
+      min-height:44px;
+    }
+    .search input{
+      border:none; outline:none; font-size:1rem; flex:1; min-width:80px;
+      -webkit-appearance:none; background:transparent;
+    }
     .select{
       border:1px solid #ffe1ef; background:#fff; border-radius:999px; padding:10px 12px;
-      font-weight:800; color:#7a3e53;
+      font-weight:800; color:#7a3e53; min-height:40px;
     }
+    .menu-btn{
+      display:none; align-items:center; justify-content:center;
+      width:44px; height:44px; border-radius:12px; border:1px solid #ffd7e7;
+      background:#fff; cursor:pointer; font-size:20px; font-weight:900;
+    }
+    @media (max-width:900px){
+      .nav{ grid-template-columns:auto 1fr auto; }
+      .search{ gap:8px; padding:8px 10px; }
+      .select{ display:none; }
+      .menu-btn{ display:flex; }
+    }
+
+    /* Drawer de filtros (mobile) */
+    .drawer{
+      position:fixed; inset:auto 0 0 0;
+      background:#fff; border-top-left-radius:18px; border-top-right-radius:18px;
+      box-shadow:0 -14px 40px rgba(16,16,24,.16);
+      transform:translateY(110%); transition:transform .25s ease;
+      z-index:60; padding:14px var(--space) max(16px,calc(env(safe-area-inset-bottom,0px) + 10px));
+    }
+    .drawer.open{ transform:translateY(0); }
+    .drawer .drag{ width:46px; height:5px; border-radius:999px; background:#e9e9ee; margin:0 auto 10px; }
+    .drawer h3{ margin:0 0 12px; font-family:'Poppins',sans-serif; font-weight:900; color:#slate-900; font-size:1.05rem }
+    .drawer .row{ display:flex; gap:10px; flex-wrap:wrap }
+    .drawer .row .select{ display:block; }
+    .overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.38); z-index:55; opacity:0; pointer-events:none; transition:opacity .2s ease;
+    }
+    .overlay.show{ opacity:1; pointer-events:auto; }
 
     /* ===== Hero ===== */
     .hero{position:relative; overflow:hidden; background:linear-gradient(180deg,#ffe9f2,var(--mint-100));}
@@ -72,7 +122,7 @@
     }
     @media (max-width:900px){ .hero .wrap{grid-template-columns:1fr} }
     .h-title{
-      margin:0; font-family:'Poppins',sans-serif; font-weight:900; color:var(--slate-900);
+      margin:0; font-family:'Poppins',sans-serif; font-weight:900; color:#141922;
       font-size:clamp(1.4rem,3.4vw,2.3rem);
     }
     .h-sub{margin:6px 0 0; color:#7a3e53; font-weight:800; font-size:clamp(1rem,2vw,1.15rem)}
@@ -87,7 +137,7 @@
     /* ===== Jogos ===== */
     .section{max-width:1200px; margin:0 auto; padding:20px var(--space)}
     .sec-title h2{
-      margin:0; font-family:'Poppins',sans-serif; font-weight:900; color:var(--slate-900);
+      margin:0; font-family:'Poppins',sans-serif; font-weight:900; color:#141922;
       font-size:clamp(1.2rem,2.2vw,1.7rem)
     }
     .grid{
@@ -105,33 +155,33 @@
     .thumb{display:grid; place-items:center; height:170px; border-bottom:1px solid #ffe1ef}
     .thumb span{font-size:48px}
     .card-body{padding:14px}
-    .card h3{margin:0 0 6px; font-size:clamp(1.06rem,1.4vw,1.25rem); color:var(--slate-900); font-weight:900}
-    .card p{margin:0; color:var(--slate-500); font-size:clamp(.95rem,1vw,1.05rem)}
+    .card h3{margin:0 0 6px; font-size:clamp(1.06rem,1.4vw,1.25rem); color:#141922; font-weight:900}
+    .card p{margin:0; color:#61708d; font-size:clamp(.95rem,1vw,1.05rem)}
     .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
     .tag{font-size:.85rem; padding:6px 10px; border-radius:999px; background:#fff; border:1px solid #ffd3e4; color:#7a3e53; font-weight:800}
     .card-actions{display:flex; gap:10px; padding:12px; border-top:1px solid #ffe1ef; background:#fff}
     .btn{flex:1; border:none; border-radius:12px; padding:14px 16px; font-weight:900; cursor:pointer; min-height:52px}
     .btn-play{background:linear-gradient(90deg,var(--pink-400),var(--pink-500)); color:#fff}
-    .btn-rank{background:#fff; border:1px solid #ffd3e4; color:var(--slate-700)}
+    .btn-rank{background:#fff; border:1px solid #ffd3e4; color:#273043}
 
     /* ===== Modais ===== */
     dialog::backdrop{background:rgba(0,0,0,.45)}
     dialog{border:none; border-radius:20px; padding:0; overflow:hidden; box-shadow:0 40px 110px rgba(0,0,0,.25); width:min(1100px,96vw)}
     .modal-header{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; background:var(--pink-100); border-bottom:1px solid #ffd3e4}
-    .modal-title{font-weight:900; color:var(--slate-900)}
-    .icon-btn{background:#fff; border:1px solid #ffd3e4; border-radius:10px; padding:8px 12px; cursor:pointer; font-weight:900}
+    .modal-title{font-weight:900; color:#141922}
+    .icon-btn{background:#fff; border:1px solid #ffd3e4; border-radius:10px; padding:8px 12px; cursor:pointer; font-weight:900; min-height:44px}
     .modal-body{background:#f8fbff; padding:0}
 
-    /* ===== Modal em tela cheia + centralização do conteúdo ===== */
+    /* ===== Modal em tela cheia ===== */
     dialog.fullscreen{width:100vw; height:100dvh; max-width:none; max-height:none; border-radius:0;}
     dialog.fullscreen .modal-body{
-      height:calc(100dvh - 52px); /* barra do cabeçalho */
+      height:calc(100dvh - 52px);
       display:grid; place-items:center; padding:clamp(10px,2vw,24px);
     }
 
-    /* ===== Jogo (autoajuste) ===== */
+    /* ===== Jogo ===== */
     #game-container{
-      width:clamp(320px, 70vw, 980px); /* cresce bem em desktop grande */
+      width:clamp(320px, 70vw, 980px);
       max-width:96vw;
       background:#fff; border:1px solid #eef2f5; border-radius:14px; box-shadow:0 6px 12px rgba(0,0,0,.06);
       padding:clamp(16px,2vw,26px); display:flex; flex-direction:column; gap:12px; text-align:center;
@@ -139,10 +189,8 @@
     @media (max-width:600px){
       #game-container{ width:min(540px, 96vw); border-radius:12px; }
     }
-
     .screen{display:flex; flex-direction:column; align-items:center; gap:12px; width:100%}
     .options{display:flex; flex-direction:column; gap:12px; width:min(760px,100%)}
-
     .option-btn{
       background:#eef2ff; color:#1f2a3a; border:none; border-radius:12px;
       padding:16px; font-weight:900; cursor:pointer; font-size:clamp(1rem,1.2vw,1.2rem); min-height:56px;
@@ -150,18 +198,12 @@
     }
     .option-btn:active{transform:scale(.99)}
     .btn-start{background:linear-gradient(90deg,var(--pink-400),var(--pink-500)); color:#fff; box-shadow:0 10px 24px rgba(255,92,150,.25)}
-
-    /* níveis com cor, sem números nos rótulos */
     .btn-level-f{background:var(--green); color:#fff}
     .btn-level-m{background:var(--yellow); color:#fff}
     .btn-level-d{background:var(--red); color:#fff}
-
     .btn-green{background-color:var(--green); color:#fff}
     .btn-red{background-color:var(--red); color:#fff}
-
-    #player-input{
-      width:min(420px,100%); padding:14px 16px; border:1px solid #e6e6e6; border-radius:12px; text-align:center; font-size:1.05rem
-    }
+    #player-input{width:min(420px,100%); padding:14px 16px; border:1px solid #e6e6e6; border-radius:12px; text-align:center; font-size:1.05rem}
     #level-display{font-weight:900}
     .rules{
       max-width:720px; font-size:.95rem; color:#6d3b4f; background:#fff5fa; border:1px solid #ffd6e6;
@@ -189,25 +231,46 @@
   <div class="topbar">
     <div class="nav">
       <div class="brand">
-        <!-- Coloque seu ícone em imagens/logo-icon.png -->
         <img src="imagens/48b51d5a-9d87-436d-8617-8a9801c054ac.png" alt="Logo Profª Julia Maria" />
       </div>
 
-      <div class="search" role="search">
+      <div class="search" role="search" aria-label="Busca e filtros">
         🔎
         <input id="q" type="search" placeholder="Buscar jogo..." oninput="applyFilters()" />
-        <select id="filter-subj" class="select" onchange="applyFilters()">
-          <option value="">Matéria</option>
+        <select id="filter-subj" class="select desktop-only" onchange="applyFilters()">
+          <option value="">Geral</option>
           <option>Matemática</option>
           <option>Ciências da Natureza</option>
           <option>Ciências Humanas</option>
           <option>Língua Portuguesa</option>
         </select>
-        <select id="filter-year" class="select" onchange="applyFilters()">
+        <select id="filter-year" class="select desktop-only" onchange="applyFilters()">
           <option value="">Ano</option>
           <option>5º ano</option>
         </select>
       </div>
+
+      <button class="menu-btn" id="open-drawer" aria-label="Abrir filtros">☰</button>
+    </div>
+  </div>
+
+  <!-- Drawer mobile de filtros -->
+  <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+  <div class="drawer" id="drawer" aria-modal="true" role="dialog" aria-label="Filtros">
+    <div class="drag"></div>
+    <h3>Filtros</h3>
+    <div class="row">
+      <select id="m-filter-subj" class="select" onchange="syncFiltersAndApply()">
+        <option value="">Matéria</option>
+        <option>Matemática</option>
+        <option>Ciências da Natureza</option>
+        <option>Ciências Humanas</option>
+        <option>Língua Portuguesa</option>
+      </select>
+      <select id="m-filter-year" class="select" onchange="syncFiltersAndApply()">
+        <option value="">Ano</option>
+        <option>5º ano</option>
+      </select>
     </div>
   </div>
 
@@ -231,12 +294,11 @@
     <div class="grid" id="games-grid"></div>
   </section>
 
-  <!-- ===== Modal do Jogo (sem ícone de maximizar) ===== -->
+  <!-- ===== Modal do Jogo ===== -->
   <dialog id="game-modal" aria-label="Jogo" class="fullscreen">
     <div class="modal-header">
       <button class="icon-btn" onclick="backFromGame()">← Voltar</button>
       <div class="modal-title" id="modal-title">Jogo</div>
-      <!-- Ícone de maximizar removido -->
       <span></span>
     </div>
     <div class="modal-body">
@@ -247,7 +309,6 @@
 
           <input type="text" id="player-input" placeholder="Seu nome" autocomplete="name" />
 
-          <!-- Texto de regras (no lugar dos números nos botões) -->
           <div class="rules">
             <strong>Como funciona:</strong> escolha um nível. Cada acerto soma pontos e cada erro desconta um pouquinho.
             <br/>Fácil: +3 / −1 • Médio: +5 / −2 • Difícil: +10 / −3.
@@ -309,20 +370,38 @@
   </footer>
 
   <script>
+    /* ===== Drawer mobile ===== */
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('open-drawer');
+
+    function openDrawer(){
+      document.getElementById('m-filter-subj').value = document.getElementById('filter-subj').value;
+      document.getElementById('m-filter-year').value = document.getElementById('filter-year').value;
+      drawer.classList.add('open'); overlay.classList.add('show');
+      document.documentElement.style.overflow='hidden';
+      document.body.style.overflow='hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open'); overlay.classList.remove('show');
+      document.documentElement.style.overflow=''; document.body.style.overflow='';
+    }
+    openBtn.addEventListener('click', openDrawer);
+
+    function syncFiltersAndApply(){
+      document.getElementById('filter-subj').value = document.getElementById('m-filter-subj').value;
+      document.getElementById('filter-year').value = document.getElementById('m-filter-year').value;
+      applyFilters();
+    }
+
     /* ====== Cards de jogos ====== */
     const gamesMeta = [
-      { key:'unidades', title:'Unidades de Medida', desc:'Grandezas, conversões e instrumentos.',
-        emoji:'📏', subj:'Matemática', year:'5º ano', color:'#34c38f' },
-      { key:'fracoes', title:'Frações: equivalência e comparação', desc:'Comparar, ordenar e reconhecer equivalências.',
-        emoji:'🍕', subj:'Matemática', year:'5º ano', color:'#5a8bff' },
-      { key:'naturais', title:'Operações com Números Naturais', desc:'Adição, subtração, multiplicação e divisão.',
-        emoji:'➕', subj:'Matemática', year:'5º ano', color:'#f1c232' },
-      { key:'posicional', title:'Valor Posicional e Arredondamento', desc:'Leitura, comparação e arredondamento.',
-        emoji:'🔢', subj:'Matemática', year:'5º ano', color:'#ef6464' },
-      { key:'area_perimetro', title:'Perímetro e Área', desc:'Retângulos, quadrados e desafios.',
-        emoji:'📐', subj:'Matemática', year:'5º ano', color:'#9c7bff' },
-      { key:'tempo', title:'Medidas de Tempo', desc:'Leitura de horas e tempo decorrido.',
-        emoji:'⏰', subj:'Matemática', year:'5º ano', color:'#ff80ae' },
+      { key:'unidades', title:'Unidades de Medida', desc:'Grandezas, conversões e instrumentos.', emoji:'📏', subj:'Matemática', year:'5º ano', color:'#34c38f' },
+      { key:'fracoes', title:'Frações: equivalência e comparação', desc:'Comparar, ordenar e reconhecer equivalências.', emoji:'🍕', subj:'Matemática', year:'5º ano', color:'#5a8bff' },
+      { key:'naturais', title:'Operações com Números Naturais', desc:'Adição, subtração, multiplicação e divisão.', emoji:'➕', subj:'Matemática', year:'5º ano', color:'#f1c232' },
+      { key:'posicional', title:'Valor Posicional e Arredondamento', desc:'Leitura, comparação e arredondamento.', emoji:'🔢', subj:'Matemática', year:'5º ano', color:'#ef6464' },
+      { key:'area_perimetro', title:'Perímetro e Área', desc:'Retângulos, quadrados e desafios.', emoji:'📐', subj:'Matemática', year:'5º ano', color:'#9c7bff' },
+      { key:'tempo', title:'Medidas de Tempo', desc:'Leitura de horas e tempo decorrido.', emoji:'⏰', subj:'Matemática', year:'5º ano', color:'#ff80ae' },
     ];
     function renderCards(){
       const grid=document.getElementById('games-grid'); grid.innerHTML='';
@@ -362,7 +441,7 @@
       });
     }
 
-    /* ====== Banco de questões (mesmo conteudo anterior) ====== */
+    /* ====== Banco de questões ====== */
     const gamesQuestions = {
       unidades: {
         facil: [
@@ -404,26 +483,18 @@
           { q:'Equivalente a 9/12', a:'3/4', b:'2/3', c:'1/4', correct:'a' }
         ]
       },
-      naturais:{
-        facil:[{q:'7 × 6 =',a:'42',b:'36',c:'48',correct:'a'},{q:'45 + 27 =',a:'62',b:'70',c:'72',correct:'c'},{q:'90 − 25 =',a:'75',b:'65',c:'70',correct:'b'},{q:'56 ÷ 7 =',a:'9',b:'8',c:'7',correct:'b'}],
+      naturais:{ facil:[{q:'7 × 6 =',a:'42',b:'36',c:'48',correct:'a'},{q:'45 + 27 =',a:'62',b:'70',c:'72',correct:'c'},{q:'90 − 25 =',a:'75',b:'65',c:'70',correct:'b'},{q:'56 ÷ 7 =',a:'9',b:'8',c:'7',correct:'b'}],
         medio:[{q:'12 × 8 =',a:'96',b:'84',c:'108',correct:'a'},{q:'125 + 298 =',a:'413',b:'423',c:'4230',correct:'b'},{q:'420 − 185 =',a:'225',b:'235',c:'240',correct:'a'},{q:'96 ÷ 12 =',a:'6',b:'7',c:'8',correct:'c'}],
-        dificil:[{q:'(37 + 28) × 2 =',a:'120',b:'130',c:'140',correct:'c'},{q:'720 ÷ 9 =',a:'70',b:'80',c:'90',correct:'b'},{q:'15 × 14 =',a:'190',b:'210',c:'225',correct:'b'},{q:'600 − (125 + 148) =',a:'327',b:'335',c:'343',correct:'a'}]
-      },
-      posicional:{
-        facil:[{q:'No número 3.486, o 4 vale…',a:'4 centenas',b:'4 dezenas',c:'4 unidades',correct:'a'},{q:'Maior número:',a:'4.905',b:'4.095',c:'4.590',correct:'a'},{q:'Arredonde 3.486 para a dezena:',a:'3.480',b:'3.490',c:'3.500',correct:'b'},{q:'O 8 em 18.253:',a:'8 dezenas',b:'8 centenas',c:'8 milhar',correct:'c'}],
+        dificil:[{q:'(37 + 28) × 2 =',a:'120',b:'130',c:'140',correct:'c'},{q:'720 ÷ 9 =',a:'70',b:'80',c:'90',correct:'b'},{q:'15 × 14 =',a:'190',b:'210',c:'225',correct:'b'},{q:'600 − (125 + 148) =',a:'327',b:'335',c:'343',correct:'a'}]},
+      posicional:{ facil:[{q:'No número 3.486, o 4 vale…',a:'4 centenas',b:'4 dezenas',c:'4 unidades',correct:'a'},{q:'Maior número:',a:'4.905',b:'4.095',c:'4.590',correct:'a'},{q:'Arredonde 3.486 para a dezena:',a:'3.480',b:'3.490',c:'3.500',correct:'b'},{q:'O 8 em 18.253:',a:'8 dezenas',b:'8 centenas',c:'8 milhar',correct:'c'}],
         medio:[{q:'Arredonde 4.749 para a centena:',a:'4.700',b:'4.800',c:'4.750',correct:'b'},{q:'Qual é menor?',a:'5.032',b:'5.203',c:'5.230',correct:'a'},{q:'Valor do 6 em 6.540:',a:'6 milhar',b:'6 centena',c:'6 dezena',correct:'a'},{q:'Complete: 3.5__ ~ 3.500 (centena mais próxima)',a:'3.400',b:'3.500',c:'3.600',correct:'b'}],
-        dificil:[{q:'Compare: 12.098 __ 12.89 (use < ou >)',a:'<',b:'>',c:'=',correct:'a'},{q:'Arredonde 9.951 para o milhar:',a:'9.000',b:'10.000',c:'9.900',correct:'b'},{q:'Número entre 7.209 e 7.219:',a:'7.218',b:'7.229',c:'7.119',correct:'a'},{q:'Maior: 30.050 ou 29.950?',a:'30.050',b:'iguais',c:'29.950',correct:'a'}]
-      },
-      area_perimetro:{
-        facil:[{q:'Área do retângulo 6×4:',a:'24 cm²',b:'20 cm²',c:'10 cm²',correct:'a'},{q:'Perímetro do quadrado lado 5:',a:'20',b:'25',c:'15',correct:'a'},{q:'Qual tem maior área?',a:'5×5',b:'4×7',c:'6×4',correct:'b'},{q:'Retângulo 8×3 perímetro:',a:'22',b:'24',c:'26',correct:'c'}],
+        dificil:[{q:'Compare: 12.098 __ 12.89 (use < ou >)',a:'<',b:'>',c:'=',correct:'a'},{q:'Arredonde 9.951 para o milhar:',a:'9.000',b:'10.000',c:'9.900',correct:'b'},{q:'Número entre 7.209 e 7.219:',a:'7.218',b:'7.229',c:'7.119',correct:'a'},{q:'Maior: 30.050 ou 29.950?',a:'30.050',b:'iguais',c:'29.950',correct:'a'}]},
+      area_perimetro:{ facil:[{q:'Área do retângulo 6×4:',a:'24 cm²',b:'20 cm²',c:'10 cm²',correct:'a'},{q:'Perímetro do quadrado lado 5:',a:'20',b:'25',c:'15',correct:'a'},{q:'Qual tem maior área?',a:'5×5',b:'4×7',c:'6×4',correct:'b'},{q:'Retângulo 8×3 perímetro:',a:'22',b:'24',c:'26',correct:'c'}],
         medio:[{q:'Quadrado área 49 cm², lado:',a:'6',b:'7',c:'8',correct:'b'},{q:'Retângulo 9×5, área:',a:'45',b:'40',c:'52',correct:'a'},{q:'Quadrado lado 12, perímetro:',a:'36',b:'44',c:'48',correct:'c'},{q:'Retângulo 10×2, perímetro:',a:'20',b:'24',c:'28',correct:'b'}],
-        dificil:[{q:'Retângulo 13×7, perímetro:',a:'36',b:'40',c:'46',correct:'c'},{q:'Qual área é maior?',a:'8×8',b:'10×6',c:'12×5',correct:'a'},{q:'Quadrado área 100, lado:',a:'8',b:'10',c:'12',correct:'b'},{q:'Retângulo 15×4, área:',a:'45',b:'54',c:'60',correct:'c'}]
-      },
-      tempo:{
-        facil:[{q:'De 14:15 a 15:05:',a:'40 min',b:'50 min',c:'55 min',correct:'b'},{q:'Faltam 25 min para 12:00 →',a:'11:25',b:'11:35',c:'11:45',correct:'c'},{q:'Das 09:20 às 10:00:',a:'30 min',b:'40 min',c:'50 min',correct:'b'},{q:'1h =',a:'60 min',b:'100 min',c:'120 min',correct:'a'}],
+        dificil:[{q:'Retângulo 13×7, perímetro:',a:'36',b:'40',c:'46',correct:'c'},{q:'Qual área é maior?',a:'8×8',b:'10×6',c:'12×5',correct:'a'},{q:'Quadrado área 100, lado:',a:'8',b:'10',c:'12',correct:'b'},{q:'Retângulo 15×4, área:',a:'45',b:'54',c:'60',correct:'c'}]},
+      tempo:{ facil:[{q:'De 14:15 a 15:05:',a:'40 min',b:'50 min',c:'55 min',correct:'b'},{q:'Faltam 25 min para 12:00 →',a:'11:25',b:'11:35',c:'11:45',correct:'c'},{q:'Das 09:20 às 10:00:',a:'30 min',b:'40 min',c:'50 min',correct:'b'},{q:'1h =',a:'60 min',b:'100 min',c:'120 min',correct:'a'}],
         medio:[{q:'Filme 18:30 + 1h45 =',a:'20:05',b:'20:10',c:'20:15',correct:'a'},{q:'Recreio 10:10 a 10:30:',a:'15 min',b:'20 min',c:'25 min',correct:'b'},{q:'3h 20min =',a:'180 min',b:'200 min',c:'220 min',correct:'c'},{q:'Aula 07:40 → 50 min →',a:'08:20',b:'08:25',c:'08:30',correct:'b'}],
-        dificil:[{q:'De 21:55 a 00:10:',a:'2h10',b:'2h15',c:'2h20',correct:'b'},{q:'Tarefa 35 + 50 + 15 min:',a:'1h30',b:'1h40',c:'1h45',correct:'b'},{q:'Saída 13:48 + 1h12 =',a:'14:58',b:'15:00',c:'15:02',correct:'c'},{q:'4h = ? min',a:'180',b:'220',c:'240',correct:'c'}]
-      }
+        dificil:[{q:'De 21:55 a 00:10:',a:'2h10',b:'2h15',c:'2h20',correct:'b'},{q:'Tarefa 35 + 50 + 15 min:',a:'1h30',b:'1h40',c:'1h45',correct:'b'},{q:'Saída 13:48 + 1h12 =',a:'14:58',b:'15:00',c:'15:02',correct:'c'},{q:'4h = ? min',a:'180',b:'220',c:'240',correct:'c'}]}
     };
 
     /* ====== Estado ====== */
@@ -445,7 +516,7 @@
 
     const levelPoints={facil:{correct:3,wrong:1}, medio:{correct:5,wrong:2}, dificil:{correct:10,wrong:3}};
 
-    /* ====== Abrir jogo (imersivo & autoajuste) ====== */
+    /* ====== Abrir jogo ====== */
     function openGame(key, autoFS=false){
       selectedGameKey=key; selectedLevel='';
       const meta=gamesMeta.find(g=>g.key===key);
@@ -542,12 +613,11 @@
     function playCorrect(){ tone(660,120,'sine',0.07); setTimeout(()=>tone(880,140,'sine',0.07),90); }
     function playWrong(){ tone(240,180,'sawtooth',0.06); }
     function playEnd(){ tone(523,120,'triangle',0.07); setTimeout(()=>tone(659,120,'triangle',0.07),110); setTimeout(()=>tone(784,160,'triangle',0.07),220); }
-    // clique em QUALQUER botão dentro do jogo toca "click"
     document.addEventListener('click', (e)=>{
       if(document.getElementById('game-modal').open && e.target.tagName==='BUTTON'){ playClick(); }
     }, true);
 
-    /* ====== Ranking local diário (para ranking online, integrar a um backend) ====== */
+    /* ====== Ranking local diário ====== */
     function todayKey(){ return new Date().toISOString().slice(0,10); }
     function rkKey(game,level){ return `ranking_${game}_${level}_${todayKey()}`; }
     function loadRankingFor(game,level){ try{ return (JSON.parse(localStorage.getItem(rkKey(game,level)))||[]).sort((a,b)=>b.score-a.score); }catch{return [];} }
@@ -555,7 +625,7 @@
     function addScoreToRanking(game,level,name,finalScore){
       let ranking=loadRankingFor(game,level);
       ranking.push({name,score:finalScore});
-      ranking.sort((a,b)=>b.score-a.score);
+      ranking.sort((a,b)=>b.score-a-score);
       saveRankingFor(game,level,ranking.slice(0,10));
     }
 
