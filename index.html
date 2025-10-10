@@ -62,7 +62,6 @@
 
   /* Busca menor — e centralizada */
   .search{
-    /* em grid, não precisamos de flex-grow; usamos largura máxima e centralizamos */
     justify-self:center;
     width:100%; max-width:480px; /* limite em desktop */
     display:flex; align-items:center; gap:10px;
@@ -86,13 +85,13 @@
   /* MOBILE */
   @media (max-width:600px){
     .nav{ gap:10px; grid-template-columns: auto 1fr auto; }
-    .brand img{ width:120px; height:120px; }     /* logo maior no mobile (de 88 -> 120) */
+    .brand img{ width:120px; height:120px; }
     .search{
       padding:6px 10px; min-height:38px; gap:8px;
-      max-width:var(--search-mobile-max);      /* <<< largura da barra no mobile: 200px */
+      max-width:var(--search-mobile-max);
       width:100%;
-      justify-self:center;                     /* garante centralização no grid */
-      margin:0;                                /* sem empurrar pros lados */
+      justify-self:center;
+      margin:0;
     }
     .search input{ font-size:.95rem; }
     .menu-btn{ width:40px; height:40px; }
@@ -415,16 +414,157 @@
     });
   }
 
-  /* ===== Banco de questões (exemplo) ===== */
+  /* ===== Banco de questões — 5º ano ===== */
   const gamesQuestions = {
+    /* ===================== UNIDADES DE MEDIDA ===================== */
     unidades: {
       facil: [
-        { q:'O que mede melhor a altura de uma pessoa?', a:'Metros', b:'Litros', c:'Quilos', correct:'a' },
-        { q:'1 L = ?', a:'100 mL', b:'1.000 mL', c:'10.000 mL', correct:'b' },
-        { q:'Régua de 30 cm tem…', a:'30 mm', b:'300 mm', c:'3.000 mm', correct:'b' },
-        { q:'Temperatura do corpo em…', a:'Graus Celsius', b:'Quilômetros', c:'Litros', correct:'a' }
-      ]
-    }
+        { q:'Qual unidade usamos para medir a ALTURA de uma pessoa?', a:'Metros (m)', b:'Litros (L)', c:'Quilos (kg)', correct:'a' },
+        { q:'1 metro tem…', a:'10 centímetros', b:'100 centímetros', c:'1000 centímetros', correct:'b' },
+        { q:'1 L equivale a…', a:'100 mL', b:'1000 mL', c:'10 000 mL', correct:'b' },
+        { q:'A massa de uma melancia é melhor medida em…', a:'Quilogramas (kg)', b:'Gramas (g)', c:'Toneladas (t)', correct:'a' },
+        { q:'Temperatura do corpo é medida em…', a:'Graus Celsius (°C)', b:'Metros (m)', c:'Joules (J)', correct:'a' },
+      ],
+      medio: [
+        { q:'Uma régua de 30 cm tem quantos milímetros?', a:'30 mm', b:'300 mm', c:'3000 mm', correct:'b' },
+        { q:'2,5 m equivalem a…', a:'250 cm', b:'25 cm', c:'2500 cm', correct:'a' },
+        { q:'0,75 L é igual a…', a:'750 mL', b:'75 mL', c:'7,5 mL', correct:'a' },
+        { q:'Se um pacote tem 500 g, isso é igual a…', a:'0,5 kg', b:'5 kg', c:'50 kg', correct:'a' },
+        { q:'A distância entre cidades se mede melhor em…', a:'Centímetros (cm)', b:'Metros (m)', c:'Quilômetros (km)', correct:'c' },
+      ],
+      dificil: [
+        { q:'Uma sala tem 6 m de comprimento. Em cm, isso vale…', a:'600 cm', b:'60 cm', c:'6000 cm', correct:'a' },
+        { q:'Para encher 3,5 L, quantos mL são necessários?', a:'350 mL', b:'3500 mL', c:'35 000 mL', correct:'b' },
+        { q:'Uma criança pesa 34 500 g. Em kg, é…', a:'3,45 kg', b:'34,5 kg', c:'345 kg', correct:'b' },
+        { q:'Uma corrida tem 1200 m. Em km, é…', a:'0,12 km', b:'1,2 km', c:'12 km', correct:'b' },
+        { q:'Um aquário tem 2,25 L. Isso equivale a…', a:'225 mL', b:'2250 mL', c:'22 500 mL', correct:'b' },
+      ],
+    },
+
+    /* ===================== FRAÇÕES ===================== */
+    fracoes: {
+      facil: [
+        { q:'Qual fração representa metade?', a:'1/2', b:'1/3', c:'2/3', correct:'a' },
+        { q:'Qual é MAIOR?', a:'1/4', b:'1/2', c:'1/8', correct:'b' },
+        { q:'3/4 é equivalente a…', a:'6/8', b:'2/8', c:'3/8', correct:'a' },
+        { q:'A fração de uma pizza com 2 de 4 pedaços é…', a:'2/2', b:'2/3', c:'2/4', correct:'c' },
+        { q:'Qual é MENOR?', a:'3/10', b:'1/10', c:'5/10', correct:'b' },
+      ],
+      medio: [
+        { q:'Ordene do MENOR para o MAIOR: 1/2, 1/4, 3/4', a:'1/4, 1/2, 3/4', b:'1/2, 1/4, 3/4', c:'3/4, 1/2, 1/4', correct:'a' },
+        { q:'Qual fração é equivalente a 4/6?', a:'2/3', b:'3/2', c:'6/4', correct:'a' },
+        { q:'Complete: 5/10 = ?', a:'1/5', b:'1/2', c:'2/5', correct:'b' },
+        { q:'Qual é MAIOR?', a:'2/5', b:'3/10', c:'4/10', correct:'a' },
+        { q:'Qual fração representa três quartos?', a:'4/3', b:'3/4', c:'1/3', correct:'b' },
+      ],
+      dificil: [
+        { q:'Qual é MAIOR?', a:'7/12', b:'2/3', c:'5/8', correct:'b' },   // 0,583 ; 0,666 ; 0,625
+        { q:'Qual fração é equivalente a 9/12?', a:'3/4', b:'2/3', c:'4/6', correct:'a' },
+        { q:'Ordene do MAIOR para o MENOR: 5/6, 4/5, 7/8', a:'7/8, 5/6, 4/5', b:'5/6, 7/8, 4/5', c:'4/5, 5/6, 7/8', correct:'a' }, // 0,875>0,833>0,8
+        { q:'Qual é MENOR?', a:'3/5', b:'1/2', c:'5/9', correct:'b' },   // 0,6 ; 0,5 ; 0,555...
+        { q:'12/16 é equivalente a…', a:'3/4', b:'2/4', c:'6/12', correct:'a' },
+      ],
+    },
+
+    /* ===================== NÚMEROS NATURAIS (operações) ===================== */
+    naturais: {
+      facil: [
+        { q:'45 + 27 = ?', a:'72', b:'68', c:'62', correct:'b' },
+        { q:'90 − 35 = ?', a:'55', b:'45', c:'65', correct:'a' },
+        { q:'8 × 7 = ?', a:'56', b:'49', c:'63', correct:'a' },
+        { q:'36 ÷ 6 = ?', a:'8', b:'6', c:'7', correct:'a' },
+        { q:'O dobro de 25 é…', a:'45', b:'50', c:'75', correct:'b' },
+      ],
+      medio: [
+        { q:'325 + 480 = ?', a:'705', b:'795', c:'805', correct:'b' },
+        { q:'900 − 275 = ?', a:'725', b:'635', c:'625', correct:'c' },
+        { q:'12 × 8 = ?', a:'80', b:'96', c:'108', correct:'b' },
+        { q:'81 ÷ 9 = ?', a:'8', b:'9', c:'7', correct:'b' },
+        { q:'Qual tem resto 2?', a:'30 ÷ 7', b:'25 ÷ 6', c:'28 ÷ 5', correct:'a' }, // 4r2 ; 4r1 ; 5r3
+      ],
+      dificil: [
+        { q:'(48 ÷ 6) × 7 = ?', a:'56', b:'49', c:'58', correct:'a' }, // 8×7
+        { q:'700 − (120 + 85) = ?', a:'505', b:'495', c:'515', correct:'b' },
+        { q:'MMC de 6 e 8 = ?', a:'12', b:'24', c:'48', correct:'b' },
+        { q:'MDC de 18 e 24 = ?', a:'6', b:'12', c:'18', correct:'b' },
+        { q:'Complete: 5 × ___ = 135', a:'25', b:'27', c:'23', correct:'b' },
+      ],
+    },
+
+    /* ===================== VALOR POSICIONAL e ARREDONDAMENTO ===================== */
+    posicional: {
+      facil: [
+        { q:'No número 4.582, o dígito 5 vale…', a:'5 dezenas', b:'5 centenas', c:'5 unidades', correct:'b' },
+        { q:'No número 7.306, o 7 está na casa de…', a:'milhar', b:'centena', c:'dezena', correct:'a' },
+        { q:'Arredonde 78 para a dezena mais próxima:', a:'70', b:'80', c:'90', correct:'b' },
+        { q:'O dígito 9 em 9.124 vale…', a:'9 milhares', b:'9 centenas', c:'9 dezenas', correct:'a' },
+        { q:'Arredonde 144 para a centena mais próxima:', a:'100', b:'200', c:'150', correct:'a' },
+      ],
+      medio: [
+        { q:'No número 36.427, o 6 vale…', a:'6 milhares', b:'6 centenas', c:'6 dezenas', correct:'b' },
+        { q:'Qual é MAIOR?', a:'5.090', b:'5.009', c:'5.900', correct:'c' },
+        { q:'Arredonde 2.649 para a centena mais próxima:', a:'2.600', b:'2.700', c:'2.650', correct:'b' },
+        { q:'Em 80.501, quantas centenas completas?', a:'805', b:'8050', c:'80', correct:'a' },
+        { q:'Qual é MENOR?', a:'4.980', b:'4.908', c:'4.890', correct:'c' },
+      ],
+      dificil: [
+        { q:'No número 254.307, o 4 vale…', a:'4 centenas', b:'4 milhares', c:'4 dezenas de milhar', correct:'b' },
+        { q:'Arredonde 49.450 para a milhar mais próxima:', a:'49.000', b:'49.500', c:'50.000', correct:'c' },
+        { q:'Sequência em ordem CRESCENTE:', a:'5.012, 5.021, 5.102', b:'5.120, 5.102, 5.210', c:'5.210, 5.201, 5.120', correct:'a' },
+        { q:'3 dezenas de milhar + 4 centenas =', a:'30.400', b:'3.400', c:'34.000', correct:'a' },
+        { q:'No número 408.670, quantas dezenas?', a:'8.067', b:'40.867', c:'4067', correct:'c' }, // 408670/10
+      ],
+    },
+
+    /* ===================== PERÍMETRO e ÁREA ===================== */
+    area_perimetro: {
+      facil: [
+        { q:'Perímetro é…', a:'a soma dos lados', b:'a área pintada', c:'a diagonal', correct:'a' },
+        { q:'Quadrado de lado 5 cm. Perímetro =', a:'10 cm', b:'20 cm', c:'25 cm²', correct:'b' },
+        { q:'Retângulo 6 cm × 3 cm. Área =', a:'9 cm²', b:'18 cm²', c:'27 cm²', correct:'b' },
+        { q:'Quadrado de lado 4 m. Área =', a:'8 m²', b:'12 m²', c:'16 m²', correct:'c' },
+        { q:'Retângulo 10 m × 2 m. Perímetro =', a:'24 m', b:'20 m', c:'12 m', correct:'a' },
+      ],
+      medio: [
+        { q:'Retângulo 7 cm × 5 cm. Área =', a:'35 cm²', b:'24 cm²', c:'12 cm²', correct:'a' },
+        { q:'Quadrado de lado 9 cm. Perímetro =', a:'18 cm', b:'36 cm', c:'81 cm²', correct:'b' },
+        { q:'Retângulo 12 m × 4 m. Perímetro =', a:'16 m', b:'24 m', c:'32 m', correct:'c' },
+        { q:'ÁREA: retângulo 8 m × 6 m =', a:'14 m²', b:'28 m²', c:'48 m²', correct:'c' },
+        { q:'Um terreno retangular 15 m × 10 m. Área =', a:'150 m²', b:'25 m²', c:'30 m²', correct:'a' },
+      ],
+      dificil: [
+        { q:'Quadrado área 49 cm². Lado =', a:'7 cm', b:'14 cm', c:'6 cm', correct:'a' },
+        { q:'Retângulo perímetro 30 m, lados 10 m e ?', a:'5 m', b:'10 m', c:'15 m', correct:'a' }, // 2(10+x)=30 -> x=5
+        { q:'Sala 6 m × 4 m. Quantos m² de piso?', a:'10 m²', b:'20 m²', c:'24 m²', correct:'c' },
+        { q:'Jardim 9 m × 3 m. Perímetro =', a:'27 m', b:'24 m', c:'18 m', correct:'b' },
+        { q:'Quadrado perímetro 28 cm. Lado =', a:'7 cm', b:'14 cm', c:'4 cm', correct:'a' },
+      ],
+    },
+
+    /* ===================== MEDIDAS DE TEMPO ===================== */
+    tempo: {
+      facil: [
+        { q:'Um minuto tem…', a:'60 segundos', b:'100 segundos', c:'30 segundos', correct:'a' },
+        { q:'Uma hora tem…', a:'60 minutos', b:'90 minutos', c:'120 minutos', correct:'a' },
+        { q:'Das 2h às 5h, passam…', a:'2 horas', b:'3 horas', c:'4 horas', correct:'b' },
+        { q:'Meia hora corresponde a…', a:'15 minutos', b:'30 minutos', c:'45 minutos', correct:'b' },
+        { q:'Um dia tem…', a:'12 horas', b:'24 horas', c:'48 horas', correct:'b' },
+      ],
+      medio: [
+        { q:'45 minutos = ? horas', a:'0,45 h', b:'0,75 h', c:'0,75 min', correct:'b' }, // 45/60=0,75 h
+        { q:'Das 8:15 às 9:00, passam…', a:'30 min', b:'45 min', c:'60 min', correct:'b' },
+        { q:'2 h e 30 min = ? min', a:'120 min', b:'150 min', c:'180 min', correct:'b' },
+        { q:'Se a aula começou 13:40 e acabou 15:10, durou…', a:'1h10', b:'1h30', c:'2h10', correct:'b' },
+        { q:'Trimestre tem cerca de…', a:'3 meses', b:'4 meses', c:'6 meses', correct:'a' },
+      ],
+      dificil: [
+        { q:'Um filme dura 1h55. Em minutos é…', a:'105 min', b:'115 min', c:'125 min', correct:'b' },
+        { q:'Começa 07:35 e termina 11:10. Duração:', a:'3h25', b:'3h35', c:'4h25', correct:'a' },
+        { q:'Se passaram 2 ½ horas. Em minutos:', a:'120', b:'140', c:'150', correct:'c' },
+        { q:'Quinze dias equivalem a…', a:'duas semanas + 1 dia', b:'exatamente 2 semanas', c:'3 semanas', correct:'a' },
+        { q:'Um bimestre tem…', a:'2 meses', b:'3 meses', c:'4 meses', correct:'a' },
+      ],
+    },
   };
 
   /* ===== Estado & Jogo ===== */
@@ -443,6 +583,7 @@
   const optionC=document.getElementById('option-c');
   const feedbackEl=document.getElementById('feedback');
   const scoreDisplayGame=document.getElementById('score-display-game');
+  const nextBtn=document.getElementById('next-btn');
 
   const levelPoints={facil:{correct:3,wrong:1}, medio:{correct:5,wrong:2}, dificil:{correct:10,wrong:3}};
 
@@ -494,16 +635,27 @@
     scoreDisplayGame.textContent='Pontuação: 0';
     showQuestion();
   }
+
+  function currentList(){
+    return (gamesQuestions[selectedGameKey]?.[selectedLevel]) || [];
+  }
+
   function showQuestion(){
-    answered=false; feedbackEl.classList.add('hidden'); document.getElementById('next-btn').classList.add('hidden');
-    const current=(gamesQuestions[selectedGameKey]?.[selectedLevel] || [{q:'Em breve 🙂',a:'—',b:'—',c:'—',correct:'a'}])[questionIndex] || {q:'Fim!',a:'',b:'',c:'',correct:'a'};
+    const list = currentList();
+    if (questionIndex >= list.length || list.length === 0){
+      endGame();
+      return;
+    }
+    answered=false; feedbackEl.classList.add('hidden'); nextBtn.classList.add('hidden');
+    const current=list[questionIndex];
     questionText.textContent=current.q;
     optionA.textContent=`a) ${current.a}`; optionB.textContent=`b) ${current.b}`; optionC.textContent=`c) ${current.c}`;
     [optionA,optionB,optionC].forEach(btn=>btn.classList.remove('btn-green','btn-red'));
   }
+
   function checkAnswer(answer){
     if(answered) return; answered=true;
-    const current=(gamesQuestions[selectedGameKey]?.[selectedLevel] || [])[questionIndex];
+    const list=currentList(); const current=list[questionIndex];
     const pts=levelPoints[selectedLevel]||levelPoints.facil;
     if(current && answer===current.correct){
       score+=pts.correct; feedbackEl.textContent=`Correto! (+${pts.correct})`; feedbackEl.style.color='green';
@@ -513,9 +665,29 @@
       document.getElementById(`option-${answer}`).classList.add('btn-red');
     }
     scoreDisplayGame.textContent=`Pontuação: ${score}`;
-    feedbackEl.classList.remove('hidden'); document.getElementById('next-btn').classList.remove('hidden');
+    feedbackEl.classList.remove('hidden'); nextBtn.classList.remove('hidden');
   }
-  function nextQuestion(){ questionIndex++; showQuestion(); }
+
+  function nextQuestion(){
+    questionIndex++;
+    showQuestion();
+  }
+
+  async function endGame(){
+    // salva no ranking (online se Firebase configurado; senão localStorage)
+    try{
+      if (typeof addScoreToRanking === 'function'){
+        await addScoreToRanking(selectedGameKey, selectedLevel, playerName || 'Jogador(a)', score);
+      } else {
+        addScoreLocal(selectedGameKey, selectedLevel, playerName || 'Jogador(a)', score);
+      }
+    }catch{
+      addScoreLocal(selectedGameKey, selectedLevel, playerName || 'Jogador(a)', score);
+    }
+    alert(`Fim do jogo!\nPontuação final: ${score}`);
+    backFromGame();
+    openRanking(selectedGameKey); // abre ranking do jogo jogado
+  }
 
   /* ===== Ranking local (fallback) ===== */
   function todayKey(){ return new Date().toISOString().slice(0,10); }
