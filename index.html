@@ -23,7 +23,6 @@
     --green:#34c38f; --yellow:#f1c232; --red:#ef6464; --blue:#5a8bff;
     --radius:18px; --shadow:0 18px 40px rgba(20,25,34,.08); --space:clamp(14px,3vw,28px);
     --safe-top: env(safe-area-inset-top, 0px);
-    /* <<< largura menor da barra no mobile >>> */
     --search-mobile-max: 200px;
   }
   *{box-sizing:border-box}
@@ -45,12 +44,9 @@
   }
   .nav{
     max-width:1200px; margin:0 auto; padding:10px var(--space);
-    /* >>> GRID para centralizar a busca entre logo e menu <<< */
     display:grid; align-items:center; gap:12px;
-    grid-template-columns: 1fr auto 1fr; /* esquerda | centro | direita */
+    grid-template-columns: 1fr auto 1fr;
   }
-
-  /* Logo maior – sem caixa e sem sobreposição */
   .brand{display:flex; align-items:center; justify-self:start}
   .brand img{
     width:150px; height:150px; object-fit:contain; display:block;
@@ -59,11 +55,9 @@
     image-rendering:-webkit-optimize-contrast;
     -webkit-user-select:none; user-select:none; touch-action:manipulation;
   }
-
-  /* Busca menor — e centralizada */
   .search{
     justify-self:center;
-    width:100%; max-width:480px; /* limite em desktop */
+    width:100%; max-width:480px;
     display:flex; align-items:center; gap:10px;
     padding:10px 12px; border-radius:999px; border:1px solid #ffe1ef; background:#fff;
     min-height:44px;
@@ -73,8 +67,6 @@
     border:none; outline:none; font-size:1rem; flex:1 1 auto;
     -webkit-appearance:none; background:transparent;
   }
-
-  /* Botão menu sempre na direita */
   .menu-btn{
     justify-self:end;
     display:flex; align-items:center; justify-content:center;
@@ -82,16 +74,12 @@
     background:#fff; cursor:pointer; font-size:20px; font-weight:900;
   }
 
-  /* MOBILE */
   @media (max-width:600px){
     .nav{ gap:10px; grid-template-columns: auto 1fr auto; }
     .brand img{ width:120px; height:120px; }
     .search{
       padding:6px 10px; min-height:38px; gap:8px;
-      max-width:var(--search-mobile-max);
-      width:100%;
-      justify-self:center;
-      margin:0;
+      max-width:var(--search-mobile-max); width:100%; justify-self:center; margin:0;
     }
     .search input{ font-size:.95rem; }
     .menu-btn{ width:40px; height:40px; }
@@ -118,7 +106,7 @@
   }
   .overlay.show{ opacity:1; pointer-events:auto; }
 
-  /* ===== Hero com faixa animada ===== */
+  /* ===== Hero ===== */
   .hero{position:relative; overflow:hidden; background:linear-gradient(180deg,#ffe9f2,var(--mint-100));}
   .hero .wrap{
     max-width:1200px; margin:0 auto; padding:20px var(--space) 10px; display:grid; gap:12px;
@@ -195,10 +183,8 @@
   .rules{ max-width:720px; font-size:.95rem; color:#6d3b4f; background:#fff5fa; border:1px solid #ffd6e6; padding:10px 12px; border-radius:12px; }
   .hidden{display:none}
 
-  /* ===== Ranking – chips alinhados ===== */
+  /* ===== Ranking ===== */
   .filter-bar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:10px 12px; background:#fff; border-bottom:1px solid #f1e2ea}
-  .filter-bar .chip{padding:10px 16px; border-radius:999px; background:#ffe9f2; border:1px solid #ffd0e1; font-weight:900; color:#7a3e53; cursor:pointer}
-  .filter-bar .chip[aria-pressed="true"]{background:var(--pink-400); color:#fff; border-color:var(--pink-500)}
   .rank-wrap{padding:14px}
   .rank-list{list-style:none; padding:0; margin:0; display:grid; gap:10px}
   .rank-item{display:flex; justify-content:space-between; align-items:center; background:#fff; border:1px solid #f1e2ea; border-radius:12px; padding:12px 14px}
@@ -309,7 +295,11 @@
 
       <div id="game-screen" class="screen hidden">
         <p id="level-display" style="font-weight:900;"></p>
-        <div id="question-box"><p id="question-text" style="font-size:1.12rem"></p></div>
+        <div id="question-box">
+          <p id="question-text" style="font-size:1.12rem"></p>
+          <!-- imagem ilustrativa da questão -->
+          <img id="question-img" alt="Ilustração da questão" style="max-width:min(560px, 96%); width:100%; height:auto; border:1px solid #eef2f5; border-radius:12px; background:#fff" />
+        </div>
         <div id="options-container" class="options">
           <button id="option-a" class="option-btn" onclick="checkAnswer('a')"></button>
           <button id="option-b" class="option-btn" onclick="checkAnswer('b')"></button>
@@ -323,25 +313,27 @@
   </div>
 </dialog>
 
-<!-- ===== Modal de Ranking ===== -->
+<!-- ===== Modal de Ranking (GERAL) ===== -->
 <dialog id="ranking-modal" aria-label="Ranking">
   <div class="modal-header">
     <button class="icon-btn" onclick="closeRanking()">← Voltar</button>
-    <div class="modal-title" id="ranking-title">Ranking de Hoje</div>
+    <div class="modal-title" id="ranking-title">🏆 Ranking Geral</div>
     <span></span>
   </div>
   <div class="modal-body">
     <div class="filter-bar">
-      <strong id="rank-game-name"></strong>
+      <strong id="rank-subtitle">Top 10 — todos os jogos e níveis</strong>
       <div style="flex:1"></div>
-      <button class="chip" data-level="facil"  aria-pressed="true"  onclick="setRankingLevel('facil')">Fácil</button>
-      <button class="chip" data-level="medio"  aria-pressed="false" onclick="setRankingLevel('medio')">Médio</button>
-      <button class="chip" data-level="dificil" aria-pressed="false" onclick="setRankingLevel('dificil')">Difícil</button>
+      <button class="chip" onclick="clearRanking()" title="Limpar ranking local (somente este dispositivo)">Limpar local</button>
     </div>
     <div class="rank-wrap">
       <ul class="rank-list" id="rank-list"></ul>
-      <p class="rank-empty hidden" id="rank-empty">Nenhum recorde hoje! Seja o primeiro.</p>
-      <p style="margin-top:8px;opacity:.8"><small>Ranking diário — <span id="rank-date"></span></small></p>
+      <p class="rank-empty hidden" id="rank-empty">Ainda sem registros. Jogue para aparecer aqui!</p>
+      <p style="margin-top:8px;opacity:.8">
+        <small>
+          Ranking geral • <span id="rank-count"></span> partidas registradas
+        </small>
+      </p>
     </div>
   </div>
 </dialog>
@@ -370,7 +362,7 @@
   }
   openBtn.addEventListener('click', openDrawer);
 
-  function syncFiltersAndApply(){ applyFilters(); } // (mantido simplificado)
+  function syncFiltersAndApply(){ applyFilters(); }
 
   /* ===== Cards ===== */
   const gamesMeta = [
@@ -399,7 +391,7 @@
         </div>
         <div class="card-actions">
           <button class="btn btn-play" onclick="openGame('${g.key}', true)">Jogar</button>
-          <button class="btn btn-rank" onclick="openRanking('${g.key}')">Ranking</button>
+          <button class="btn btn-rank" onclick="openRanking()">Ranking</button>
         </div>`;
       grid.appendChild(el);
     });
@@ -414,9 +406,12 @@
     });
   }
 
-  /* ===== Banco de questões — 5º ano ===== */
+  /* ============================================================
+     Banco de questões — 5º ano
+     (Mesmas questões do envio anterior; imagens agora são geradas
+      automaticamente por SVG conforme o tema)
+  ============================================================ */
   const gamesQuestions = {
-    /* ===================== UNIDADES DE MEDIDA ===================== */
     unidades: {
       facil: [
         { q:'Qual unidade usamos para medir a ALTURA de uma pessoa?', a:'Metros (m)', b:'Litros (L)', c:'Quilos (kg)', correct:'a' },
@@ -440,8 +435,6 @@
         { q:'Um aquário tem 2,25 L. Isso equivale a…', a:'225 mL', b:'2250 mL', c:'22 500 mL', correct:'b' },
       ],
     },
-
-    /* ===================== FRAÇÕES ===================== */
     fracoes: {
       facil: [
         { q:'Qual fração representa metade?', a:'1/2', b:'1/3', c:'2/3', correct:'a' },
@@ -458,15 +451,13 @@
         { q:'Qual fração representa três quartos?', a:'4/3', b:'3/4', c:'1/3', correct:'b' },
       ],
       dificil: [
-        { q:'Qual é MAIOR?', a:'7/12', b:'2/3', c:'5/8', correct:'b' },   // 0,583 ; 0,666 ; 0,625
+        { q:'Qual é MAIOR?', a:'7/12', b:'2/3', c:'5/8', correct:'b' },
         { q:'Qual fração é equivalente a 9/12?', a:'3/4', b:'2/3', c:'4/6', correct:'a' },
-        { q:'Ordene do MAIOR para o MENOR: 5/6, 4/5, 7/8', a:'7/8, 5/6, 4/5', b:'5/6, 7/8, 4/5', c:'4/5, 5/6, 7/8', correct:'a' }, // 0,875>0,833>0,8
-        { q:'Qual é MENOR?', a:'3/5', b:'1/2', c:'5/9', correct:'b' },   // 0,6 ; 0,5 ; 0,555...
+        { q:'Ordene do MAIOR para o MENOR: 5/6, 4/5, 7/8', a:'7/8, 5/6, 4/5', b:'5/6, 7/8, 4/5', c:'4/5, 5/6, 7/8', correct:'a' },
+        { q:'Qual é MENOR?', a:'3/5', b:'1/2', c:'5/9', correct:'b' },
         { q:'12/16 é equivalente a…', a:'3/4', b:'2/4', c:'6/12', correct:'a' },
       ],
     },
-
-    /* ===================== NÚMEROS NATURAIS (operações) ===================== */
     naturais: {
       facil: [
         { q:'45 + 27 = ?', a:'72', b:'68', c:'62', correct:'b' },
@@ -480,18 +471,16 @@
         { q:'900 − 275 = ?', a:'725', b:'635', c:'625', correct:'c' },
         { q:'12 × 8 = ?', a:'80', b:'96', c:'108', correct:'b' },
         { q:'81 ÷ 9 = ?', a:'8', b:'9', c:'7', correct:'b' },
-        { q:'Qual tem resto 2?', a:'30 ÷ 7', b:'25 ÷ 6', c:'28 ÷ 5', correct:'a' }, // 4r2 ; 4r1 ; 5r3
+        { q:'Qual tem resto 2?', a:'30 ÷ 7', b:'25 ÷ 6', c:'28 ÷ 5', correct:'a' },
       ],
       dificil: [
-        { q:'(48 ÷ 6) × 7 = ?', a:'56', b:'49', c:'58', correct:'a' }, // 8×7
+        { q:'(48 ÷ 6) × 7 = ?', a:'56', b:'49', c:'58', correct:'a' },
         { q:'700 − (120 + 85) = ?', a:'505', b:'495', c:'515', correct:'b' },
         { q:'MMC de 6 e 8 = ?', a:'12', b:'24', c:'48', correct:'b' },
         { q:'MDC de 18 e 24 = ?', a:'6', b:'12', c:'18', correct:'b' },
         { q:'Complete: 5 × ___ = 135', a:'25', b:'27', c:'23', correct:'b' },
       ],
     },
-
-    /* ===================== VALOR POSICIONAL e ARREDONDAMENTO ===================== */
     posicional: {
       facil: [
         { q:'No número 4.582, o dígito 5 vale…', a:'5 dezenas', b:'5 centenas', c:'5 unidades', correct:'b' },
@@ -512,11 +501,9 @@
         { q:'Arredonde 49.450 para a milhar mais próxima:', a:'49.000', b:'49.500', c:'50.000', correct:'c' },
         { q:'Sequência em ordem CRESCENTE:', a:'5.012, 5.021, 5.102', b:'5.120, 5.102, 5.210', c:'5.210, 5.201, 5.120', correct:'a' },
         { q:'3 dezenas de milhar + 4 centenas =', a:'30.400', b:'3.400', c:'34.000', correct:'a' },
-        { q:'No número 408.670, quantas dezenas?', a:'8.067', b:'40.867', c:'4067', correct:'c' }, // 408670/10
+        { q:'No número 408.670, quantas dezenas?', a:'8.067', b:'40.867', c:'4067', correct:'c' },
       ],
     },
-
-    /* ===================== PERÍMETRO e ÁREA ===================== */
     area_perimetro: {
       facil: [
         { q:'Perímetro é…', a:'a soma dos lados', b:'a área pintada', c:'a diagonal', correct:'a' },
@@ -534,14 +521,12 @@
       ],
       dificil: [
         { q:'Quadrado área 49 cm². Lado =', a:'7 cm', b:'14 cm', c:'6 cm', correct:'a' },
-        { q:'Retângulo perímetro 30 m, lados 10 m e ?', a:'5 m', b:'10 m', c:'15 m', correct:'a' }, // 2(10+x)=30 -> x=5
+        { q:'Retângulo perímetro 30 m, lados 10 m e ?', a:'5 m', b:'10 m', c:'15 m', correct:'a' },
         { q:'Sala 6 m × 4 m. Quantos m² de piso?', a:'10 m²', b:'20 m²', c:'24 m²', correct:'c' },
         { q:'Jardim 9 m × 3 m. Perímetro =', a:'27 m', b:'24 m', c:'18 m', correct:'b' },
         { q:'Quadrado perímetro 28 cm. Lado =', a:'7 cm', b:'14 cm', c:'4 cm', correct:'a' },
       ],
     },
-
-    /* ===================== MEDIDAS DE TEMPO ===================== */
     tempo: {
       facil: [
         { q:'Um minuto tem…', a:'60 segundos', b:'100 segundos', c:'30 segundos', correct:'a' },
@@ -551,7 +536,7 @@
         { q:'Um dia tem…', a:'12 horas', b:'24 horas', c:'48 horas', correct:'b' },
       ],
       medio: [
-        { q:'45 minutos = ? horas', a:'0,45 h', b:'0,75 h', c:'0,75 min', correct:'b' }, // 45/60=0,75 h
+        { q:'45 minutos = ? horas', a:'0,45 h', b:'0,75 h', c:'0,75 min', correct:'b' },
         { q:'Das 8:15 às 9:00, passam…', a:'30 min', b:'45 min', c:'60 min', correct:'b' },
         { q:'2 h e 30 min = ? min', a:'120 min', b:'150 min', c:'180 min', correct:'b' },
         { q:'Se a aula começou 13:40 e acabou 15:10, durou…', a:'1h10', b:'1h30', c:'2h10', correct:'b' },
@@ -578,6 +563,7 @@
   const gameScreen=document.getElementById('game-screen');
   const levelDisplay=document.getElementById('level-display');
   const questionText=document.getElementById('question-text');
+  const questionImg=document.getElementById('question-img');
   const optionA=document.getElementById('option-a');
   const optionB=document.getElementById('option-b');
   const optionC=document.getElementById('option-c');
@@ -649,6 +635,10 @@
     answered=false; feedbackEl.classList.add('hidden'); nextBtn.classList.add('hidden');
     const current=list[questionIndex];
     questionText.textContent=current.q;
+    // imagem gerada conforme tema
+    questionImg.src = makeIllustrationDataURL(selectedGameKey, current, questionIndex);
+    questionImg.style.display = 'block';
+
     optionA.textContent=`a) ${current.a}`; optionB.textContent=`b) ${current.b}`; optionC.textContent=`c) ${current.c}`;
     [optionA,optionB,optionC].forEach(btn=>btn.classList.remove('btn-green','btn-red'));
   }
@@ -673,71 +663,225 @@
     showQuestion();
   }
 
-  async function endGame(){
-    // salva no ranking (online se Firebase configurado; senão localStorage)
+  /* =================== RANKING GERAL (Local + Google Sheets opcional) =================== */
+  const RANKING_KEY = 'ranking_geral_v1';
+  const SHEETS_WEBAPP_URL = ''; // <-- COLE AQUI a URL do seu Web App do Apps Script (POST)
+
+  function loadRankingAll(){
+    try{ return JSON.parse(localStorage.getItem(RANKING_KEY)) || []; }catch{return [];}
+  }
+  function saveRankingAll(arr){
+    try{ localStorage.setItem(RANKING_KEY, JSON.stringify(arr)); }catch{}
+  }
+  function addToRankingAll(entry){
+    // entry = {name, score, game, level, dateISO}
+    const all = loadRankingAll();
+    all.push(entry);
+    // mantém até 200 registros locais (para não crescer infinito)
+    if (all.length > 200) all.shift();
+    // ordenação apenas na exibição
+    saveRankingAll(all);
+  }
+  async function postToSheets(entry){
+    if(!SHEETS_WEBAPP_URL) return;
     try{
-      if (typeof addScoreToRanking === 'function'){
-        await addScoreToRanking(selectedGameKey, selectedLevel, playerName || 'Jogador(a)', score);
-      } else {
-        addScoreLocal(selectedGameKey, selectedLevel, playerName || 'Jogador(a)', score);
-      }
-    }catch{
-      addScoreLocal(selectedGameKey, selectedLevel, playerName || 'Jogador(a)', score);
+      await fetch(SHEETS_WEBAPP_URL, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(entry)
+      });
+    }catch(e){
+      console.warn('Falha ao enviar para Sheets:', e?.message || e);
     }
+  }
+
+  async function endGame(){
+    const entry = {
+      name: playerName || 'Jogador(a)',
+      score,
+      game: selectedGameKey,
+      level: selectedLevel,
+      dateISO: new Date().toISOString()
+    };
+    // salva local e tenta enviar ao Sheets
+    addToRankingAll(entry);
+    postToSheets(entry);
+
     alert(`Fim do jogo!\nPontuação final: ${score}`);
     backFromGame();
-    openRanking(selectedGameKey); // abre ranking do jogo jogado
+    openRanking(); // abre o ranking geral
   }
 
-  /* ===== Ranking local (fallback) ===== */
-  function todayKey(){ return new Date().toISOString().slice(0,10); }
-  function rkKey(game,level){ return `ranking_${game}_${level}_${todayKey()}`; }
-  function loadRankingLocal(game,level){ try{ return (JSON.parse(localStorage.getItem(rkKey(game,level)))||[]).sort((a,b)=>b.score-a.score); }catch{return [];} }
-  function saveRankingLocal(game,level,arr){ try{ localStorage.setItem(rkKey(game,level), JSON.stringify(arr)); }catch{} }
-  function addScoreLocal(game,level,name,finalScore){
-    let ranking=loadRankingLocal(game,level);
-    ranking.push({name,score:finalScore});
-    ranking.sort((a,b)=>b.score-a.score);
-    saveRankingLocal(game,level,ranking.slice(0,10));
-  }
-
-  /* ===== Modal Ranking ===== */
-  const rmodal=document.getElementById('ranking-modal');
-  const rankTitle=document.getElementById('ranking-title');
-  const rankGameName=document.getElementById('rank-game-name');
-  const rankList=document.getElementById('rank-list');
-  const rankEmpty=document.getElementById('rank-empty');
-  const rankDate=document.getElementById('rank-date');
-  let rankingGameKey=null, rankingLevel='facil';
-  window.unsubscribeRanking=null;
-
-  function openRanking(gameKey){
-    rankingGameKey=gameKey; rankingLevel='facil';
-    rankTitle.textContent='Ranking de Hoje'; rankGameName.textContent=gamesMeta.find(g=>g.key===gameKey).title;
-    document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
-    document.querySelector('#ranking-modal .chip[data-level="facil"]').setAttribute('aria-pressed','true');
+  function openRanking(){
     if(!rmodal.open) rmodal.showModal();
-    startRealtimeRanking();
+    renderRankingGeneral();
   }
-  function closeRanking(){
-    if (window.unsubscribeRanking) { window.unsubscribeRanking(); window.unsubscribeRanking=null; }
-    if(rmodal.open) rmodal.close();
-  }
-  function setRankingLevel(lvl){
-    rankingLevel=lvl;
-    document.querySelectorAll('#ranking-modal .chip').forEach(c=>c.setAttribute('aria-pressed','false'));
-    document.querySelector(`#ranking-modal .chip[data-level="${lvl}"]`).setAttribute('aria-pressed','true');
-    startRealtimeRanking();
-  }
-  function renderRankingList(arr){
-    rankList.innerHTML=''; rankDate.textContent=todayKey();
-    if(!arr || !arr.length){ rankEmpty.classList.remove('hidden'); return; }
+  function closeRanking(){ if(rmodal.open) rmodal.close(); }
+  function renderRankingGeneral(){
+    const all = loadRankingAll();
+    const sorted = all.slice().sort((a,b)=>b.score - a.score).slice(0, 10);
+    rankList.innerHTML='';
+    document.getElementById('rank-count').textContent = all.length;
+    if(!sorted.length){ rankEmpty.classList.remove('hidden'); return; }
     rankEmpty.classList.add('hidden');
-    arr.forEach((e,i)=>{
+    sorted.forEach((e,i)=>{
+      const labelGame = gamesMeta.find(g=>g.key===e.game)?.title || e.game;
       const li=document.createElement('li'); li.className='rank-item';
-      li.innerHTML=`<strong>${i+1}. ${e.name}</strong><span>${e.score} pts</span>`;
+      li.innerHTML = `<strong>${i+1}. ${e.name}</strong>
+                      <span>${e.score} pts • <small>${labelGame} — ${e.level}</small></span>`;
       rankList.appendChild(li);
     });
+  }
+  function clearRanking(){
+    if(confirm('Limpar ranking local deste dispositivo?')){ saveRankingAll([]); renderRankingGeneral(); }
+  }
+
+  /* ===== Modal Ranking (referências DOM) ===== */
+  const rmodal=document.getElementById('ranking-modal');
+  const rankList=document.getElementById('rank-list');
+  const rankEmpty=document.getElementById('rank-empty');
+
+  /* =================== Ilustrações (SVG data URL) =================== */
+  function svgToDataUrl(svg){
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  }
+
+  function makeIllustrationDataURL(gameKey, qObj, idx){
+    const W=700, H=360, bg='#ffffff', border='#ffd3e4', title='#7a3e53', main='#5a8bff', aux='#34c38f', text='#273043';
+    const safeText = (t)=> String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    if(gameKey==='fracoes'){
+      // Pizza fracionada simples com legenda
+      const frac = (qObj.a.includes('/')? qObj.a : (qObj.b.includes('/')? qObj.b : (qObj.c.includes('/')? qObj.c : '1/2')));
+      const [num,den] = frac.split('/').map(Number);
+      const cx=180, cy=180, r=110;
+      let slices='';
+      for(let i=0;i<den;i++){
+        const a1 = (2*Math.PI*i/den) - Math.PI/2;
+        const a2 = (2*Math.PI*(i+1)/den) - Math.PI/2;
+        const large = (a2-a1)>Math.PI?1:0;
+        const x1 = cx + r*Math.cos(a1), y1 = cy + r*Math.sin(a1);
+        const x2 = cx + r*Math.cos(a2), y2 = cy + r*Math.sin(a2);
+        const filled = i < num ? main : '#eef2ff';
+        slices += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large} 1 ${x2},${y2} Z" fill="${filled}" stroke="${border}"/>`;
+      }
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+          <rect x="0" y="0" width="${W}" height="${H}" fill="${bg}" stroke="${border}"/>
+          <g>
+            <circle cx="${cx}" cy="${cy}" r="${r+1}" fill="#fff" stroke="${border}"/>
+            ${slices}
+          </g>
+          <text x="360" y="120" font-family="Nunito" font-size="22" fill="${title}" font-weight="900">Frações</text>
+          <text x="360" y="160" font-family="Nunito" font-size="18" fill="${text}">Exemplo visual de fatias de pizza.</text>
+          <text x="360" y="200" font-family="Nunito" font-size="18" fill="${text}">Destaque: ${safeText(frac)}</text>
+        </svg>`;
+      return svgToDataUrl(svg);
+    }
+
+    if(gameKey==='unidades'){
+      // Régua + garrafa + termômetro (ícones simples)
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+          <rect width="${W}" height="${H}" fill="${bg}" stroke="${border}"/>
+          <!-- Régua -->
+          <rect x="40" y="60" width="300" height="30" rx="6" fill="#ffe9f2" stroke="${border}"/>
+          ${Array.from({length:31}).map((_,i)=>{
+            const x=50+i*9.6; const h=i%5===0?20:12;
+            return `<line x1="${x}" y1="${60}" x2="${x}" y2="${60+h}" stroke="${title}" stroke-width="2"/>`
+          }).join('')}
+          <text x="40" y="115" font-family="Nunito" font-size="16" fill="${text}">cm / mm</text>
+          <!-- Garrafa (L/mL) -->
+          <rect x="420" y="70" width="80" height="180" rx="16" fill="#e6f7ff" stroke="${border}"/>
+          <rect x="420" y="170" width="80" height="80" rx="16" fill="${main}" opacity="0.5"/>
+          <text x="410" y="270" font-family="Nunito" font-size="16" fill="${text}">Litros e mL</text>
+          <!-- Termômetro -->
+          <line x1="620" y1="60" x2="620" y2="240" stroke="${title}" stroke-width="8" />
+          <circle cx="620" cy="250" r="18" fill="${aux}"/>
+          <text x="600" y="290" font-family="Nunito" font-size="16" fill="${text}">°C</text>
+        </svg>`;
+      return svgToDataUrl(svg);
+    }
+
+    if(gameKey==='naturais'){
+      // Operações
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+          <rect width="${W}" height="${H}" fill="${bg}" stroke="${border}"/>
+          <text x="40" y="90" font-family="Nunito" font-size="42" fill="${main}" font-weight="900">8 × 7 = ?</text>
+          <text x="40" y="150" font-family="Nunito" font-size="32" fill="${title}">Somar, subtrair, multiplicar, dividir</text>
+          <text x="40" y="200" font-family="Nunito" font-size="22" fill="${text}">Use estratégias: decomposição, propriedades, estimativa.</text>
+          <circle cx="560" cy="140" r="40" fill="#eef2ff" stroke="${border}"/>
+          <text x="540" y="150" font-family="Nunito" font-size="28" fill="${text}" font-weight="900">?</text>
+        </svg>`;
+      return svgToDataUrl(svg);
+    }
+
+    if(gameKey==='posicional'){
+      // Tabela de valor posicional
+      const cols=['Milhar','Centena','Dezena','Unidade'];
+      const nums=[4,5,8,2];
+      const svgCols = cols.map((c,i)=>{
+        const x = 60 + i*150;
+        return `
+          <rect x="${x}" y="80" width="130" height="160" fill="#fff" stroke="${border}" rx="10"/>
+          <text x="${x+65}" y="120" text-anchor="middle" font-family="Nunito" font-size="16" fill="${title}" font-weight="900">${c}</text>
+          <text x="${x+65}" y="190" text-anchor="middle" font-family="Nunito" font-size="40" fill="${main}" font-weight="900">${nums[i]}</text>
+        `;
+      }).join('');
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+          <rect width="${W}" height="${H}" fill="${bg}" stroke="${border}"/>
+          <text x="40" y="50" font-family="Nunito" font-size="22" fill="${title}" font-weight="900">Valor posicional (ex.: 4.582)</text>
+          ${svgCols}
+        </svg>`;
+      return svgToDataUrl(svg);
+    }
+
+    if(gameKey==='area_perimetro'){
+      // Retângulo com área e perímetro
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+          <rect width="${W}" height="${H}" fill="${bg}" stroke="${border}"/>
+          <rect x="140" y="80" width="280" height="160" fill="#eefcf6" stroke="${aux}" stroke-width="3"/>
+          <text x="280" y="170" font-family="Nunito" font-size="18" fill="${text}" text-anchor="middle">Área = base × altura</text>
+          <text x="140" y="75" font-family="Nunito" font-size="16" fill="${title}">Perímetro = soma dos lados</text>
+          <text x="460" y="120" font-family="Nunito" font-size="18" fill="${text}">Ex.: 7 cm × 5 cm → 35 cm²</text>
+        </svg>`;
+      return svgToDataUrl(svg);
+    }
+
+    if(gameKey==='tempo'){
+      // Relógio simples
+      const cx=180, cy=180, r=110;
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+          <rect width="${W}" height="${H}" fill="${bg}" stroke="${border}"/>
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="${border}" stroke-width="3"/>
+          ${Array.from({length:12}).map((_,i)=>{
+            const ang = (i/12)*2*Math.PI - Math.PI/2;
+            const x1=cx+ (r-15)*Math.cos(ang), y1=cy+(r-15)*Math.sin(ang);
+            const x2=cx+ (r-5)*Math.cos(ang), y2=cy+(r-5)*Math.sin(ang);
+            return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${title}" stroke-width="3"/>`
+          }).join('')}
+          <!-- Ponteiros 10:10 -->
+          <line x1="${cx}" y1="${cy}" x2="${cx+60*Math.cos(-Math.PI/6)}" y2="${cy+60*Math.sin(-Math.PI/6)}" stroke="${main}" stroke-width="6" stroke-linecap="round"/>
+          <line x1="${cx}" y1="${cy}" x2="${cx+80*Math.cos(Math.PI/3)}" y2="${cy+80*Math.sin(Math.PI/3)}" stroke="${aux}" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="${cx}" cy="${cy}" r="5" fill="${text}"/>
+          <text x="360" y="100" font-family="Nunito" font-size="22" fill="${title}" font-weight="900">Medidas de tempo</text>
+          <text x="360" y="140" font-family="Nunito" font-size="18" fill="${text}">Minutos ↔ horas, duração de eventos, intervalos.</text>
+        </svg>`;
+      return svgToDataUrl(svg);
+    }
+
+    // padrão
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+        <rect width="${W}" height="${H}" fill="${bg}" stroke="${border}"/>
+        <text x="40" y="120" font-family="Nunito" font-size="22" fill="${title}" font-weight="900">${safeText(gameKey)}</text>
+        <text x="40" y="170" font-family="Nunito" font-size="18" fill="${text}">${safeText(qObj.q)}</text>
+      </svg>`;
+    return svgToDataUrl(svg);
   }
 
   /* ===== Init ===== */
@@ -748,68 +892,7 @@
   document.addEventListener('DOMContentLoaded', init);
 </script>
 
-<!-- ===== Firestore (opcional para ranking online) ===== -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp,
-           query, where, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
-
-  /* COLE A SUA CONFIG DO FIREBASE AQUI
-  const firebaseConfig = {
-    apiKey: "…",
-    authDomain: "…",
-    projectId: "…",
-    storageBucket: "…",
-    messagingSenderId: "…",
-    appId: "…"
-  };
-  */
-  let app=null, db=null;
-  try{
-    app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-  }catch(e){
-    console.warn('Firebase não configurado. Ranking usa fallback local.', e?.message||e);
-  }
-
-  const todayKey = () => new Date().toISOString().slice(0,10);
-
-  async function addScoreOnline(game, level, name, finalScore){
-    if(!db) throw new Error('Sem Firebase');
-    await addDoc(collection(db,"scores"), {
-      game, level, name, score: finalScore,
-      date: todayKey(),
-      createdAt: serverTimestamp()
-    });
-  }
-
-  window.addScoreToRanking = async function(game, level, name, finalScore){
-    try{ await addScoreOnline(game, level, name, finalScore); }
-    catch(e){ console.warn('Salvar online falhou, usando local.', e?.message||e); addScoreLocal(game, level, name, finalScore); }
-  }
-
-  window.startRealtimeRanking = function(){
-    if (window.unsubscribeRanking) { window.unsubscribeRanking(); window.unsubscribeRanking=null; }
-    const game = window.rankingGameKey, level = window.rankingLevel;
-
-    if(!db){ const arr = loadRankingLocal(game, level); renderRankingList(arr); return; }
-
-    const q = query(
-      collection(db, "scores"),
-      where("date","==", todayKey()),
-      where("game","==", game),
-      where("level","==", level),
-      orderBy("score","desc"),
-      limit(10)
-    );
-    window.unsubscribeRanking = onSnapshot(q, (snap)=>{
-      const arr=[]; snap.forEach(d=>arr.push(d.data()));
-      renderRankingList(arr);
-    }, (err)=>{
-      console.warn('Snapshot erro, voltando pro local:', err?.message||err);
-      const arr = loadRankingLocal(game, level); renderRankingList(arr);
-    });
-  }
-</script>
+<!-- ===== (Removido Firestore para simplificar; agora ranking é geral e local, com envio opcional ao Sheets) ===== -->
 </body>
 </html>
+
